@@ -388,12 +388,11 @@
     </div>
 
     <script type="module">
-        // 1. Imports (Added 'collection', 'addDoc', 'getDocs', 'deleteDoc' for Lists)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // 2. CONFIGURATION
+        // CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
             authDomain: "ecogrampanchayatmandur.firebaseapp.com",
@@ -407,52 +406,39 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- AUTHENTICATION ---
+        // --- AUTH ---
         const btnLogin = document.getElementById('btnLogin');
-        if (btnLogin) {
-            btnLogin.addEventListener('click', () => {
-                const email = document.getElementById('adminUser').value;
-                const pass = document.getElementById('adminPass').value;
-                const errorMsg = document.getElementById('login-error');
-                btnLogin.innerText = "Checking...";
-                signInWithEmailAndPassword(auth, email, pass)
-                    .catch((error) => {
-                        btnLogin.innerText = "LOGIN SECURELY";
-                        errorMsg.innerText = "Error: " + error.message;
-                        errorMsg.style.display = 'block';
-                    });
-            });
-        }
-        const btnLogout = document.getElementById('btnLogout');
-        if (btnLogout) btnLogout.addEventListener('click', () => { signOut(auth).then(() => location.reload()); });
+        if (btnLogin) btnLogin.addEventListener('click', () => {
+            signInWithEmailAndPassword(auth, document.getElementById('adminUser').value, document.getElementById('adminPass').value)
+                .catch(e => alert(e.message));
+        });
+        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => location.reload()));
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard-container').style.display = 'flex';
+                // Load ALL data
                 loadCloudRti();
-                loadCloudSchemes(); // Load schemes when logged in
+                loadCloudSchemes();
+                loadCloudWorks();
+                loadCloudGS();
             } else {
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('dashboard-container').style.display = 'none';
             }
         });
 
-        // --- RTI SECTION ---
-        const btnSaveRti = document.getElementById('btnSaveRti');
-        if (btnSaveRti) {
-            btnSaveRti.addEventListener('click', async () => {
-                btnSaveRti.innerText = "Saving...";
-                try {
-                    await setDoc(doc(db, "content", "rti"), {
-                        officerName: document.getElementById('rtiName').value,
-                        officerContact: document.getElementById('rtiContact').value
-                    });
-                    alert("✅ RTI Saved!");
-                    btnSaveRti.innerText = "Save RTI Info";
-                } catch (error) { alert("Error: " + error.message); }
-            });
-        }
+        // --- 1. RTI ---
+        document.getElementById('btnSaveRti').addEventListener('click', async () => {
+            try {
+                await setDoc(doc(db, "content", "rti"), {
+                    officerName: document.getElementById('rtiName').value,
+                    officerContact: document.getElementById('rtiContact').value
+                });
+                alert("✅ RTI Saved!");
+            } catch (e) { alert(e.message); }
+        });
         async function loadCloudRti() {
             const snap = await getDoc(doc(db, "content", "rti"));
             if (snap.exists()) {
@@ -461,67 +447,87 @@
             }
         }
 
-        // --- SCHEMES SECTION (NEW) ---
-
-        // 1. Global Function to Add Scheme (attached to window for onclick)
+        // --- 2. SCHEMES ---
         window.saveScheme = async function () {
-            const title = document.getElementById('schTitle').value;
-            const cat = document.getElementById('schCat').value;
-            const benefit = document.getElementById('schBenefit').value;
-            const link = document.getElementById('schLink').value;
-            const desc = document.getElementById('schDesc').value;
-
-            if (!title) { alert("Scheme Name is required"); return; }
-
             try {
                 await addDoc(collection(db, "schemes"), {
-                    title: title,
-                    category: cat,
-                    benefit: benefit,
-                    link: link,
-                    desc: desc,
+                    title: document.getElementById('schTitle').value,
+                    category: document.getElementById('schCat').value,
+                    benefit: document.getElementById('schBenefit').value,
+                    link: document.getElementById('schLink').value,
+                    desc: document.getElementById('schDesc').value,
                     createdAt: Date.now()
                 });
                 alert("✅ Scheme Added!");
-                // Clear inputs
-                document.getElementById('schTitle').value = "";
-                document.getElementById('schBenefit').value = "";
-                document.getElementById('schLink').value = "";
-                document.getElementById('schDesc').value = "";
-                loadCloudSchemes(); // Refresh list
-            } catch (e) {
-                alert("Error: " + e.message);
-            }
+                loadCloudSchemes();
+            } catch (e) { alert(e.message); }
         }
-
-        // 2. Global Function to Load Schemes
         window.loadCloudSchemes = async function () {
-            const list = document.getElementById('listSchemes');
-            list.innerHTML = "Loading...";
-
             const q = query(collection(db, "schemes"), orderBy("createdAt", "desc"));
             const snapshot = await getDocs(q);
-
-            let html = '<table class="data-table"><tr><th>Scheme</th><th>Category</th><th>Action</th></tr>';
-
-            snapshot.forEach((doc) => {
-                const s = doc.data();
-                html += `<tr>
-                        <td>${s.title}</td>
-                        <td>${s.category}</td>
-                        <td><button onclick="deleteScheme('${doc.id}')" class="btn-danger"><i class="fas fa-trash"></i></button></td>
-                    </tr>`;
+            let html = '<table class="data-table"><tr><th>Scheme</th><th>Cat</th><th>Action</th></tr>';
+            snapshot.forEach(d => {
+                html += `<tr><td>${d.data().title}</td><td>${d.data().category}</td><td><button onclick="deleteScheme('${d.id}')" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`;
             });
-            list.innerHTML = html + '</table>';
+            document.getElementById('listSchemes').innerHTML = html + '</table>';
         }
+        window.deleteScheme = async function (id) { if (confirm("Delete?")) { await deleteDoc(doc(db, "schemes", id)); loadCloudSchemes(); } }
 
-        // 3. Global Function to Delete Scheme
-        window.deleteScheme = async function (id) {
-            if (confirm("Are you sure you want to delete this scheme?")) {
-                await deleteDoc(doc(db, "schemes", id));
-                loadCloudSchemes();
-            }
+        // --- 3. WORKS (NEW) ---
+        window.saveWork = async function () {
+            try {
+                await addDoc(collection(db, "works"), {
+                    title: document.getElementById('workTitle').value,
+                    status: document.getElementById('workStatus').value,
+                    cost: document.getElementById('workEstCost').value,
+                    exp: document.getElementById('workExp').value,
+                    start: document.getElementById('workStart').value,
+                    end: document.getElementById('workEnd').value,
+                    photo: document.getElementById('workPhoto').value,
+                    createdAt: Date.now()
+                });
+                alert("✅ Work Added!");
+                loadCloudWorks();
+            } catch (e) { alert(e.message); }
         }
+        window.loadCloudWorks = async function () {
+            const q = query(collection(db, "works"), orderBy("createdAt", "desc"));
+            const snapshot = await getDocs(q);
+            let html = '<table class="data-table"><tr><th>Work</th><th>Status</th><th>Action</th></tr>';
+            snapshot.forEach(d => {
+                html += `<tr><td>${d.data().title}</td><td>${d.data().status}</td><td><button onclick="deleteWork('${d.id}')" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`;
+            });
+            document.getElementById('listWorks').innerHTML = html + '</table>';
+        }
+        window.deleteWork = async function (id) { if (confirm("Delete?")) { await deleteDoc(doc(db, "works", id)); loadCloudWorks(); } }
+
+        // --- 4. GRAM SABHA (NEW) ---
+        window.saveGS = async function () {
+            try {
+                await addDoc(collection(db, "gramsabha"), {
+                    title: document.getElementById('gsTitle').value,
+                    date: document.getElementById('gsDate').value,
+                    time: document.getElementById('gsTime').value,
+                    venue: document.getElementById('gsVenue').value,
+                    link: document.getElementById('gsLink').value,
+                    agenda: document.getElementById('gsAgenda').value,
+                    createdAt: Date.now()
+                });
+                alert("✅ Meeting Added!");
+                loadCloudGS();
+            } catch (e) { alert(e.message); }
+        }
+        window.loadCloudGS = async function () {
+            const q = query(collection(db, "gramsabha"), orderBy("createdAt", "desc"));
+            const snapshot = await getDocs(q);
+            let html = '<table class="data-table"><tr><th>Date</th><th>Title</th><th>Action</th></tr>';
+            snapshot.forEach(d => {
+                html += `<tr><td>${d.data().date}</td><td>${d.data().title}</td><td><button onclick="deleteGS('${d.id}')" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`;
+            });
+            document.getElementById('listGS').innerHTML = html + '</table>';
+        }
+        window.deleteGS = async function (id) { if (confirm("Delete?")) { await deleteDoc(doc(db, "gramsabha", id)); loadCloudGS(); } }
+
     </script>
 
     <script>
