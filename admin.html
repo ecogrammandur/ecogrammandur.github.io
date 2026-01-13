@@ -250,7 +250,7 @@
                             <input type="text" id="rtiName" class="form-control" placeholder="Officer Name">
                             <input type="text" id="rtiContact" class="form-control" placeholder="Contact Details">
                         </div>
-                        <button onclick="saveRtiData()" class="btn-primary" style="width:auto;">Save RTI Info</button>
+                        <button id="btnSaveRti" class="btn-primary" style="width:auto;">Save RTI Info</button>
                     </div>
                     <div class="admin-card" style="border-left: 5px solid #10b981;">
                         <h3>2. Important Documents Table</h3>
@@ -388,12 +388,11 @@
     </div>
 
     <script type="module">
-        // 1. Import the Firestore tools
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // 2. CONFIGURATION (Your Keys)
+        // CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
             authDomain: "ecogrampanchayatmandur.firebaseapp.com",
@@ -403,70 +402,81 @@
             appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
         };
 
-        // 3. INITIALIZE
+        // INITIALIZE
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app); // Connect to the Database
+        const db = getFirestore(app);
 
-        // --- AUTHENTICATION LOGIC ---
-        document.getElementById('btnLogin').addEventListener('click', () => {
-            const email = document.getElementById('adminUser').value;
-            const pass = document.getElementById('adminPass').value;
-            const errorMsg = document.getElementById('login-error');
-            const btn = document.getElementById('btnLogin');
+        // --- 1. AUTH LOGIC ---
+        const btnLogin = document.getElementById('btnLogin');
+        if (btnLogin) {
+            btnLogin.addEventListener('click', () => {
+                const email = document.getElementById('adminUser').value;
+                const pass = document.getElementById('adminPass').value;
+                const errorMsg = document.getElementById('login-error');
 
-            errorMsg.style.display = 'none';
-            btn.innerText = "Checking...";
+                errorMsg.style.display = 'none';
+                btnLogin.innerText = "Checking...";
 
-            signInWithEmailAndPassword(auth, email, pass)
-                .then((userCredential) => {
-                    // Success handled by monitor below
-                })
-                .catch((error) => {
-                    btn.innerText = "LOGIN SECURELY";
-                    errorMsg.innerText = "Error: " + error.message;
-                    errorMsg.style.display = 'block';
-                });
-        });
+                signInWithEmailAndPassword(auth, email, pass)
+                    .then((userCredential) => {
+                        console.log("Login Successful");
+                    })
+                    .catch((error) => {
+                        btnLogin.innerText = "LOGIN SECURELY";
+                        errorMsg.innerText = "Error: " + error.message;
+                        errorMsg.style.display = 'block';
+                    });
+            });
+        }
 
-        document.getElementById('btnLogout').addEventListener('click', () => {
-            signOut(auth).then(() => { alert("Logged Out"); }).catch((error) => { console.error(error); });
-        });
+        const btnLogout = document.getElementById('btnLogout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', () => {
+                signOut(auth).then(() => { alert("Logged Out"); location.reload(); });
+            });
+        }
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard-container').style.display = 'flex';
-                loadCloudRti(); // Load data from Cloud when logged in
+                console.log("User is logged in:", user.email);
+                loadCloudRti(); // Load data
             } else {
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('dashboard-container').style.display = 'none';
             }
         });
 
-        // --- NEW: FIRESTORE FUNCTIONS (Attached to Window for HTML buttons) ---
+        // --- 2. RTI SAVE LOGIC (Using Event Listener) ---
+        const btnSaveRti = document.getElementById('btnSaveRti');
+        if (btnSaveRti) {
+            btnSaveRti.addEventListener('click', async () => {
+                console.log("RTI Save Button Clicked"); // Debug check
+                const name = document.getElementById('rtiName').value;
+                const contact = document.getElementById('rtiContact').value;
 
-        // 1. SAVE RTI DATA TO CLOUD
-        window.saveRtiData = async function () {
-            const name = document.getElementById('rtiName').value;
-            const contact = document.getElementById('rtiContact').value;
+                if (!name || !contact) { alert("Please fill both fields"); return; }
 
-            if (!name || !contact) { alert("Please fill both fields"); return; }
+                btnSaveRti.innerText = "Saving...";
 
-            try {
-                // Save to collection "content", document "rti"
-                await setDoc(doc(db, "content", "rti"), {
-                    officerName: name,
-                    officerContact: contact
-                });
-                alert("✅ RTI Data Saved to Cloud!");
-            } catch (error) {
-                console.error("Error writing document: ", error);
-                alert("❌ Error: " + error.message);
-            }
+                try {
+                    await setDoc(doc(db, "content", "rti"), {
+                        officerName: name,
+                        officerContact: contact
+                    });
+                    alert("✅ RTI Data Saved to Cloud!");
+                    btnSaveRti.innerText = "Save RTI Info";
+                } catch (error) {
+                    console.error("Error writing document: ", error);
+                    alert("❌ Error: " + error.message);
+                    btnSaveRti.innerText = "Save RTI Info";
+                }
+            });
         }
 
-        // 2. LOAD RTI DATA FROM CLOUD (To show in Admin Panel)
+        // --- 3. RTI LOAD LOGIC ---
         async function loadCloudRti() {
             try {
                 const docRef = doc(db, "content", "rti");
@@ -481,8 +491,6 @@
                 console.log("No existing RTI data found.");
             }
         }
-
-        // Note: We will add functions for Schemes, Works, etc. here later.
     </script>
 
     <script>
