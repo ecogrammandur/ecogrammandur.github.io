@@ -380,7 +380,8 @@
             const container = document.getElementById('dynamic-services');
 
             try {
-                const q = query(collection(db, "services"), orderBy("rank", "asc"));
+                // FIXED: Changed "orderBy('rank')" to "orderBy('createdAt')" to ensure data shows even if rank is missing
+                const q = query(collection(db, "services"), orderBy("createdAt", "desc"));
                 const snap = await getDocs(q);
 
                 if (snap.empty) {
