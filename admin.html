@@ -400,7 +400,8 @@
         // AUTH
         const btnLogin = document.getElementById('btnLogin');
         if (btnLogin) btnLogin.addEventListener('click', () => { signInWithEmailAndPassword(auth, document.getElementById('adminUser').value, document.getElementById('adminPass').value).catch(e => alert(e.message)); });
-        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => location.reload()));
+        //document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => location.reload()));
+		document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => window.location.href = "index.html"));
         onAuthStateChanged(auth, (user) => { if (user) { document.getElementById('login-screen').style.display = 'none'; document.getElementById('dashboard-container').style.display = 'flex'; loadAll(); } else { document.getElementById('login-screen').style.display = 'flex'; document.getElementById('dashboard-container').style.display = 'none'; } });
 
         function loadAll() {
