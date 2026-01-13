@@ -388,10 +388,12 @@
     </div>
 
     <script type="module">
+        // 1. Import the Firestore tools
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- 1. CONFIGURATION ---
+        // 2. CONFIGURATION (Your Keys)
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
             authDomain: "ecogrampanchayatmandur.firebaseapp.com",
@@ -401,11 +403,12 @@
             appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
         };
 
-        // --- 2. INITIALIZE ---
+        // 3. INITIALIZE
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app); // Connect to the Database
 
-        // --- 3. LOGIN LOGIC ---
+        // --- AUTHENTICATION LOGIC ---
         document.getElementById('btnLogin').addEventListener('click', () => {
             const email = document.getElementById('adminUser').value;
             const pass = document.getElementById('adminPass').value;
@@ -417,7 +420,7 @@
 
             signInWithEmailAndPassword(auth, email, pass)
                 .then((userCredential) => {
-                    // Success handled by onAuthStateChanged
+                    // Success handled by monitor below
                 })
                 .catch((error) => {
                     btn.innerText = "LOGIN SECURELY";
@@ -426,29 +429,60 @@
                 });
         });
 
-        // --- 4. LOGOUT LOGIC ---
         document.getElementById('btnLogout').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                // Sign-out successful.
-            }).catch((error) => {
-                alert("Error signing out");
-            });
+            signOut(auth).then(() => { alert("Logged Out"); }).catch((error) => { console.error(error); });
         });
 
-        // --- 5. SESSION MONITOR ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard-container').style.display = 'flex';
-                // Load local storage data for now (Phase 1)
-                window.loadAllAdminData();
+                loadCloudRti(); // Load data from Cloud when logged in
             } else {
-                // User is signed out
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('dashboard-container').style.display = 'none';
             }
         });
+
+        // --- NEW: FIRESTORE FUNCTIONS (Attached to Window for HTML buttons) ---
+
+        // 1. SAVE RTI DATA TO CLOUD
+        window.saveRtiData = async function () {
+            const name = document.getElementById('rtiName').value;
+            const contact = document.getElementById('rtiContact').value;
+
+            if (!name || !contact) { alert("Please fill both fields"); return; }
+
+            try {
+                // Save to collection "content", document "rti"
+                await setDoc(doc(db, "content", "rti"), {
+                    officerName: name,
+                    officerContact: contact
+                });
+                alert("✅ RTI Data Saved to Cloud!");
+            } catch (error) {
+                console.error("Error writing document: ", error);
+                alert("❌ Error: " + error.message);
+            }
+        }
+
+        // 2. LOAD RTI DATA FROM CLOUD (To show in Admin Panel)
+        async function loadCloudRti() {
+            try {
+                const docRef = doc(db, "content", "rti");
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('rtiName').value = data.officerName;
+                    document.getElementById('rtiContact').value = data.officerContact;
+                }
+            } catch (error) {
+                console.log("No existing RTI data found.");
+            }
+        }
+
+        // Note: We will add functions for Schemes, Works, etc. here later.
     </script>
 
     <script>
