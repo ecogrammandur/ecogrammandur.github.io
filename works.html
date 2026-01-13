@@ -15,49 +15,173 @@
             --header-height-desktop: 175px;
         }
 
-        body { 
-            margin: 0; padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #f4f6f9; 
-            padding-top: var(--header-height-desktop); 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding-top: var(--header-height-desktop);
         }
 
         /* --- HEADER & BRANDING --- */
         .gov-header-group {
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 1000; background: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
-        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
-        .brand-info { display: flex; align-items: center; gap: 15px; }
-        
-        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
-        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
+
+        .top-strip {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .main-brand {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+        }
+
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #txt-title {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--gov-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        #txt-subtitle {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--gov-blue) !important;
+            font-weight: 600;
+        }
 
         /* --- NAVIGATION --- */
-        .main-nav { background-color: var(--gov-blue); }
-        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
-        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
-        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
-        .btn-login { background: #dc3545 !important; }
+        .main-nav {
+            background-color: var(--gov-blue);
+        }
+
+            .main-nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .main-nav li a {
+                display: block;
+                padding: 12px 18px;
+                color: white;
+                text-decoration: none;
+                font-weight: 500;
+                transition: 0.3s;
+                white-space: nowrap;
+            }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: var(--gov-orange);
+                }
+
+        .btn-login {
+            background: #dc3545 !important;
+        }
 
         /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+            display: none;
+        }
 
         @media (max-width: 992px) {
-            body { padding-top: 100px; }
-            .top-strip, .landmark-desktop { display: none; }
-            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
-            .main-brand img { height: 50px; }
-            #txt-title { font-size: 1.2rem; }
-            
-            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
-            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
-            .main-nav.active { left: 0; }
-            .main-nav ul { flex-direction: column; }
-            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
+            body {
+                padding-top: 100px;
+            }
+
+            .top-strip, .landmark-desktop {
+                display: none;
+            }
+
+            .mobile-toggle-btn {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.8rem;
+                color: var(--gov-blue);
+                cursor: pointer;
+            }
+
+            .main-brand img {
+                height: 50px;
+            }
+
+            #txt-title {
+                font-size: 1.2rem;
+            }
+
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 1001;
+            }
+
+            .main-nav {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1002;
+                transition: 0.3s;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+                overflow-y: auto;
+            }
+
+                .main-nav.active {
+                    left: 0;
+                }
+
+                .main-nav ul {
+                    flex-direction: column;
+                }
+
+                .main-nav li {
+                    width: 100%;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+
+            .sidebar-close-btn {
+                display: block;
+                width: 100%;
+                text-align: right;
+                padding: 15px;
+                color: white;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+            }
         }
 
         /* --- Works Page Grid Styles --- */
@@ -77,10 +201,10 @@
             border: 1px solid #eee;
         }
 
-        .work-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-        }
+            .work-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            }
 
         .work-img {
             width: 100%;
@@ -103,9 +227,21 @@
             display: inline-block;
             margin-bottom: 10px;
         }
-        .status-Completed { background: #d4edda; color: #155724; }
-        .status-Ongoing { background: #fff3cd; color: #856404; }
-        .status-Proposed { background: #e2e3e5; color: #383d41; }
+
+        .status-Completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-Ongoing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-Proposed {
+            background: #e2e3e5;
+            color: #383d41;
+        }
 
         .work-title {
             font-size: 1.2rem;
@@ -124,9 +260,16 @@
             border-bottom: 1px dashed #eee;
             padding-bottom: 5px;
         }
-        .info-row:last-child { border-bottom: none; }
-        .info-label { font-weight: 600; color: #333; }
-        
+
+            .info-row:last-child {
+                border-bottom: none;
+            }
+
+        .info-label {
+            font-weight: 600;
+            color: #333;
+        }
+
         /* Button Styles */
         .btn-main {
             background-color: var(--gov-blue);
@@ -148,7 +291,7 @@
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
                 <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
                 <span>
-                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> | 
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
                     <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
                 </span>
             </div>
@@ -199,7 +342,7 @@
         </div>
 
         <div id="dynamic-works-container" class="works-grid">
-            <p style="grid-column: 1/-1; text-align: center;">Loading works...</p>
+            <p style="grid-column: 1/-1; text-align: center;">Loading works from cloud...</p>
         </div>
 
     </main>
@@ -208,7 +351,26 @@
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
     </footer>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
+            authDomain: "ecogrampanchayatmandur.firebaseapp.com",
+            projectId: "ecogrampanchayatmandur",
+            storageBucket: "ecogrampanchayatmandur.firebasestorage.app",
+            messagingSenderId: "474255490054",
+            appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make functions global for HTML onClick events
+        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
+        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+
         // --- MASTER TRANSLATION SCRIPT ---
         const translations = {
             en: {
@@ -216,13 +378,13 @@
                 title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
                 navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
                 navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
-                
+
                 pageTitle: "Development Works",
                 btnAll: "All Projects", btnFilter: "Filter by Year",
-                
+
                 // Labels for Work Cards (Static parts)
                 lblCost: "Est. Cost", lblExp: "Expenditure", lblStart: "Start Date", lblEnd: "End Date",
-                
+
                 footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
             },
             mr: {
@@ -230,25 +392,25 @@
                 title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
                 navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
                 navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
-                
+
                 pageTitle: "विकास कामे",
                 btnAll: "सर्व प्रकल्प", btnFilter: "वर्षानुसार",
-                
+
                 // Labels for Work Cards
                 lblCost: "अंदाजित खर्च", lblExp: "झालेला खर्च", lblStart: "सुरु तारीख", lblEnd: "पूर्ण तारीख",
-                
+
                 footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
             }
         };
 
-        function setLanguage(lang) {
+        window.setLanguage = function (lang) {
             const t = translations[lang];
-            
+
             // Header
             document.getElementById('txt-helpline').innerText = t.helpline;
             document.getElementById('txt-title').innerText = t.title;
             document.getElementById('txt-subtitle').innerText = t.subtitle;
-            
+
             // Nav
             document.getElementById('nav-home').innerText = t.navHome;
             document.getElementById('nav-about').innerText = t.navAbout;
@@ -262,69 +424,85 @@
             document.getElementById('nav-rti').innerText = t.navRTI;
             document.getElementById('nav-contact').innerText = t.navContact;
             document.getElementById('btn-login-txt').innerText = t.navLogin;
-            
+
             // Page Content
             document.getElementById('page-title').innerText = t.pageTitle;
             document.getElementById('btn-all-projects').innerText = t.btnAll;
             document.getElementById('btn-filter-year').innerText = t.btnFilter;
-            
+
             // Footer
             document.getElementById('txt-footer').innerText = t.footer;
-            
+
             localStorage.setItem('gp_lang_pref', lang);
-            
+
             // Reload Works to apply translation to labels
-            loadWorks(lang); 
+            loadWorks(lang);
         }
 
-        function loadWorks(lang) {
+        // --- NEW: FIREBASE WORKS LOADER ---
+        async function loadWorks(lang) {
             const t = translations[lang];
             const container = document.getElementById('dynamic-works-container');
-            let works = JSON.parse(localStorage.getItem('gp_works_data')) || [];
 
-            if (works.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777;">No project data found.</p>';
-            } else {
+            try {
+                // Fetch from Firestore
+                const q = query(collection(db, "works"));
+                const querySnapshot = await getDocs(q);
+
+                let works = [];
+                querySnapshot.forEach((doc) => {
+                    works.push(doc.data());
+                });
+
+                if (works.length === 0) {
+                    container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777;">No project data found in cloud.</p>';
+                    return;
+                }
+
+                // Sort by rank (or fallback to createdAt logic if needed)
                 works.sort((a, b) => (a.rank || 99) - (b.rank || 99));
-                
+
                 let html = '';
                 works.forEach(w => {
                     const imgUrl = w.photo ? w.photo : 'https://via.placeholder.com/400x200?text=No+Image';
-                    
+
                     html += `
-                    <div class="work-card">
-                        <img src="${imgUrl}" class="work-img" alt="Work Image">
-                        <div class="work-body">
-                            <span class="status-badge status-${w.status}">${w.status}</span>
-                            <h3 class="work-title">${w.title}</h3>
-                            
-                            <div class="info-row">
-                                <span class="info-label">${t.lblCost}:</span>
-                                <span>${w.estCost || '-'}</span>
+                        <div class="work-card">
+                            <img src="${imgUrl}" class="work-img" alt="Work Image">
+                            <div class="work-body">
+                                <span class="status-badge status-${w.status}">${w.status}</span>
+                                <h3 class="work-title">${w.title}</h3>
+
+                                <div class="info-row">
+                                    <span class="info-label">${t.lblCost}:</span>
+                                    <span>${w.cost || '-'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">${t.lblExp}:</span>
+                                    <span>${w.exp || '-'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">${t.lblStart}:</span>
+                                    <span>${w.start || '-'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">${t.lblEnd}:</span>
+                                    <span>${w.end || '-'}</span>
+                                </div>
                             </div>
-                            <div class="info-row">
-                                <span class="info-label">${t.lblExp}:</span>
-                                <span>${w.exp || '-'}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">${t.lblStart}:</span>
-                                <span>${w.start || '-'}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">${t.lblEnd}:</span>
-                                <span>${w.end || '-'}</span>
-                            </div>
-                        </div>
-                    </div>`;
+                        </div>`;
                 });
                 container.innerHTML = html;
+
+            } catch (error) {
+                console.error("Error loading works:", error);
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:red;">Failed to load data. Please check connection.</p>';
             }
         }
 
-        window.onload = function() {
+        window.onload = function () {
             const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
             setLanguage(savedLang);
-            // Note: loadWorks is called inside setLanguage
         };
     </script>
 </body>
