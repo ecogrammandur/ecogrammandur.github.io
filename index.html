@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | GRAM PANCHAYAT MANDUR</title>
+    <title>GRAM PANCHAYAT NANDGAON</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- 1. CORE VARIABLES & DEFAULTS --- */
+        /* --- CSS VARIABLES & RESET --- */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
@@ -15,81 +15,376 @@
             --header-height-desktop: 175px;
         }
 
-        body { 
-            margin: 0; padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #f4f6f9; 
-            padding-top: var(--header-height-desktop); 
+        * {
+            box-sizing: border-box;
         }
 
-        /* --- 2. HEADER & BRANDING --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding-top: var(--header-height-desktop);
+        }
+
+        /* --- HEADER & BRANDING --- */
         .gov-header-group {
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 1000; background: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
-        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
-        .brand-info { display: flex; align-items: center; gap: 15px; }
-        
-        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
-        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
 
-        /* --- 3. NAVIGATION (SIDEBAR ON MOBILE / BAR ON DESKTOP) --- */
-        .main-nav { background-color: var(--gov-blue); }
-        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
-        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
-        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
-        .btn-login { background: #dc3545 !important; }
-
-        /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
-
-        /* --- 4. MOBILE SIDEBAR RESPONSIVE --- */
-        @media (max-width: 992px) {
-            body { padding-top: 100px; }
-            .top-strip, .landmark-desktop { display: none; }
-            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
-            .main-brand img { height: 50px; }
-            #txt-title { font-size: 1.2rem; }
-            
-            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
-            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
-            .main-nav.active { left: 0; }
-            .main-nav ul { flex-direction: column; }
-            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
+        .top-strip {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 5px 0;
+            font-size: 0.9rem;
         }
 
-        /* --- 5. SLIDER & NEWS --- */
-        .hero-section { position: relative; width: 100%; height: 450px; overflow: hidden; background: #333; }
-        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: 1s; }
-        .hero-slide.active { opacity: 1; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 48, 97, 0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; z-index: 5; padding: 20px; }
-        
-        .news-strip { background-color: var(--gov-orange); padding: 10px 0; display: flex; align-items: center; color: white; }
-        .news-label { background: #b34700; padding: 5px 15px; margin-left: 20px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
-        .marquee-container { flex: 1; overflow: hidden; margin-left: 15px; font-weight: 500; }
-        #dynamic-news { color: #ffffff !important; }
+        .main-brand {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+        }
 
-        /* --- 6. CONTENT SECTIONS --- */
-        .content-row { background: white; margin-bottom: 30px; border-bottom: 1px solid #eee; }
-        .row-header { background-color: var(--gov-blue); padding: 12px; text-align: center; }
-        .row-header h2 { color: white !important; margin: 0; font-size: 1.4rem; text-transform: uppercase; }
-        
-        .welcome-section { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-        .services-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-        .service-card { background: white; border: 1px solid #ddd; padding: 25px; width: 250px; text-align: center; border-radius: 8px; border-bottom: 4px solid var(--gov-blue); }
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-        #doc-table { width: 100%; max-width: 1000px; margin: 0 auto; border-collapse: collapse; }
-        #doc-table th { background: #f1f1f1; color: var(--gov-blue); padding: 12px; border: 1px solid #ddd; }
-        #doc-table td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+        #txt-title {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--gov-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
 
-        .logo-track { display: flex; gap: 20px; overflow-x: auto; padding: 20px; justify-content: center; }
-        .logo-card { min-width: 260px; height: 90px; border: 1px solid #eee; display: flex; align-items: center; padding: 15px; background: white; text-decoration: none; border-radius: 6px; }
-        .logo-card img { height: 50px; margin-right: 15px; }
+        #txt-subtitle {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--gov-blue) !important;
+            font-weight: 600;
+        }
 
-        .gov-footer { background: var(--gov-blue); color: white; text-align: center; padding: 30px 20px; }
+        /* --- NAVIGATION --- */
+        .main-nav {
+            background-color: var(--gov-blue);
+        }
+
+            .main-nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .main-nav li a {
+                display: block;
+                padding: 12px 18px;
+                color: white;
+                text-decoration: none;
+                font-weight: 500;
+                transition: 0.3s;
+                white-space: nowrap;
+            }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: var(--gov-orange);
+                }
+
+        .btn-login {
+            background: #dc3545 !important;
+        }
+
+        /* --- HERO SLIDER --- */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            background: #ddd;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+            .slide.active {
+                opacity: 1;
+            }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            padding: 20px;
+        }
+
+            .hero-content h2 {
+                font-size: 3rem;
+                margin-bottom: 10px;
+                font-weight: 800;
+            }
+
+            .hero-content p {
+                font-size: 1.3rem;
+                margin-bottom: 20px;
+            }
+
+        /* --- MARQUEE --- */
+        .news-ticker {
+            background: var(--gov-blue);
+            color: white;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .ticker-label {
+            background: var(--gov-orange);
+            padding: 5px 15px;
+            font-weight: bold;
+            margin-left: 20px;
+            border-radius: 4px;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .marquee-container {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 20s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* --- QUICK LINKS (Cards) --- */
+        .cards-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: 0.3s;
+            border-bottom: 4px solid var(--gov-orange);
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+
+            .feature-card i {
+                font-size: 2.5rem;
+                color: var(--gov-blue);
+                margin-bottom: 15px;
+            }
+
+            .feature-card h3 {
+                margin: 10px 0;
+                color: var(--gov-blue);
+            }
+
+        /* --- FOOTER --- */
+        .gov-footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--gov-orange);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+            .footer-col ul li {
+                margin-bottom: 10px;
+            }
+
+                .footer-col ul li a {
+                    color: #ccc;
+                    text-decoration: none;
+                    transition: 0.3s;
+                }
+
+                    .footer-col ul li a:hover {
+                        color: var(--gov-orange);
+                        padding-left: 5px;
+                    }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+            color: #777;
+        }
+
+        /* --- MOBILE --- */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            body {
+                padding-top: 100px;
+            }
+
+            .top-strip, .landmark-desktop {
+                display: none;
+            }
+
+            .mobile-toggle-btn {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.8rem;
+                color: var(--gov-blue);
+                cursor: pointer;
+            }
+
+            .main-brand img {
+                height: 50px;
+            }
+
+            #txt-title {
+                font-size: 1.2rem;
+            }
+
+            .hero-section {
+                height: 300px;
+            }
+
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 1001;
+            }
+
+            .main-nav {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1002;
+                transition: 0.3s;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+                overflow-y: auto;
+            }
+
+                .main-nav.active {
+                    left: 0;
+                }
+
+                .main-nav ul {
+                    flex-direction: column;
+                }
+
+                .main-nav li {
+                    width: 100%;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+
+            .sidebar-close-btn {
+                display: block;
+                width: 100%;
+                text-align: right;
+                padding: 15px;
+                color: white;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,18 +396,17 @@
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
                 <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
                 <span>
-                    <a href="javascript:void(0)" onclick="setLanguage('en')">English</a> | 
-                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="color: var(--gov-orange);">मराठी</a>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
                 </span>
             </div>
         </div>
-
         <div class="main-brand">
             <div class="brand-info">
                 <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
-                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <h1 id="txt-title">GRAM PANCHAYAT NANDGAON</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
@@ -121,225 +415,142 @@
         <nav class="main-nav" id="sidebarMenu">
             <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
             <ul>
-                <li><a href="index.html" class="active" id="nav-home" onclick="closeMenu()">Home</a></li>
-                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
-                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
-                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
-                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
-                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
-                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
-                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
-                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
-                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
-                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
-                <li style="margin-left: auto;">
-                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
-                        <span id="btn-login-txt">Login</span>
-                    </a>
-                </li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="administration.html">Administration</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="works.html">Works</a></li>
+                <li><a href="gramsabha.html">Gram Sabha</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="grievance.html">Grievance</a></li>
+                <li><a href="rti.html">RTI</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li style="margin-left: auto;"><a href="admin.html" class="btn-login">Login</a></li>
             </ul>
         </nav>
     </header>
 
-    <div id="hero-slider" class="hero-section">
+    <div class="hero-section" id="hero-slider">
+        <div class="slide active" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e4/Gram_Panchayat_Office%2C_Mararikulam_North.jpg');"></div>
+
         <div class="hero-overlay">
-            <h1 id="hero-title"></h1>
-            <p id="hero-sub"></p>
+            <div class="hero-content">
+                <h2 id="hero-title">Welcome to Nandgaon</h2>
+                <p id="hero-desc">Digital Gateway to Our Village Development</p>
+                <a href="services.html" class="feature-card" style="display:inline-block; padding:10px 30px; background:var(--gov-orange); color:white; border:none;">Explore Services</a>
+            </div>
         </div>
-        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1593352771143-6c8469c47142?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
     </div>
 
-    <div class="news-strip">
-        <span class="news-label" id="txt-news-label">LATEST UPDATE:</span>
+    <div class="news-ticker">
+        <div class="ticker-label"><i class="fas fa-bullhorn"></i> UPDATES</div>
         <div class="marquee-container">
-            <marquee id="dynamic-news" behavior="scroll" direction="left" scrollamount="6">Welcome to the official e-Gram Panchayat Portal.</marquee>
+            <div class="marquee-content" id="news-marquee">
+                Loading updates...
+            </div>
         </div>
     </div>
 
-    <main>
-        <div class="content-row">
-            <div class="row-header"><h2 id="wel-head">e-Governance Initiative</h2></div>
-            <section class="welcome-section">
-                <p id="wel-text">We are committed to providing transparent, efficient, and time-bound services.</p>
-                <div class="services-grid">
-                    <div class="service-card"><i class="fas fa-file-signature fa-3x"></i><h3 id="card-1">Certificates</h3></div>
-                    <div class="service-card"><i class="fas fa-hand-holding-water fa-3x"></i><h3 id="card-2">Water Tax</h3></div>
-                    <div class="service-card"><i class="fas fa-home fa-3x"></i><h3 id="card-3">Property Tax</h3></div>
-                </div>
-            </section>
-        </div>
+    <div class="cards-container">
+        <a href="schemes.html" class="feature-card">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h3 id="card-schemes">Govt Schemes</h3>
+            <p>Beneficiary schemes & applications</p>
+        </a>
+        <a href="works.html" class="feature-card">
+            <i class="fas fa-hard-hat"></i>
+            <h3 id="card-works">Development Works</h3>
+            <p>Track ongoing village projects</p>
+        </a>
+        <a href="gramsabha.html" class="feature-card">
+            <i class="fas fa-users"></i>
+            <h3 id="card-gramsabha">Gram Sabha</h3>
+            <p>Meeting schedules & resolutions</p>
+        </a>
+        <a href="rti.html" class="feature-card">
+            <i class="fas fa-file-alt"></i>
+            <h3 id="card-rti">RTI / Documents</h3>
+            <p>Transparency & public records</p>
+        </a>
+    </div>
 
-        <div class="content-row">
-            <div class="row-header"><h2 id="txt-doc-title">Important Documents</h2></div>
-            <div style="overflow-x: auto; padding: 20px;">
-                <table id="doc-table">
-                    <thead><tr><th style="width: 10%;" id="th-sr">Sr. No</th><th id="th-name">Document Name</th><th id="th-download">Download</th></tr></thead>
-                    <tbody id="doc-table-body"></tbody>
-                </table>
+    <footer class="gov-footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Gram Panchayat Nandgaon<br>Tal: Gaganbawada, Dist: Kolhapur</p>
+                <p><i class="fas fa-phone"></i> +91-9922003344</p>
+                <p><i class="fas fa-envelope"></i> contact@nandgaon-gp.in</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="admin.html">Admin Login</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="disclaimer.html">Disclaimer</a></li>
+                </ul>
             </div>
         </div>
-
-        <div class="content-row">
-            <div class="row-header"><h2 id="txt-imp-links">Important Links</h2></div>
-            <div class="logo-track">
-                <a href="https://www.maharashtra.gov.in" target="_blank" class="logo-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Government_of_Maharashtra_Logo.svg/1200px-Government_of_Maharashtra_Logo.svg.png">
-                    <span>Govt. of Maharashtra</span>
-                </a>
-                <a href="https://aaplesarkar.mahaonline.gov.in" target="_blank" class="logo-card">
-                    <img src="https://aaplesarkar.mahaonline.gov.in/Images/logo.png">
-                    <span>Aaple Sarkar</span>
-                </a>
-            </div>
+        <div class="copyright">
+            <p>© 2026 GRAM PANCHAYAT NANDGAON. All Rights Reserved.</p>
         </div>
-    </main>
+    </footer>
 
-    <footer class="gov-footer"><p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p></footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <script>
-        function openMenu() {
-            document.getElementById('sidebarMenu').classList.add('active');
-            document.getElementById('menuOverlay').style.display = 'block';
-        }
-        function closeMenu() {
-            document.getElementById('sidebarMenu').classList.remove('active');
-            document.getElementById('menuOverlay').style.display = 'none';
-        }
-
-        // FULLY UPDATED TRANSLATION LOGIC
-        function setLanguage(lang) {
-            const translations = {
-                en: { 
-                    helpline: "Help Line",
-                    title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur", 
-                    newsLabel: "LATEST UPDATE:",
-                    navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
-                    navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
-                    welHead: "e-Governance Initiative", 
-                    welText: "We are committed to providing transparent, efficient, and time-bound services.",
-                    card1: "Certificates", card2: "Water Tax", card3: "Property Tax",
-                    txtDocTitle: "Important Documents", 
-                    thSr: "Sr. No", thName: "Document Name", thDownload: "Download",
-                    txtImpLinks: "Important Links",
-                    footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
-                },
-                mr: { 
-                    helpline: "हेल्पलाइन",
-                    title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर", 
-                    newsLabel: "नवीन अपडेट:",
-                    navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
-                    navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
-                    welHead: "ई-शासन उपक्रम", 
-                    welText: "आम्ही पारदर्शक, कार्यक्षम आणि वेळेवर सेवा देण्यासाठी कटिबद्ध आहोत.",
-                    card1: "दाखले", card2: "पाणीपट्टी", card3: "घरपट्टी",
-                    txtDocTitle: "महत्वाचे दस्तऐवज", 
-                    thSr: "अ. क्र.", thName: "दस्तऐवजाचे नाव", thDownload: "डाउनलोड",
-                    txtImpLinks: "महत्वाचे दुवे",
-                    footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
-                }
-            };
-
-            const t = translations[lang];
-            
-            // Header Info
-            document.getElementById('txt-helpline').innerText = t.helpline;
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
-            document.getElementById('txt-news-label').innerText = t.newsLabel;
-
-            // Nav Updates
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
-
-            // Content Updates
-            document.getElementById('wel-head').innerText = t.welHead;
-            document.getElementById('wel-text').innerText = t.welText;
-            document.getElementById('card-1').innerText = t.card1;
-            document.getElementById('card-2').innerText = t.card2;
-            document.getElementById('card-3').innerText = t.card3;
-            document.getElementById('txt-doc-title').innerText = t.txtDocTitle;
-            
-            // Table Headers
-            document.getElementById('th-sr').innerText = t.thSr;
-            document.getElementById('th-name').innerText = t.thName;
-            document.getElementById('th-download').innerText = t.thDownload;
-
-            document.getElementById('txt-imp-links').innerText = t.txtImpLinks;
-            document.getElementById('txt-footer').innerText = t.footer;
-            
-            localStorage.setItem('gp_lang_pref', lang);
-        }
-
-        window.onload = function() {
-            setLanguage(localStorage.getItem('gp_lang_pref') || 'en');
-            initSlider();
-            
-            // Dynamic News
-            const news = localStorage.getItem('gp_news_ticker');
-            if(news) document.getElementById('dynamic-news').innerText = news;
-
-            // Load Table
-            const savedDocs = JSON.parse(localStorage.getItem('gp_documents_data')) || [];
-            const tableBody = document.getElementById('doc-table-body');
-            if(tableBody) {
-                // Check if we need to show empty message (Optional Enhancement)
-                if (savedDocs.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="3" style="color:red; font-weight:bold;">No documents available currently.</td></tr>`;
-                } else {
-                    tableBody.innerHTML = savedDocs.map((doc, index) => `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${doc.name}</td>
-                            <td><a href="${doc.link}" target="_blank" style="color:var(--gov-orange); font-weight:bold;">View/Download</a></td>
-                        </tr>
-                    `).join('');
-                }
-            }
+        const firebaseConfig = {
+            apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
+            authDomain: "ecogrampanchayatmandur.firebaseapp.com",
+            projectId: "ecogrampanchayatmandur",
+            storageBucket: "ecogrampanchayatmandur.firebasestorage.app",
+            messagingSenderId: "474255490054",
+            appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
         };
 
-        function initSlider() {
-            const container = document.getElementById('hero-slider');
-            const slides = JSON.parse(localStorage.getItem('gp_banner_slides')) || [];
-            
-            // If local storage has slides, use them. 
-            // Note: Currently code prepends. If you want ONLY dynamic slides, we would clear container first.
-            // Keeping "prepend" as per your existing logic to allow mixed mode if desired.
-            if(slides.length > 0) {
-                const overlay = container.querySelector('.hero-overlay').outerHTML;
-                // Optional: Clear existing static slide if dynamic ones exist to avoid mixing
-                // container.innerHTML = overlay; 
-                
-                slides.forEach((url, i) => {
-                    const div = document.createElement('div');
-                    // If we have dynamic slides, make the first one active immediately
-                    div.className = i === 0 ? 'hero-slide active' : 'hero-slide';
-                    div.style.backgroundImage = `url('${url}')`;
-                    container.prepend(div);
-                });
-            }
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-            let current = 0;
-            const divs = document.querySelectorAll('.hero-slide');
-            const timing = (localStorage.getItem('gp_slider_timing') || 3) * 1000;
-            
-            if(divs.length > 1) {
-                setInterval(() => {
-                    divs[current].classList.remove('active');
-                    current = (current + 1) % divs.length;
-                    divs[current].classList.add('active');
-                }, timing);
+        // SLIDER LOGIC
+        async function loadBanners() {
+            const container = document.getElementById('hero-slider');
+            const q = query(collection(db, "banners"), orderBy("createdAt", "desc"));
+            const snap = await getDocs(q);
+
+            if (!snap.empty) {
+                // Remove default slide
+                const defaultSlide = container.querySelector('.slide');
+                if (defaultSlide) defaultSlide.remove();
+
+                let slides = [];
+                snap.forEach(doc => {
+                    const div = document.createElement('div');
+                    div.className = 'slide';
+                    div.style.backgroundImage = `url('${doc.data().url}')`;
+                    container.insertBefore(div, container.firstChild); // Insert before overlay
+                    slides.push(div);
+                });
+
+                // Auto Rotate
+                let current = 0;
+                slides[0].classList.add('active');
+                if (slides.length > 1) {
+                    setInterval(() => {
+                        slides[current].classList.remove('active');
+                        current = (current + 1) % slides.length;
+                        slides[current].classList.add('active');
+                    }, 4000); // 4 Seconds
+                }
             }
         }
+
+        loadBanners();
+
+        // UI Helpers
+        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
+        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
     </script>
 </body>
 </html>
