@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Gram Panchayat Nandgaon</title>
+    <title>Admin Dashboard | Gram Panchayat Mandur</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -65,16 +65,6 @@
             cursor: pointer;
             margin-top: 10px;
             font-weight: bold;
-        }
-
-        .btn-warning {
-            background-color: #f59e0b;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 5px;
         }
 
         .btn-danger {
@@ -157,18 +147,6 @@
                 animation: fadeIn 0.3s;
             }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: 0;
-            }
-        }
-
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -200,7 +178,6 @@
     <div id="login-screen">
         <div class="login-card">
             <h2>Official Login</h2>
-            <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Powered by Google Firebase</p>
             <input type="email" id="adminUser" class="login-input" placeholder="Email Address">
             <input type="password" id="adminPass" class="login-input" placeholder="Password">
             <button id="btnLogin" class="btn-primary">LOGIN SECURELY</button>
@@ -229,7 +206,7 @@
 
                 <div id="manage-home" class="view-section active">
                     <div class="admin-card">
-                        <h3>Home Slider Images</h3>
+                        <h3>Home Slider</h3>
                         <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 10px;">
                             <input type="text" id="bannerInput" class="form-control" placeholder="Image URL">
                             <button onclick="saveBannerSlide()" class="btn-primary" style="margin-top:0;">+ Add Slide</button>
@@ -239,151 +216,140 @@
                 </div>
 
                 <div id="manage-docs" class="view-section">
-                    <div class="admin-card" style="border-left: 5px solid var(--admin-accent);">
-                        <h3>RTI Officer Info</h3>
+                    <div class="admin-card">
+                        <h3>RTI Info</h3>
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                             <input type="text" id="rtiName" class="form-control" placeholder="Officer Name">
-                            <input type="text" id="rtiContact" class="form-control" placeholder="Contact Details">
+                            <input type="text" id="rtiContact" class="form-control" placeholder="Contact">
                         </div>
-                        <button id="btnSaveRti" class="btn-primary" style="width:auto;">Save RTI Info</button>
+                        <button id="btnSaveRti" class="btn-primary" style="width:auto;">Save RTI</button>
                     </div>
                 </div>
 
                 <div id="manage-admin" class="view-section">
-
-                    <div class="admin-card" style="border-left: 5px solid #3b82f6;">
-                        <h3>1. Elected Body (Sarpanch/Deputy)</h3>
+                    <div class="admin-card">
+                        <h3>1. Elected Body</h3>
                         <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr; gap:10px;">
-                            <input type="number" id="leadRank" class="form-control" placeholder="Rank (1=Sarpanch)">
+                            <input type="number" id="leadRank" class="form-control" placeholder="Rank">
                             <input type="text" id="leadName" class="form-control" placeholder="Name">
-                            <input type="text" id="leadRole" class="form-control" placeholder="Role (e.g. Sarpanch)">
+                            <input type="text" id="leadRole" class="form-control" placeholder="Role">
                         </div>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                            <input type="text" id="leadPhone" class="form-control" placeholder="Phone">
-                            <input type="text" id="leadPhoto" class="form-control" placeholder="Photo URL">
-                        </div>
+                        <input type="text" id="leadPhone" class="form-control" placeholder="Phone">
+                        <input type="text" id="leadPhoto" class="form-control" placeholder="Photo URL">
                         <button onclick="saveLeader()" class="btn-primary" style="width:auto;">Add Leader</button>
-                        <div id="listLeaders" style="margin-top:15px;"></div>
+                        <div id="listLeaders" style="margin-top:10px;"></div>
                     </div>
-
-                    <div class="admin-card" style="border-left: 5px solid #f59e0b;">
+                    <div class="admin-card">
                         <h3>2. Committee Members</h3>
                         <div style="display:grid; grid-template-columns: 1fr 0.5fr 1fr; gap:10px;">
                             <input type="text" id="memName" class="form-control" placeholder="Name">
-                            <input type="text" id="memWard" class="form-control" placeholder="Ward No.">
+                            <input type="text" id="memWard" class="form-control" placeholder="Ward">
                             <input type="text" id="memPhone" class="form-control" placeholder="Contact">
                         </div>
                         <button onclick="saveMember()" class="btn-primary" style="width:auto;">Add Member</button>
-                        <div id="listMembers" style="margin-top:15px;"></div>
+                        <div id="listMembers" style="margin-top:10px;"></div>
                     </div>
-
-                    <div class="admin-card" style="border-left: 5px solid #10b981;">
-                        <h3>3. Gram Panchayat Staff</h3>
+                    <div class="admin-card">
+                        <h3>3. Staff</h3>
                         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
                             <input type="text" id="staffName" class="form-control" placeholder="Name">
-                            <input type="text" id="staffRole" class="form-control" placeholder="Designation">
+                            <input type="text" id="staffRole" class="form-control" placeholder="Role">
                             <input type="text" id="staffPhone" class="form-control" placeholder="Phone">
                         </div>
                         <button onclick="saveStaff()" class="btn-primary" style="width:auto;">Add Staff</button>
-                        <div id="listStaff" style="margin-top:15px;"></div>
+                        <div id="listStaff" style="margin-top:10px;"></div>
                     </div>
-
-                    <div class="admin-card" style="border-left: 5px solid #e11d48;">
-                        <h3>4. Anganwadi Sevika</h3>
+                    <div class="admin-card">
+                        <h3>4. Anganwadi</h3>
                         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
                             <input type="text" id="angName" class="form-control" placeholder="Name">
-                            <select id="angRole" class="form-control">
-                                <option value="Sevika">Sevika</option>
-                                <option value="Helper">Helper</option>
-                            </select>
-                            <input type="text" id="angCenter" class="form-control" placeholder="Anganwadi Name/No">
+                            <select id="angRole" class="form-control"><option>Sevika</option><option>Helper</option></select>
+                            <input type="text" id="angCenter" class="form-control" placeholder="Center Name">
                         </div>
                         <input type="text" id="angPhone" class="form-control" placeholder="Phone">
-                        <button onclick="saveAng()" class="btn-primary" style="width:auto;">Add Anganwadi Staff</button>
-                        <div id="listAng" style="margin-top:15px;"></div>
+                        <button onclick="saveAng()" class="btn-primary" style="width:auto;">Add Anganwadi</button>
+                        <div id="listAng" style="margin-top:10px;"></div>
                     </div>
                 </div>
 
                 <div id="manage-services" class="view-section">
                     <div class="admin-card">
-                        <h3>Citizen Services</h3>
-                        <p>Services are currently static. You can add dynamic services here later.</p>
+                        <h3>Manage Citizen Services</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr; gap:10px;">
+                            <input type="number" id="svcRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="svcTitle" class="form-control" placeholder="Service Name">
+                            <input type="text" id="svcIcon" class="form-control" placeholder="Icon (e.g. fa-file)">
+                        </div>
+                        <input type="text" id="svcLink" class="form-control" placeholder="Link/URL (Optional)">
+                        <textarea id="svcDesc" class="form-control" placeholder="Description"></textarea>
+                        <button onclick="saveService()" class="btn-primary" style="width:auto;">Add Service</button>
+                        <div id="listServices" style="margin-top:15px;"></div>
                     </div>
                 </div>
 
                 <div id="manage-schemes" class="view-section">
                     <div class="admin-card">
-                        <h3>Manage Government Schemes</h3>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                            <input type="text" id="schTitle" class="form-control" placeholder="Scheme Name">
-                            <select id="schCat" class="form-control">
-                                <option value="Housing">Housing</option>
-                                <option value="Water">Water</option>
-                                <option value="Agriculture">Agriculture</option>
-                                <option value="Social">Social</option>
-                            </select>
-                        </div>
-                        <input type="text" id="schBenefit" class="form-control" placeholder="Benefit (e.g. ₹10,000)">
-                        <input type="text" id="schLink" class="form-control" placeholder="Application Link">
-                        <textarea id="schDesc" class="form-control" placeholder="Description"></textarea>
+                        <h3>Schemes</h3>
+                        <input type="text" id="schTitle" class="form-control" placeholder="Name">
+                        <input type="text" id="schCat" class="form-control" placeholder="Category">
+                        <input type="text" id="schBenefit" class="form-control" placeholder="Benefit">
+                        <input type="text" id="schLink" class="form-control" placeholder="Link">
+                        <textarea id="schDesc" class="form-control" placeholder="Desc"></textarea>
                         <button onclick="saveScheme()" class="btn-primary" style="width:auto;">Add Scheme</button>
-                        <div id="listSchemes" style="margin-top:15px;"></div>
+                        <div id="listSchemes" style="margin-top:10px;"></div>
                     </div>
                 </div>
 
                 <div id="manage-works" class="view-section">
                     <div class="admin-card">
-                        <h3>Development Works</h3>
+                        <h3>Works</h3>
                         <div style="display:grid; grid-template-columns: 0.5fr 2fr 1fr; gap:10px;">
-                            <input type="number" id="workRank" class="form-control" placeholder="Sort Order">
-                            <input type="text" id="workTitle" class="form-control" placeholder="Work Name">
-                            <select id="workStatus" class="form-control">
-                                <option value="Proposed">Proposed</option>
-                                <option value="Ongoing">Ongoing</option>
-                                <option value="Completed">Completed</option>
-                            </select>
+                            <input type="number" id="workRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="workTitle" class="form-control" placeholder="Title">
+                            <select id="workStatus" class="form-control"><option>Proposed</option><option>Ongoing</option><option>Completed</option></select>
                         </div>
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                            <input type="text" id="workEstCost" class="form-control" placeholder="Est. Cost">
-                            <input type="text" id="workExp" class="form-control" placeholder="Expenditure">
+                            <input type="text" id="workEstCost" class="form-control" placeholder="Cost">
+                            <input type="text" id="workExp" class="form-control" placeholder="Expense">
                         </div>
                         <div style="display:grid; grid-template-columns: 1fr 1fr 2fr; gap:10px;">
-                            <input type="text" id="workStart" class="form-control" placeholder="Start Date">
-                            <input type="text" id="workEnd" class="form-control" placeholder="End Date">
+                            <input type="text" id="workStart" class="form-control" placeholder="Start">
+                            <input type="text" id="workEnd" class="form-control" placeholder="End">
                             <input type="text" id="workPhoto" class="form-control" placeholder="Photo URL">
                         </div>
                         <button onclick="saveWork()" class="btn-primary" style="width:auto;">Add Work</button>
-                        <div id="listWorks" style="margin-top:15px;"></div>
+                        <div id="listWorks" style="margin-top:10px;"></div>
                     </div>
                 </div>
 
                 <div id="manage-gramsabha" class="view-section">
                     <div class="admin-card">
-                        <h3>Gram Sabha Meetings</h3>
+                        <h3>Gram Sabha</h3>
                         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                            <input type="text" id="gsTitle" class="form-control" placeholder="Meeting Title">
+                            <input type="text" id="gsTitle" class="form-control" placeholder="Title">
                             <input type="date" id="gsDate" class="form-control">
                             <input type="time" id="gsTime" class="form-control">
                         </div>
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                             <input type="text" id="gsVenue" class="form-control" placeholder="Venue">
-                            <input type="text" id="gsLink" class="form-control" placeholder="Notice PDF Link">
+                            <input type="text" id="gsLink" class="form-control" placeholder="PDF Link">
                         </div>
-                        <textarea id="gsAgenda" class="form-control" placeholder="Agenda Points"></textarea>
+                        <textarea id="gsAgenda" class="form-control" placeholder="Agenda"></textarea>
                         <button onclick="saveGS()" class="btn-primary" style="width:auto;">Add Meeting</button>
-                        <div id="listGS" style="margin-top:15px;"></div>
+                        <div id="listGS" style="margin-top:10px;"></div>
                     </div>
                 </div>
 
                 <div id="manage-gallery" class="view-section">
                     <div class="admin-card">
-                        <h3>Photo Gallery</h3>
+                        <h3>Gallery</h3>
                         <input type="text" id="galUrl" class="form-control" placeholder="Image URL">
                         <input type="text" id="galCaption" class="form-control" placeholder="Caption">
                         <button onclick="savePhoto()" class="btn-primary" style="width:auto;">Add Photo</button>
-                        <div id="adminGalleryList" style="margin-top:20px; display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:10px;"></div>
+                        <div id="adminGalleryList" style="margin-top:10px; display:grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap:10px;"></div>
                     </div>
                 </div>
+
             </div>
         </main>
     </div>
@@ -406,156 +372,76 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- AUTH ---
+        // AUTH
         const btnLogin = document.getElementById('btnLogin');
-        if (btnLogin) btnLogin.addEventListener('click', () => {
-            signInWithEmailAndPassword(auth, document.getElementById('adminUser').value, document.getElementById('adminPass').value)
-                .catch(e => alert(e.message));
-        });
+        if (btnLogin) btnLogin.addEventListener('click', () => { signInWithEmailAndPassword(auth, document.getElementById('adminUser').value, document.getElementById('adminPass').value).catch(e => alert(e.message)); });
         document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => location.reload()));
+        onAuthStateChanged(auth, (user) => { if (user) { document.getElementById('login-screen').style.display = 'none'; document.getElementById('dashboard-container').style.display = 'flex'; loadAll(); } else { document.getElementById('login-screen').style.display = 'flex'; document.getElementById('dashboard-container').style.display = 'none'; } });
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard-container').style.display = 'flex';
-                loadAllData();
+        function loadAll() {
+            loadList('banners', 'bannerList', 'url', true);
+            loadList('schemes', 'listSchemes', 'title');
+            loadList('works', 'listWorks', 'title');
+            loadList('gramsabha', 'listGS', 'title');
+            loadList('leaders', 'listLeaders', 'name');
+            loadList('members', 'listMembers', 'name');
+            loadList('staff', 'listStaff', 'name');
+            loadList('anganwadi', 'listAng', 'name');
+            loadList('services', 'listServices', 'title'); // NEW
+            loadList('gallery', 'adminGalleryList', 'url', true);
+            loadRti();
+        }
+
+        // --- GENERIC HELPERS ---
+        async function loadList(colName, divId, displayField, isImage = false) {
+            const div = document.getElementById(divId); if (!div) return;
+            const q = query(collection(db, colName), orderBy("createdAt", "desc")); // Simplified sort for now
+            const snap = await getDocs(q);
+            let html = '';
+            if (isImage) {
+                html = `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:10px;">`;
+                snap.forEach(d => { html += `<div><img src="${d.data()[displayField]}" style="width:100%;height:60px;object-fit:cover;"><button onclick="delDoc('${colName}','${d.id}','${divId}')" class="btn-danger" style="width:100%">Del</button></div>`; });
+                html += `</div>`;
             } else {
-                document.getElementById('login-screen').style.display = 'flex';
-                document.getElementById('dashboard-container').style.display = 'none';
+                html = `<table class="data-table">`;
+                snap.forEach(d => { html += `<tr><td>${d.data()[displayField]}</td><td><button onclick="delDoc('${colName}','${d.id}','${divId}')" class="btn-danger">Del</button></td></tr>`; });
+                html += `</table>`;
             }
-        });
-
-        function loadAllData() {
-            loadCloudBanners();
-            loadCloudRti();
-            loadCloudSchemes();
-            loadCloudWorks();
-            loadCloudGS();
-            loadCloudLeaders();
-            loadCloudMembers(); // NEW
-            loadCloudStaff();   // NEW
-            loadCloudAng();     // NEW
-            loadCloudGallery();
+            div.innerHTML = html;
         }
 
-        // --- 1. HOME BANNERS ---
-        window.saveBannerSlide = async function () {
-            try { await addDoc(collection(db, "banners"), { url: document.getElementById('bannerInput').value, createdAt: Date.now() }); alert("Added!"); loadCloudBanners(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudBanners = async function () {
-            const list = document.getElementById('bannerList'); if (!list) return;
-            const snap = await getDocs(query(collection(db, "banners"), orderBy("createdAt", "desc")));
-            let html = ''; snap.forEach(d => { html += `<div style="border:1px solid #ddd; padding:5px;"><img src="${d.data().url}" style="height:50px;"><button onclick="deleteBanner('${d.id}')" class="btn-danger">Del</button></div>`; }); list.innerHTML = html;
-        }
-        window.deleteBanner = async function (id) { if (confirm("Delete?")) { await deleteDoc(doc(db, "banners", id)); loadCloudBanners(); } }
+        window.delDoc = async function (col, id, divId) { if (confirm("Delete?")) { await deleteDoc(doc(db, col, id)); loadAll(); } }
 
-        // --- 2. RTI ---
-        if (document.getElementById('btnSaveRti')) document.getElementById('btnSaveRti').addEventListener('click', async () => {
-            try { await setDoc(doc(db, "content", "rti"), { officerName: document.getElementById('rtiName').value, officerContact: document.getElementById('rtiContact').value }); alert("Saved!"); } catch (e) { alert(e.message); }
-        });
-        async function loadCloudRti() {
-            const snap = await getDoc(doc(db, "content", "rti"));
-            if (snap.exists()) { document.getElementById('rtiName').value = snap.data().officerName; document.getElementById('rtiContact').value = snap.data().officerContact; }
-        }
+        // --- SPECIFIC SAVES ---
+        window.saveBannerSlide = async () => { await addDoc(collection(db, "banners"), { url: document.getElementById('bannerInput').value, createdAt: Date.now() }); loadAll(); }
+        window.saveScheme = async () => { await addDoc(collection(db, "schemes"), { title: document.getElementById('schTitle').value, category: document.getElementById('schCat').value, benefit: document.getElementById('schBenefit').value, link: document.getElementById('schLink').value, desc: document.getElementById('schDesc').value, createdAt: Date.now() }); loadAll(); }
+        window.saveWork = async () => { await addDoc(collection(db, "works"), { title: document.getElementById('workTitle').value, status: document.getElementById('workStatus').value, cost: document.getElementById('workEstCost').value, exp: document.getElementById('workExp').value, start: document.getElementById('workStart').value, end: document.getElementById('workEnd').value, photo: document.getElementById('workPhoto').value, createdAt: Date.now(), rank: document.getElementById('workRank').value }); loadAll(); }
+        window.saveGS = async () => { await addDoc(collection(db, "gramsabha"), { title: document.getElementById('gsTitle').value, date: document.getElementById('gsDate').value, time: document.getElementById('gsTime').value, venue: document.getElementById('gsVenue').value, link: document.getElementById('gsLink').value, agenda: document.getElementById('gsAgenda').value, createdAt: Date.now() }); loadAll(); }
+        window.saveLeader = async () => { await addDoc(collection(db, "leaders"), { rank: document.getElementById('leadRank').value, name: document.getElementById('leadName').value, role: document.getElementById('leadRole').value, phone: document.getElementById('leadPhone').value, photo: document.getElementById('leadPhoto').value, createdAt: Date.now() }); loadAll(); }
+        window.saveMember = async () => { await addDoc(collection(db, "members"), { name: document.getElementById('memName').value, ward: document.getElementById('memWard').value, phone: document.getElementById('memPhone').value, createdAt: Date.now() }); loadAll(); }
+        window.saveStaff = async () => { await addDoc(collection(db, "staff"), { name: document.getElementById('staffName').value, role: document.getElementById('staffRole').value, phone: document.getElementById('staffPhone').value, createdAt: Date.now() }); loadAll(); }
+        window.saveAng = async () => { await addDoc(collection(db, "anganwadi"), { name: document.getElementById('angName').value, role: document.getElementById('angRole').value, center: document.getElementById('angCenter').value, phone: document.getElementById('angPhone').value, createdAt: Date.now() }); loadAll(); }
+        window.savePhoto = async () => { await addDoc(collection(db, "gallery"), { url: document.getElementById('galUrl').value, caption: document.getElementById('galCaption').value, createdAt: Date.now() }); loadAll(); }
 
-        // --- 3. SCHEMES ---
-        window.saveScheme = async function () {
-            try { await addDoc(collection(db, "schemes"), { title: document.getElementById('schTitle').value, category: document.getElementById('schCat').value, benefit: document.getElementById('schBenefit').value, link: document.getElementById('schLink').value, desc: document.getElementById('schDesc').value, createdAt: Date.now() }); alert("Added!"); loadCloudSchemes(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudSchemes = async function () {
-            const snap = await getDocs(query(collection(db, "schemes"), orderBy("createdAt", "desc")));
-            let html = '<table class="data-table"><tr><th>Scheme</th><th>Action</th></tr>';
-            snap.forEach(d => { html += `<tr><td>${d.data().title}</td><td><button onclick="deleteScheme('${d.id}')" class="btn-danger">Del</button></td></tr>`; });
-            document.getElementById('listSchemes').innerHTML = html + '</table>';
-        }
-        window.deleteScheme = async function (id) { if (confirm("Delete?")) { await deleteDoc(doc(db, "schemes", id)); loadCloudSchemes(); } }
-
-        // --- 4. WORKS ---
-        window.saveWork = async function () {
-            try { await addDoc(collection(db, "works"), { title: document.getElementById('workTitle').value, status: document.getElementById('workStatus').value, cost: document.getElementById('workEstCost').value, exp: document.getElementById('workExp').value, start: document.getElementById('workStart').value, end: document.getElementById('workEnd').value, photo: document.getElementById('workPhoto').value, createdAt: Date.now(), rank: parseInt(document.getElementById('workRank').value) || 99 }); alert("Added!"); loadCloudWorks(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudWorks = async function () {
-            const snap = await getDocs(query(collection(db, "works"), orderBy("createdAt", "desc")));
-            let html = '<table class="data-table"><tr><th>Work</th><th>Status</th><th>Act</th></tr>';
-            snap.forEach(d => { html += `<tr><td>${d.data().title}</td><td>${d.data().status}</td><td><button onclick="deleteWork('${d.id}')" class="btn-danger">Del</button></td></tr>`; });
-            document.getElementById('listWorks').innerHTML = html + '</table>';
-        }
-        window.deleteWork = async function (id) { if (confirm("Delete?")) { await deleteDoc(doc(db, "works", id)); loadCloudWorks(); } }
-
-        // --- 5. GRAM SABHA ---
-        window.saveGS = async function () {
-            try { await addDoc(collection(db, "gramsabha"), { title: document.getElementById('gsTitle').value, date: document.getElementById('gsDate').value, time: document.getElementById('gsTime').value, venue: document.getElementById('gsVenue').value, link: document.getElementById('gsLink').value, agenda: document.getElementById('gsAgenda').value, createdAt: Date.now() }); alert("Added!"); loadCloudGS(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudGS = async function () {
-            const snap = await getDocs(query(collection(db, "gramsabha"), orderBy("createdAt", "desc")));
-            let html = '<table class="data-table"><tr><th>Date</th><th>Title</th><th>Act</th></tr>';
-            snap.forEach(d => { html += `<tr><td>${d.data().date}</td><td>${d.data().title}</td><td><button onclick="deleteGS('${d.id}')" class="btn-danger">Del</button></td></tr>`; });
-            document.getElementById('listGS').innerHTML = html + '</table>';
-        }
-        window.deleteGS = async function (id) { if (confirm("Delete?")) { await deleteDoc(doc(db, "gramsabha", id)); loadCloudGS(); } }
-
-        // --- 6. ADMINISTRATION LOGIC (FULL) ---
-
-        // 6A. LEADERS
-        window.saveLeader = async function () {
-            try { await addDoc(collection(db, "leaders"), { rank: parseInt(document.getElementById('leadRank').value) || 99, name: document.getElementById('leadName').value, role: document.getElementById('leadRole').value, phone: document.getElementById('leadPhone').value, photo: document.getElementById('leadPhoto').value }); alert("Added!"); loadCloudLeaders(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudLeaders = async function () {
-            const snap = await getDocs(query(collection(db, "leaders"), orderBy("rank", "asc")));
-            let html = '<table class="data-table"><tr><th>Name</th><th>Role</th><th>Act</th></tr>';
-            snap.forEach(d => { html += `<tr><td>${d.data().name}</td><td>${d.data().role}</td><td><button onclick="deleteDoc(doc(db,'leaders','${d.id}')).then(loadCloudLeaders)" class="btn-danger">Del</button></td></tr>`; });
-            document.getElementById('listLeaders').innerHTML = html + '</table>';
+        // SERVICES SAVE (NEW)
+        window.saveService = async () => {
+            await addDoc(collection(db, "services"), {
+                rank: document.getElementById('svcRank').value,
+                title: document.getElementById('svcTitle').value,
+                icon: document.getElementById('svcIcon').value,
+                link: document.getElementById('svcLink').value,
+                desc: document.getElementById('svcDesc').value,
+                createdAt: Date.now()
+            });
+            alert("Service Added!");
+            loadAll();
         }
 
-        // 6B. MEMBERS
-        window.saveMember = async function () {
-            try { await addDoc(collection(db, "members"), { name: document.getElementById('memName').value, ward: document.getElementById('memWard').value, phone: document.getElementById('memPhone').value, rank: 99 }); alert("Added!"); loadCloudMembers(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudMembers = async function () {
-            const snap = await getDocs(collection(db, "members"));
-            let html = '<table class="data-table"><tr><th>Name</th><th>Ward</th><th>Act</th></tr>';
-            snap.forEach(d => { html += `<tr><td>${d.data().name}</td><td>${d.data().ward}</td><td><button onclick="deleteDoc(doc(db,'members','${d.id}')).then(loadCloudMembers)" class="btn-danger">Del</button></td></tr>`; });
-            document.getElementById('listMembers').innerHTML = html + '</table>';
-        }
+        // RTI
+        if (document.getElementById('btnSaveRti')) document.getElementById('btnSaveRti').addEventListener('click', async () => { await setDoc(doc(db, "content", "rti"), { officerName: document.getElementById('rtiName').value, officerContact: document.getElementById('rtiContact').value }); alert("RTI Saved!"); });
+        async function loadRti() { const s = await getDoc(doc(db, "content", "rti")); if (s.exists()) { document.getElementById('rtiName').value = s.data().officerName; document.getElementById('rtiContact').value = s.data().officerContact; } }
 
-        // 6C. STAFF
-        window.saveStaff = async function () {
-            try { await addDoc(collection(db, "staff"), { name: document.getElementById('staffName').value, role: document.getElementById('staffRole').value, phone: document.getElementById('staffPhone').value, rank: 99 }); alert("Added!"); loadCloudStaff(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudStaff = async function () {
-            const snap = await getDocs(collection(db, "staff"));
-            let html = '<table class="data-table"><tr><th>Name</th><th>Role</th><th>Act</th></tr>';
-            snap.forEach(d => { html += `<tr><td>${d.data().name}</td><td>${d.data().role}</td><td><button onclick="deleteDoc(doc(db,'staff','${d.id}')).then(loadCloudStaff)" class="btn-danger">Del</button></td></tr>`; });
-            document.getElementById('listStaff').innerHTML = html + '</table>';
-        }
-
-        // 6D. ANGANWADI
-        window.saveAng = async function () {
-            try { await addDoc(collection(db, "anganwadi"), { name: document.getElementById('angName').value, role: document.getElementById('angRole').value, center: document.getElementById('angCenter').value, phone: document.getElementById('angPhone').value, rank: 99 }); alert("Added!"); loadCloudAng(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudAng = async function () {
-            const snap = await getDocs(collection(db, "anganwadi"));
-            let html = '<table class="data-table"><tr><th>Name</th><th>Role</th><th>Act</th></tr>';
-            snap.forEach(d => { html += `<tr><td>${d.data().name}</td><td>${d.data().role}</td><td><button onclick="deleteDoc(doc(db,'anganwadi','${d.id}')).then(loadCloudAng)" class="btn-danger">Del</button></td></tr>`; });
-            document.getElementById('listAng').innerHTML = html + '</table>';
-        }
-
-        // --- 7. GALLERY ---
-        window.savePhoto = async function () {
-            try { await addDoc(collection(db, "gallery"), { url: document.getElementById('galUrl').value, caption: document.getElementById('galCaption').value, createdAt: Date.now() }); alert("Added!"); loadCloudGallery(); } catch (e) { alert(e.message); }
-        }
-        window.loadCloudGallery = async function () {
-            const snap = await getDocs(query(collection(db, "gallery"), orderBy("createdAt", "desc")));
-            let html = ''; snap.forEach(d => { html += `<div style="border:1px solid #ddd; padding:5px;"><img src="${d.data().url}" style="height:50px;"><button onclick="deleteDoc(doc(db,'gallery','${d.id}')).then(loadCloudGallery)" class="btn-danger">Del</button></div>`; });
-            document.getElementById('adminGalleryList').innerHTML = html;
-        }
-
-        // Global Delete Helper
-        window.deleteDoc = deleteDoc;
-        window.doc = doc;
-        window.db = db;
-
-        // Navigation Helper
+        // TABS
         window.switchTab = function (id, el) {
             document.querySelectorAll('.view-section').forEach(x => x.classList.remove('active'));
             document.getElementById(id).classList.add('active');
