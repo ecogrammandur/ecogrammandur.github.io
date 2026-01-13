@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTI | GRAM PANCHAYAT NANDGAON</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- CORE VARIABLES (Matched from Index) --- */
+        :root {
+            --gov-blue: #003366;
+            --gov-orange: #ff9933;
+            --text-light: #ffffff;
+            --header-height-desktop: 175px;
+        }
+
+        body { 
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #f4f6f9; 
+            padding-top: var(--header-height-desktop); 
+        }
+
+        /* --- HEADER & BRANDING --- */
+        .gov-header-group {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1000; background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
+        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
+        .brand-info { display: flex; align-items: center; gap: 15px; }
+        
+        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
+
+        /* --- NAVIGATION --- */
+        .main-nav { background-color: var(--gov-blue); }
+        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
+        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
+        .btn-login { background: #dc3545 !important; }
+
+        /* Mobile specific elements */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
+
+        @media (max-width: 992px) {
+            body { padding-top: 100px; }
+            .top-strip, .landmark-desktop { display: none; }
+            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
+            .main-brand img { height: 50px; }
+            #txt-title { font-size: 1.2rem; }
+            
+            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
+            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
+            .main-nav.active { left: 0; }
+            .main-nav ul { flex-direction: column; }
+            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
+        }
+
+        /* --- Page Specific Styles --- */
+        .rti-container { max-width: 1000px; margin: 50px auto; padding: 0 20px; line-height: 1.6; }
+        .rti-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px; border-top: 4px solid var(--gov-orange); }
+        .officer-box { background: #f9f9f9; padding: 20px; border-left: 5px solid var(--gov-blue); margin-top: 20px; }
+        h2 { color: var(--gov-blue); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .rti-list { list-style: none; padding: 0; }
+        .rti-list li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px; }
+        .rti-list i { color: var(--gov-orange); margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+    <header class="gov-header-group">
+        <div class="top-strip">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> | 
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
+                </span>
+            </div>
+        </div>
+        <div class="main-brand">
+            <div class="brand-info">
+                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
+                <div style="text-align: left;">
+                    <h1 id="txt-title">GRAM PANCHAYAT NANDGAON</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+        </div>
+        <nav class="main-nav" id="sidebarMenu">
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
+                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
+                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
+                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
+                <li><a href="rti.html" class="active" id="nav-rti" onclick="closeMenu()">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
+                <li style="margin-left: auto;">
+                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
+                        <span id="btn-login-txt">Login</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="rti-container">
+        <h1 id="rti-main-title" style="text-align: center; color: var(--gov-blue); margin-bottom: 40px;">Right to Information (RTI)</h1>
+
+        <div class="rti-card">
+            <h2 id="rti-sec-1">RTI Act 2005</h2>
+            <p id="rti-text-1">The Right to Information Act 2005 mandates timely response to citizen requests for government information. It is an initiative by the Department of Personnel and Training, Ministry of Personnel, Public Grievances and Pensions to provide a– RTI Portal Gateway to the citizens.</p>
+        </div>
+
+        <div class="rti-card">
+            <h2 id="rti-sec-2">Public Information Officer (PIO)</h2>
+            <p id="rti-text-2">For any information related to Gram Panchayat Nandgaon, citizens can contact the following designated officer:</p>
+            
+            <div class="officer-box">
+                <p><strong><i class="fas fa-user-tie"></i> <span id="display-rti-label">Name</span>:</strong> <span id="rti-officer-name">Loading...</span></p>
+                <p><strong><i class="fas fa-envelope"></i> <span id="display-rti-contact-label">Contact/Email</span>:</strong> <span id="rti-officer-contact">Loading...</span></p>
+            </div>
+        </div>
+
+        <div class="rti-card">
+            <h2 id="rti-sec-3">How to Apply</h2>
+            <ul class="rti-list">
+                <li><i class="fas fa-check-circle"></i> <span id="step-1">Write your application on a plain paper in English or Marathi.</span></li>
+                <li><i class="fas fa-check-circle"></i> <span id="step-2">Address it to the Public Information Officer mentioned above.</span></li>
+                <li><i class="fas fa-check-circle"></i> <span id="step-3">Attach the prescribed fee (Court Fee Stamp or Demand Draft).</span></li>
+                <li><i class="fas fa-check-circle"></i> <span id="step-4">Submit it by post or in person at the Gram Panchayat office.</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="gov-footer">
+        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function openMenu() {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+        }
+        function closeMenu() {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+        }
+
+        const translations = {
+            en: {
+                helpline: "Help Line",
+                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
+                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
+                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
+                
+                mainTitle: "Right to Information (RTI)",
+                sec1: "RTI Act 2005",
+                text1: "The Right to Information Act 2005 mandates timely response to citizen requests for government information. It is an initiative to provide transparency and accountability in the working of every public authority.",
+                sec2: "Public Information Officer (PIO)",
+                text2: "For any information related to Gram Panchayat Nandgaon, citizens can contact the following designated officer:",
+                lblOfficerName: "Name", lblOfficerContact: "Contact/Email",
+                sec3: "How to Apply",
+                step1: "Write your application on a plain paper in English or Marathi.",
+                step2: "Address it to the Public Information Officer mentioned above.",
+                step3: "Attach the prescribed fee (Court Fee Stamp or Demand Draft).",
+                step4: "Submit it by post or in person at the Gram Panchayat office.",
+                
+                footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
+            },
+            mr: {
+                helpline: "हेल्पलाइन",
+                title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
+                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
+                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+                
+                mainTitle: "माहितीचा अधिकार (RTI)",
+                sec1: "माहिती अधिकार अधिनियम २००५",
+                text1: "माहिती अधिकार अधिनियम २००५ अंतर्गत नागरिकांना सरकारी कामकाजाची माहिती मिळवण्याचा अधिकार आहे. हा कायदा प्रशासनात पारदर्शकता आणि उत्तरदायित्व आणण्यासाठी आहे.",
+                sec2: "जन माहिती अधिकारी (PIO)",
+                text2: "ग्रामपंचायत संबंधित कोणत्याही माहितीसाठी नागरिक खालील नियुक्त अधिकाऱ्याशी संपर्क साधू शकतात:",
+                lblOfficerName: "नाव", lblOfficerContact: "संपर्क/ईमेल",
+                sec3: "अर्ज कसा करावा",
+                step1: "आपला अर्ज साध्या कागदावर मराठी किंवा इंग्रजी भाषेत लिहा.",
+                step2: "हा अर्ज वर नमूद केलेल्या जन माहिती अधिकाऱ्यास संबोधित करा.",
+                step3: "विहित शुल्क (कोर्ट फी स्टॅम्प किंवा डिमांड ड्राफ्ट) जोडा.",
+                step4: "अर्ज पोस्टाने किंवा प्रत्यक्ष ग्रामपंचायत कार्यालयात जमा करा.",
+                
+                footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
+            }
+        };
+
+        function setLanguage(lang) {
+            const t = translations[lang];
+            
+            // Header
+            document.getElementById('txt-helpline').innerText = t.helpline;
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            
+            // Nav
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-about').innerText = t.navAbout;
+            document.getElementById('nav-admin').innerText = t.navAdmin;
+            document.getElementById('nav-services').innerText = t.navServices;
+            document.getElementById('nav-schemes').innerText = t.navSchemes;
+            document.getElementById('nav-works').innerText = t.navWorks;
+            document.getElementById('nav-gramsabha').innerText = t.navGram;
+            document.getElementById('nav-gallery').innerText = t.navGallery;
+            document.getElementById('nav-grievance').innerText = t.navGrievance;
+            document.getElementById('nav-rti').innerText = t.navRTI;
+            document.getElementById('nav-contact').innerText = t.navContact;
+            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            
+            // Page Content
+            document.getElementById('rti-main-title').innerText = t.mainTitle;
+            
+            document.getElementById('rti-sec-1').innerText = t.sec1;
+            document.getElementById('rti-text-1').innerText = t.text1;
+            
+            document.getElementById('rti-sec-2').innerText = t.sec2;
+            document.getElementById('rti-text-2').innerText = t.text2;
+            document.getElementById('display-rti-label').innerText = t.lblOfficerName;
+            document.getElementById('display-rti-contact-label').innerText = t.lblOfficerContact;
+            
+            document.getElementById('rti-sec-3').innerText = t.sec3;
+            document.getElementById('step-1').innerText = t.step1;
+            document.getElementById('step-2').innerText = t.step2;
+            document.getElementById('step-3').innerText = t.step3;
+            document.getElementById('step-4').innerText = t.step4;
+            
+            // Footer
+            document.getElementById('txt-footer').innerText = t.footer;
+            
+            localStorage.setItem('gp_lang_pref', lang);
+        }
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
+            setLanguage(savedLang);
+
+            // Load Admin Data for RTI Officer
+            const rtiData = JSON.parse(localStorage.getItem('gp_rti_data')) || {name: 'Not Assigned', contact: 'Contact Office'};
+            document.getElementById('rti-officer-name').innerText = rtiData.name;
+            document.getElementById('rti-officer-contact').innerText = rtiData.contact;
+        };
+    </script>
+</body>
+</html>

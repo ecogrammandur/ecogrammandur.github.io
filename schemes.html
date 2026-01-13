@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schemes | Gram Panchayat Nandgaon</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- CORE VARIABLES (Matched from Index) --- */
+        :root {
+            --gov-blue: #003366;
+            --gov-orange: #ff9933;
+            --text-light: #ffffff;
+            --header-height-desktop: 175px;
+        }
+
+        body { 
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #f4f6f9; 
+            padding-top: var(--header-height-desktop); 
+        }
+
+        /* --- HEADER & BRANDING --- */
+        .gov-header-group {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1000; background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
+        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
+        .brand-info { display: flex; align-items: center; gap: 15px; }
+        
+        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
+
+        /* --- NAVIGATION --- */
+        .main-nav { background-color: var(--gov-blue); }
+        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
+        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
+        .btn-login { background: #dc3545 !important; }
+
+        /* Mobile specific elements */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
+
+        @media (max-width: 992px) {
+            body { padding-top: 100px; }
+            .top-strip, .landmark-desktop { display: none; }
+            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
+            .main-brand img { height: 50px; }
+            #txt-title { font-size: 1.2rem; }
+            
+            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
+            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
+            .main-nav.active { left: 0; }
+            .main-nav ul { flex-direction: column; }
+            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+    <header class="gov-header-group">
+        <div class="top-strip">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> | 
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
+                </span>
+            </div>
+        </div>
+        <div class="main-brand">
+            <div class="brand-info">
+                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
+                <div style="text-align: left;">
+                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+        </div>
+        <nav class="main-nav" id="sidebarMenu">
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
+                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
+                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
+                <li><a href="schemes.html" class="active" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
+                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
+                <li style="margin-left: auto;">
+                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
+                        <span id="btn-login-txt">Login</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+
+        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px;">
+            Government Schemes
+        </h2>
+        
+        <p id="page-desc" style="margin-bottom: 30px; color: #666;">
+            Information about Central and State government welfare schemes available for the citizens of Nandgaon.
+        </p>
+
+        <div id="dynamic-scheme-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <p>Loading schemes...</p>
+        </div>
+
+    </main>
+
+    <footer class="gov-footer">
+        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function openMenu() {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+        }
+        function closeMenu() {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+        }
+
+        const translations = {
+            en: {
+                helpline: "Help Line",
+                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
+                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
+                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
+                
+                pageTitle: "Government Schemes",
+                pageDesc: "Information about Central and State government welfare schemes available for the citizens of Nandgaon.",
+                
+                footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
+            },
+            mr: {
+                helpline: "हेल्पलाइन",
+                title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
+                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
+                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+                
+                pageTitle: "शासकीय योजना",
+                pageDesc: "नांदगावच्या नागरिकांसाठी उपलब्ध केंद्र आणि राज्य सरकारच्या कल्याणकारी योजनांची माहिती.",
+                
+                footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
+            }
+        };
+
+        function setLanguage(lang) {
+            const t = translations[lang];
+            
+            // Header
+            document.getElementById('txt-helpline').innerText = t.helpline;
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            
+            // Nav
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-about').innerText = t.navAbout;
+            document.getElementById('nav-admin').innerText = t.navAdmin;
+            document.getElementById('nav-services').innerText = t.navServices;
+            document.getElementById('nav-schemes').innerText = t.navSchemes;
+            document.getElementById('nav-works').innerText = t.navWorks;
+            document.getElementById('nav-gramsabha').innerText = t.navGram;
+            document.getElementById('nav-gallery').innerText = t.navGallery;
+            document.getElementById('nav-grievance').innerText = t.navGrievance;
+            document.getElementById('nav-rti').innerText = t.navRTI;
+            document.getElementById('nav-contact').innerText = t.navContact;
+            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            
+            // Page Content
+            document.getElementById('page-title').innerText = t.pageTitle;
+            document.getElementById('page-desc').innerText = t.pageDesc;
+            
+            // Footer
+            document.getElementById('txt-footer').innerText = t.footer;
+            
+            localStorage.setItem('gp_lang_pref', lang);
+        }
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
+            setLanguage(savedLang);
+
+            // Load Dynamic Schemes from Admin Panel
+            const container = document.getElementById('dynamic-scheme-container');
+            let schemes = JSON.parse(localStorage.getItem('gp_schemes_data')) || [];
+
+            if (schemes.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #777;">No schemes posted yet. Please check back later.</p>';
+                return;
+            }
+
+            // Sort by Rank
+            schemes.sort((a, b) => (a.rank || 99) - (b.rank || 99));
+
+            let html = '';
+            schemes.forEach(scheme => {
+                // Logic for Link Button
+                const linkHtml = scheme.link 
+                    ? `<a href="${scheme.link}" target="_blank" style="background:var(--gov-blue); color:white; padding:8px 15px; border-radius:4px; text-decoration:none; font-size:0.9rem; display:inline-block; margin-top:10px;">View Details / Apply</a>` 
+                    : `<a href="contact.html" style="background:#ddd; color:#333; padding:8px 15px; border-radius:4px; text-decoration:none; font-size:0.9rem; display:inline-block; margin-top:10px;">Contact Office</a>`;
+
+                html += `
+                <div class="scheme-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--gov-orange); display:flex; flex-direction:column; align-items:flex-start;">
+                    <span style="background: #eef2ff; color: var(--gov-blue); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">${scheme.category}</span>
+                    <h3 style="margin: 15px 0 10px; color: var(--gov-blue);">${scheme.title}</h3>
+                    <p style="color: #555; margin-bottom: 15px; line-height: 1.6; flex-grow:1;">${scheme.desc}</p>
+                    <div style="background: #fff8e1; padding: 10px; border-radius: 5px; color: #d35400; font-weight: bold; width:100%; margin-bottom:10px;">
+                        <i class="fas fa-gift"></i> Benefit: ${scheme.benefit}
+                    </div>
+                    ${linkHtml}
+                </div>`;
+            });
+            container.innerHTML = html;
+        };
+    </script>
+
+</body>
+</html>

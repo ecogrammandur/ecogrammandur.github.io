@@ -1,0 +1,512 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Gram Panchayat Nandgaon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --admin-dark: #1e293b; --admin-blue: #0f172a; --admin-accent: #3b82f6; --bg-light: #f1f5f9; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-light); height: 100vh; overflow: hidden; }
+        
+        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #003061 0%, #001f3f 100%); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+        .login-card { background: white; padding: 40px; width: 400px; border-radius: 12px; text-align: center; }
+        .login-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; }
+        .btn-primary { background-color: var(--admin-accent); color: white; border: none; padding: 12px 20px; border-radius: 6px; width: 100%; cursor: pointer; margin-top: 10px; font-weight: bold;}
+        .btn-warning { background-color: #f59e0b; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        
+        #dashboard-container { display: none; height: 100vh; display: flex; }
+        .sidebar { width: 260px; background-color: var(--admin-dark); color: white; display: flex; flex-direction: column; }
+        .menu { list-style: none; padding: 20px 0; }
+        .menu li a { display: flex; align-items: center; padding: 15px 25px; color: #94a3b8; text-decoration: none; cursor: pointer; transition: 0.3s; }
+        .menu li a.active, .menu li a:hover { background: #334155; color: white; border-left: 4px solid var(--admin-accent); }
+        .main-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+        .page-content { padding: 30px; }
+        .admin-card { background: white; border-radius: 10px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 15px; }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: 0; } }
+        
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .data-table th, .data-table td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+        .data-table th { background-color: #f8fafc; color: #64748b; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>Official Login</h2>
+            <input type="text" id="adminUser" class="login-input" placeholder="Username (admin)">
+            <input type="password" id="adminPass" class="login-input" placeholder="Password (admin123)">
+            <button onclick="attemptLogin()" class="btn-primary">ACCESS DASHBOARD</button>
+        </div>
+    </div>
+
+    <div id="dashboard-container">
+        <nav class="sidebar">
+            <h3 style="padding:20px; border-bottom:1px solid #334155;">GP ADMIN</h3>
+            <ul class="menu">
+                <li><a onclick="switchTab('manage-home', this)" class="active">Home Page</a></li>
+                <li><a onclick="switchTab('manage-docs', this)">Documents & RTI</a></li>
+                <li><a onclick="switchTab('manage-admin', this)">Administration</a></li>
+                <li><a onclick="switchTab('manage-services', this)">Services</a></li>
+                <li><a onclick="switchTab('manage-schemes', this)">Schemes</a></li>
+                <li><a onclick="switchTab('manage-works', this)">Works</a></li>
+                <li><a onclick="switchTab('manage-gramsabha', this)">Gram Sabha</a></li>
+                <li><a onclick="switchTab('manage-gallery', this)">Gallery</a></li>
+                <li><a onclick="switchTab('view-complaints', this)">Complaints</a></li>
+                <li><a href="index.html" style="color:#f87171;">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-content">
+                
+                <div id="manage-home" class="view-section active">
+                    <div class="admin-card">
+                        <h3>Slider Settings</h3>
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <label>Slide Duration (seconds):</label>
+                            <input type="number" id="slideTimer" class="form-control" style="width: 100px; margin-bottom: 0;" placeholder="3">
+                            <button onclick="saveSlideTiming()" class="btn-primary" style="width: auto; margin-top: 0;">Save Timing</button>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Manage Home Page Slider</h3>
+                        <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 10px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
+                            <input type="text" id="bannerInput" class="form-control" placeholder="Image Link (GitHub Raw URL)" style="margin-bottom: 0;">
+                            <div>
+                                <button onclick="saveBannerSlide()" id="btnSaveBanner" class="btn-primary" style="width: 100%; margin-top: 0;">+ Add Slide</button>
+                            </div>
+                        </div>
+                        <div id="bannerList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                            <p>Loading slides...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="manage-docs" class="view-section">
+                    <div class="admin-card" style="border-left: 5px solid var(--admin-accent);">
+                        <h3>1. RTI Section Management</h3>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                            <input type="text" id="rtiName" class="form-control" placeholder="Officer Name">
+                            <input type="text" id="rtiContact" class="form-control" placeholder="Contact Details">
+                        </div>
+                        <button onclick="saveRtiData()" class="btn-primary" style="width:auto;">Save RTI Info</button>
+                    </div>
+                    <div class="admin-card" style="border-left: 5px solid #10b981;">
+                        <h3>2. Important Documents Table</h3>
+                        <div style="display:grid; grid-template-columns: 2fr 2fr 1fr; gap:10px; margin-bottom: 20px;">
+                            <input type="text" id="docName" class="form-control" placeholder="Document Name">
+                            <input type="text" id="docLink" class="form-control" placeholder="PDF URL">
+                            <button onclick="addDocument()" class="btn-primary" style="margin-top:0;">+ Add Row</button>
+                        </div>
+                        <div id="listDocs"></div>
+                    </div>
+                </div>
+
+                <div id="manage-admin" class="view-section">
+                    <div class="admin-card" style="border-left: 5px solid #3b82f6;">
+                        <h3>Elected Body</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr; gap:10px;">
+                            <input type="number" id="leadRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="leadName" class="form-control" placeholder="Name">
+                            <select id="leadRole" class="form-control"><option value="Sarpanch">Sarpanch</option><option value="Up-Sarpanch">Up-Sarpanch</option><option value="Member">Member</option></select>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                            <input type="text" id="leadPhone" class="form-control" placeholder="Phone">
+                            <input type="text" id="leadPhoto" class="form-control" placeholder="Photo URL">
+                        </div>
+                        <button onclick="saveLeader()" class="btn-primary" style="width:auto;">Add Leader</button>
+                        <div id="listLeaders" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
+                <div id="manage-services" class="view-section">
+                    <div class="admin-card">
+                        <h3>Manage Citizen Services</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr; gap:10px;">
+                            <input type="number" id="svcRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="svcTitle" class="form-control" placeholder="Service Name">
+                            <input type="text" id="svcIcon" class="form-control" placeholder="Icon Class (e.g. fas fa-user)">
+                        </div>
+                        <input type="text" id="svcLink" class="form-control" placeholder="Target Link (e.g. contact.html)">
+                        <textarea id="svcDesc" class="form-control" placeholder="Description"></textarea>
+                        <button onclick="saveService()" class="btn-primary" style="width:auto;">Add Service</button>
+                        <div id="listServices" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
+                <div id="manage-schemes" class="view-section">
+                    <div class="admin-card">
+                        <h3>Manage Government Schemes</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr; gap:10px;">
+                            <input type="number" id="schRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="schTitle" class="form-control" placeholder="Scheme Name">
+                            <select id="schCat" class="form-control">
+                                <option value="Housing">Housing</option>
+                                <option value="Water">Water</option>
+                                <option value="Agriculture">Agriculture</option>
+                                <option value="Social">Social</option>
+                            </select>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                            <input type="text" id="schBenefit" class="form-control" placeholder="Benefit (e.g. ₹1.5 Lakh)">
+                            <input type="text" id="schLink" class="form-control" placeholder="Application Link">
+                        </div>
+                        <textarea id="schDesc" class="form-control" placeholder="Description"></textarea>
+                        <button onclick="saveScheme()" class="btn-primary" style="width:auto;">Add Scheme</button>
+                        <div id="listSchemes" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
+                <div id="manage-works" class="view-section">
+                    <div class="admin-card">
+                        <h3>Manage Development Works</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 2fr 1fr; gap:10px;">
+                            <input type="number" id="workRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="workTitle" class="form-control" placeholder="Work Name">
+                            <select id="workStatus" class="form-control">
+                                <option value="Proposed">Proposed</option>
+                                <option value="Ongoing">Ongoing</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                            <input type="text" id="workEstCost" class="form-control" placeholder="Est. Cost">
+                            <input type="text" id="workExp" class="form-control" placeholder="Expenditure">
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 2fr; gap:10px;">
+                            <input type="text" id="workStart" class="form-control" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')">
+                            <input type="text" id="workEnd" class="form-control" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')">
+                            <input type="text" id="workPhoto" class="form-control" placeholder="Photo Link">
+                        </div>
+                        <button onclick="saveWork()" class="btn-primary" style="width:auto;">Add Work</button>
+                        <div id="listWorks" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
+                <div id="manage-gramsabha" class="view-section">
+                    <div class="admin-card">
+                        <h3>Manage Gram Sabha</h3>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+                            <input type="text" id="gsTitle" class="form-control" placeholder="Meeting Title">
+                            <input type="text" id="gsDate" class="form-control" placeholder="Date" onfocus="(this.type='date')" onblur="(this.type='text')">
+                            <input type="text" id="gsTime" class="form-control" placeholder="Time">
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                            <input type="text" id="gsVenue" class="form-control" placeholder="Venue">
+                            <input type="text" id="gsLink" class="form-control" placeholder="PDF/Agenda Link">
+                        </div>
+                        <textarea id="gsAgenda" class="form-control" placeholder="Agenda Points"></textarea>
+                        <button onclick="saveGS()" class="btn-primary" style="width:auto;">Add Meeting</button>
+                        <div id="listGS" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
+                <div id="manage-gallery" class="view-section">
+                    <div class="admin-card">
+                        <h3>Manage Photo Gallery</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 3fr; gap:10px;">
+                            <input type="number" id="galRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="galUrl" class="form-control" placeholder="Image URL">
+                        </div>
+                        <input type="text" id="galCaption" class="form-control" placeholder="Caption">
+                        <button onclick="savePhoto()" class="btn-primary" style="width:auto;">Add Photo</button>
+                        <div id="adminGalleryList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top:20px;"></div>
+                    </div>
+                </div>
+
+                <div id="view-complaints" class="view-section">
+                    <div class="admin-card" style="border-left: 5px solid #25D366;">
+                        <h3 style="color: #075e54;"><i class="fab fa-whatsapp"></i> WhatsApp Grievance Settings</h3>
+                        <input type="text" id="waLink" class="form-control" placeholder="WhatsApp Group Link">
+                        <input type="text" id="waQr" class="form-control" placeholder="QR Code Image URL">
+                        <button onclick="saveWaSettings()" class="btn-primary" style="background-color:#25D366; border:none; width:auto;">Save Settings</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+    // --- AUTH & NAVIGATION ---
+    function attemptLogin() {
+        const user = document.getElementById('adminUser').value;
+        const pass = document.getElementById('adminPass').value;
+        if(user === 'admin' && pass === 'admin123') {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard-container').style.display = 'flex';
+            loadAllAdminData();
+        } else { alert("Wrong password!"); }
+    }
+
+    function switchTab(id, el) {
+        document.querySelectorAll('.view-section').forEach(x => x.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function loadAllAdminData() {
+        loadBannerSlides();
+        loadRti();
+        loadDocs();
+        loadLeaders();
+        loadServices();
+        loadSchemes();
+        loadWorks();
+        loadGS();
+        loadGallery();
+        loadWaSettings();
+    }
+
+    // --- RTI LOGIC ---
+    function loadRti() {
+        const data = JSON.parse(localStorage.getItem('gp_rti_data')) || {name: '', contact: ''};
+        document.getElementById('rtiName').value = data.name;
+        document.getElementById('rtiContact').value = data.contact;
+    }
+    function saveRtiData() {
+        const data = { name: document.getElementById('rtiName').value, contact: document.getElementById('rtiContact').value };
+        localStorage.setItem('gp_rti_data', JSON.stringify(data));
+        alert("RTI Saved!");
+    }
+
+    // --- DOCUMENTS LOGIC ---
+    function loadDocs() {
+        let d = JSON.parse(localStorage.getItem('gp_documents_data')) || [];
+        let h = '<table class="data-table"><tr><th>Sr.</th><th>Name</th><th>Act</th></tr>';
+        d.forEach((doc, i) => { h += `<tr><td>${i+1}</td><td>${doc.name}</td><td><button onclick="delDoc(${i})" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`; });
+        document.getElementById('listDocs').innerHTML = h + '</table>';
+    }
+    function addDocument() {
+        let d = JSON.parse(localStorage.getItem('gp_documents_data')) || [];
+        d.push({ name: document.getElementById('docName').value, link: document.getElementById('docLink').value });
+        localStorage.setItem('gp_documents_data', JSON.stringify(d));
+        document.getElementById('docName').value = ''; document.getElementById('docLink').value = '';
+        loadDocs();
+    }
+    function delDoc(i) {
+        let d = JSON.parse(localStorage.getItem('gp_documents_data')) || [];
+        d.splice(i, 1);
+        localStorage.setItem('gp_documents_data', JSON.stringify(d));
+        loadDocs();
+    }
+
+    // --- BANNER SLIDER LOGIC ---
+    function loadBannerSlides() {
+        const slides = JSON.parse(localStorage.getItem('gp_banner_slides')) || [];
+        document.getElementById('slideTimer').value = localStorage.getItem('gp_slider_timing') || 3;
+        let html = '';
+        slides.forEach((url, i) => {
+            html += `<div style="border:1px solid #ddd; padding:10px; background:white; margin-bottom:10px;">
+                <img src="${url}" style="width:100%; height:80px; object-fit:cover;">
+                <button onclick="delBannerSlide(${i})" class="btn-danger" style="width:100%; margin-top:5px;">Delete</button>
+            </div>`;
+        });
+        document.getElementById('bannerList').innerHTML = html || 'No slides.';
+    }
+    function saveBannerSlide() {
+        const url = document.getElementById('bannerInput').value;
+        if(!url) return;
+        let slides = JSON.parse(localStorage.getItem('gp_banner_slides')) || [];
+        slides.push(url);
+        localStorage.setItem('gp_banner_slides', JSON.stringify(slides));
+        document.getElementById('bannerInput').value = '';
+        loadBannerSlides();
+    }
+    function delBannerSlide(i) {
+        let slides = JSON.parse(localStorage.getItem('gp_banner_slides')) || [];
+        slides.splice(i, 1);
+        localStorage.setItem('gp_banner_slides', JSON.stringify(slides));
+        loadBannerSlides();
+    }
+    function saveSlideTiming() {
+        localStorage.setItem('gp_slider_timing', document.getElementById('slideTimer').value);
+        alert("Timing Saved!");
+    }
+
+    // --- LEADERS LOGIC ---
+    function loadLeaders() {
+        let d = JSON.parse(localStorage.getItem('gp_leaders_data')) || [];
+        d.sort((a,b)=>(a.rank||99)-(b.rank||99));
+        let h = '<table class="data-table"><tr><th>Name</th><th>Role</th><th>Act</th></tr>';
+        d.forEach((l, i) => { h += `<tr><td>${l.name}</td><td>${l.role}</td><td><button onclick="delLeader(${i})" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`; });
+        document.getElementById('listLeaders').innerHTML = h + '</table>';
+    }
+    function saveLeader() {
+        let d = JSON.parse(localStorage.getItem('gp_leaders_data')) || [];
+        d.push({
+            rank: document.getElementById('leadRank').value,
+            name: document.getElementById('leadName').value,
+            role: document.getElementById('leadRole').value,
+            phone: document.getElementById('leadPhone').value,
+            photo: document.getElementById('leadPhoto').value
+        });
+        localStorage.setItem('gp_leaders_data', JSON.stringify(d));
+        loadLeaders();
+    }
+    function delLeader(i) {
+        let d = JSON.parse(localStorage.getItem('gp_leaders_data')) || [];
+        d.splice(i, 1);
+        localStorage.setItem('gp_leaders_data', JSON.stringify(d));
+        loadLeaders();
+    }
+
+    // --- SERVICES LOGIC ---
+    function loadServices() {
+        let d = JSON.parse(localStorage.getItem('gp_services_data')) || [];
+        d.sort((a,b)=>(a.rank||99)-(b.rank||99));
+        let h = '<table class="data-table"><tr><th>Service</th><th>Act</th></tr>';
+        d.forEach((s, i) => { h += `<tr><td>${s.title}</td><td><button onclick="delService(${i})" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`; });
+        document.getElementById('listServices').innerHTML = h + '</table>';
+    }
+    function saveService() {
+        let d = JSON.parse(localStorage.getItem('gp_services_data')) || [];
+        d.push({
+            rank: document.getElementById('svcRank').value,
+            title: document.getElementById('svcTitle').value,
+            icon: document.getElementById('svcIcon').value,
+            link: document.getElementById('svcLink').value,
+            desc: document.getElementById('svcDesc').value
+        });
+        localStorage.setItem('gp_services_data', JSON.stringify(d));
+        loadServices();
+    }
+    function delService(i) {
+        let d = JSON.parse(localStorage.getItem('gp_services_data')) || [];
+        d.splice(i, 1);
+        localStorage.setItem('gp_services_data', JSON.stringify(d));
+        loadServices();
+    }
+
+    // --- SCHEMES LOGIC (NEW) ---
+    function loadSchemes() {
+        let d = JSON.parse(localStorage.getItem('gp_schemes_data')) || [];
+        d.sort((a,b)=>(a.rank||99)-(b.rank||99));
+        let h = '<table class="data-table"><tr><th>Scheme</th><th>Cat</th><th>Act</th></tr>';
+        d.forEach((s, i) => { h += `<tr><td>${s.title}</td><td>${s.cat}</td><td><button onclick="delScheme(${i})" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`; });
+        document.getElementById('listSchemes').innerHTML = h + '</table>';
+    }
+    function saveScheme() {
+        let d = JSON.parse(localStorage.getItem('gp_schemes_data')) || [];
+        d.push({
+            rank: document.getElementById('schRank').value,
+            title: document.getElementById('schTitle').value,
+            cat: document.getElementById('schCat').value,
+            benefit: document.getElementById('schBenefit').value,
+            link: document.getElementById('schLink').value,
+            desc: document.getElementById('schDesc').value
+        });
+        localStorage.setItem('gp_schemes_data', JSON.stringify(d));
+        loadSchemes();
+    }
+    function delScheme(i) {
+        let d = JSON.parse(localStorage.getItem('gp_schemes_data')) || [];
+        d.splice(i, 1);
+        localStorage.setItem('gp_schemes_data', JSON.stringify(d));
+        loadSchemes();
+    }
+
+    // --- WORKS LOGIC (NEW) ---
+    function loadWorks() {
+        let d = JSON.parse(localStorage.getItem('gp_works_data')) || [];
+        d.sort((a,b)=>(a.rank||99)-(b.rank||99));
+        let h = '<table class="data-table"><tr><th>Work</th><th>Status</th><th>Act</th></tr>';
+        d.forEach((w, i) => { h += `<tr><td>${w.title}</td><td>${w.status}</td><td><button onclick="delWork(${i})" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`; });
+        document.getElementById('listWorks').innerHTML = h + '</table>';
+    }
+    function saveWork() {
+        let d = JSON.parse(localStorage.getItem('gp_works_data')) || [];
+        d.push({
+            rank: document.getElementById('workRank').value,
+            title: document.getElementById('workTitle').value,
+            status: document.getElementById('workStatus').value,
+            estCost: document.getElementById('workEstCost').value,
+            exp: document.getElementById('workExp').value,
+            start: document.getElementById('workStart').value,
+            end: document.getElementById('workEnd').value,
+            photo: document.getElementById('workPhoto').value
+        });
+        localStorage.setItem('gp_works_data', JSON.stringify(d));
+        loadWorks();
+    }
+    function delWork(i) {
+        let d = JSON.parse(localStorage.getItem('gp_works_data')) || [];
+        d.splice(i, 1);
+        localStorage.setItem('gp_works_data', JSON.stringify(d));
+        loadWorks();
+    }
+
+    // --- GRAM SABHA LOGIC (NEW) ---
+    function loadGS() {
+        let d = JSON.parse(localStorage.getItem('gp_gramsabha_data')) || [];
+        // Sort by Date (desc) for admin view too? Or simple list? Simple list for management.
+        let h = '<table class="data-table"><tr><th>Date</th><th>Meeting</th><th>Act</th></tr>';
+        d.forEach((g, i) => { h += `<tr><td>${g.date}</td><td>${g.title}</td><td><button onclick="delGS(${i})" class="btn-danger"><i class="fas fa-trash"></i></button></td></tr>`; });
+        document.getElementById('listGS').innerHTML = h + '</table>';
+    }
+    function saveGS() {
+        let d = JSON.parse(localStorage.getItem('gp_gramsabha_data')) || [];
+        d.push({
+            title: document.getElementById('gsTitle').value,
+            date: document.getElementById('gsDate').value,
+            time: document.getElementById('gsTime').value,
+            venue: document.getElementById('gsVenue').value,
+            link: document.getElementById('gsLink').value,
+            agenda: document.getElementById('gsAgenda').value
+        });
+        localStorage.setItem('gp_gramsabha_data', JSON.stringify(d));
+        loadGS();
+    }
+    function delGS(i) {
+        let d = JSON.parse(localStorage.getItem('gp_gramsabha_data')) || [];
+        d.splice(i, 1);
+        localStorage.setItem('gp_gramsabha_data', JSON.stringify(d));
+        loadGS();
+    }
+
+    // --- GALLERY LOGIC ---
+    function loadGallery() {
+        let d = JSON.parse(localStorage.getItem('gp_gallery_data')) || [];
+        let h = '';
+        d.forEach((img, i) => { h += `<div style="border:1px solid #ddd; padding:5px; background:white;"><img src="${img.url}" style="width:100%; height:100px; object-fit:cover;"><button onclick="delPhoto(${i})" class="btn-danger" style="width:100%; margin-top:5px;">Del</button></div>`; });
+        document.getElementById('adminGalleryList').innerHTML = h || 'No photos.';
+    }
+    function savePhoto() {
+        let d = JSON.parse(localStorage.getItem('gp_gallery_data')) || [];
+        d.push({
+            rank: document.getElementById('galRank').value,
+            url: document.getElementById('galUrl').value,
+            caption: document.getElementById('galCaption').value
+        });
+        localStorage.setItem('gp_gallery_data', JSON.stringify(d));
+        loadGallery();
+    }
+    function delPhoto(i) {
+        let d = JSON.parse(localStorage.getItem('gp_gallery_data')) || [];
+        d.splice(i, 1);
+        localStorage.setItem('gp_gallery_data', JSON.stringify(d));
+        loadGallery();
+    }
+
+    // --- WHATSAPP LOGIC ---
+    function loadWaSettings() {
+        const s = JSON.parse(localStorage.getItem('gp_wa_settings')) || {};
+        document.getElementById('waLink').value = s.link || '';
+        document.getElementById('waQr').value = s.qr || '';
+    }
+    function saveWaSettings() {
+        const obj = { link: document.getElementById('waLink').value, qr: document.getElementById('waQr').value };
+        localStorage.setItem('gp_wa_settings', JSON.stringify(obj));
+        alert("WhatsApp Settings Saved!");
+    }
+    </script>
+</body>
+</html>

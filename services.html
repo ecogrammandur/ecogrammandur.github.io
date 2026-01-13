@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Services | Gram Panchayat Nandgaon</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CORE VARIABLES (Matched from Index) --- */
+        :root {
+            --gov-blue: #003366;
+            --gov-orange: #ff9933;
+            --text-light: #ffffff;
+            --header-height-desktop: 175px;
+        }
+
+        body { 
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #f4f6f9; 
+            padding-top: var(--header-height-desktop); 
+        }
+
+        /* --- HEADER & BRANDING (Matched from Index) --- */
+        .gov-header-group {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1000; background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
+        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
+        .brand-info { display: flex; align-items: center; gap: 15px; }
+        
+        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
+
+        /* --- NAVIGATION --- */
+        .main-nav { background-color: var(--gov-blue); }
+        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
+        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
+        .btn-login { background: #dc3545 !important; }
+
+        /* Mobile specific elements */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
+
+        @media (max-width: 992px) {
+            body { padding-top: 100px; }
+            .top-strip, .landmark-desktop { display: none; }
+            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
+            .main-brand img { height: 50px; }
+            #txt-title { font-size: 1.2rem; }
+            
+            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
+            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
+            .main-nav.active { left: 0; }
+            .main-nav ul { flex-direction: column; }
+            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
+        }
+
+        /* --- Service Page Specific Styles --- */
+        .page-header {
+            background-color: white;
+            padding: 30px 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .service-box {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--gov-blue);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .service-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .svc-icon {
+            font-size: 2.5rem;
+            color: var(--gov-orange);
+            margin-bottom: 20px;
+        }
+
+        .service-box h3 { margin-bottom: 10px; color: var(--gov-blue); font-size: 1.3rem; }
+        .service-box p { color: #666; margin-bottom: 20px; line-height: 1.6; flex-grow: 1; }
+
+        .btn-action {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #f0f2f5;
+            color: var(--gov-blue);
+            border-radius: 4px;
+            font-weight: 600;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .btn-action:hover { background-color: var(--gov-blue); color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+    <header class="gov-header-group">
+        <div class="top-strip">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> | 
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
+                </span>
+            </div>
+        </div>
+
+        <div class="main-brand">
+            <div class="brand-info">
+                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
+                <div style="text-align: left;">
+                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+        </div>
+
+        <nav class="main-nav" id="sidebarMenu">
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
+                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
+                <li><a href="services.html" class="active" id="nav-services" onclick="closeMenu()">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
+                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
+                <li style="margin-left: auto;">
+                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
+                        <span id="btn-login-txt">Login</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h2 id="page-head" style="color: var(--gov-blue); font-size: 2rem;">Citizen Services</h2>
+            <p id="page-sub" style="color: #666; margin-top: 10px;">Fast, Transparent, and Efficient Services for Every Villager.</p>
+        </div>
+
+        <div id="dynamic-services" class="services-container">
+            <p style="text-align: center; grid-column: 1/-1;">Loading services...</p>
+        </div>
+    </main>
+
+    <footer class="gov-footer">
+        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function openMenu() {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+        }
+        function closeMenu() {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+        }
+
+        const translations = {
+            en: {
+                helpline: "Help Line",
+                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
+                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
+                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
+                
+                pageHead: "Citizen Services",
+                pageSub: "Fast, Transparent, and Efficient Services for Every Villager.",
+                
+                footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
+            },
+            mr: {
+                helpline: "हेल्पलाइन",
+                title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
+                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
+                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+                
+                pageHead: "नागरी सुविधा",
+                pageSub: "प्रत्येक ग्रामस्थासाठी जलद, पारदर्शक आणि कार्यक्षम सेवा.",
+                
+                footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
+            }
+        };
+
+        function setLanguage(lang) {
+            const t = translations[lang];
+            
+            // Header
+            document.getElementById('txt-helpline').innerText = t.helpline;
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            
+            // Nav
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-about').innerText = t.navAbout;
+            document.getElementById('nav-admin').innerText = t.navAdmin;
+            document.getElementById('nav-services').innerText = t.navServices;
+            document.getElementById('nav-schemes').innerText = t.navSchemes;
+            document.getElementById('nav-works').innerText = t.navWorks;
+            document.getElementById('nav-gramsabha').innerText = t.navGram;
+            document.getElementById('nav-gallery').innerText = t.navGallery;
+            document.getElementById('nav-grievance').innerText = t.navGrievance;
+            document.getElementById('nav-rti').innerText = t.navRTI;
+            document.getElementById('nav-contact').innerText = t.navContact;
+            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            
+            // Page Content
+            document.getElementById('page-head').innerText = t.pageHead;
+            document.getElementById('page-sub').innerText = t.pageSub;
+            
+            // Footer
+            document.getElementById('txt-footer').innerText = t.footer;
+            
+            localStorage.setItem('gp_lang_pref', lang);
+        }
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
+            setLanguage(savedLang);
+
+            // Load Services
+            const container = document.getElementById('dynamic-services');
+            const services = JSON.parse(localStorage.getItem('gp_services_data')) || [];
+            
+            if (services.length === 0) {
+                container.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">No services listed yet.</p>';
+            } else {
+                services.sort((a, b) => (a.rank || 99) - (b.rank || 99));
+                let html = '';
+                services.forEach(svc => {
+                    const iconClass = svc.icon ? svc.icon : 'fas fa-file-alt';
+                    const linkUrl = svc.link ? svc.link : 'contact.html'; // Default to contact if empty
+                    
+                    html += `
+                    <div class="service-box">
+                        <div class="svc-icon"><i class="${iconClass}"></i></div>
+                        <h3>${svc.title}</h3>
+                        <p>${svc.desc}</p>
+                        <a href="${linkUrl}" class="btn-action">View Details <i class="fas fa-arrow-right"></i></a>
+                    </div>`;
+                });
+                container.innerHTML = html;
+            }
+        };
+    </script>
+</body>
+</html>

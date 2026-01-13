@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | GRAM PANCHAYAT MANDUR</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- 1. CORE VARIABLES & DEFAULTS --- */
+        :root {
+            --gov-blue: #003366;
+            --gov-orange: #ff9933;
+            --text-light: #ffffff;
+            --header-height-desktop: 175px;
+        }
+
+        body { 
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #f4f6f9; 
+            padding-top: var(--header-height-desktop); 
+        }
+
+        /* --- 2. HEADER & BRANDING --- */
+        .gov-header-group {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1000; background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
+        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
+        .brand-info { display: flex; align-items: center; gap: 15px; }
+        
+        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
+
+        /* --- 3. NAVIGATION (SIDEBAR ON MOBILE / BAR ON DESKTOP) --- */
+        .main-nav { background-color: var(--gov-blue); }
+        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
+        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
+        .btn-login { background: #dc3545 !important; }
+
+        /* Mobile specific elements */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
+
+        /* --- 4. MOBILE SIDEBAR RESPONSIVE --- */
+        @media (max-width: 992px) {
+            body { padding-top: 100px; }
+            .top-strip, .landmark-desktop { display: none; }
+            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
+            .main-brand img { height: 50px; }
+            #txt-title { font-size: 1.2rem; }
+            
+            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
+            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
+            .main-nav.active { left: 0; }
+            .main-nav ul { flex-direction: column; }
+            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
+        }
+
+        /* --- 5. SLIDER & NEWS --- */
+        .hero-section { position: relative; width: 100%; height: 450px; overflow: hidden; background: #333; }
+        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: 1s; }
+        .hero-slide.active { opacity: 1; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 48, 97, 0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; z-index: 5; padding: 20px; }
+        
+        .news-strip { background-color: var(--gov-orange); padding: 10px 0; display: flex; align-items: center; color: white; }
+        .news-label { background: #b34700; padding: 5px 15px; margin-left: 20px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
+        .marquee-container { flex: 1; overflow: hidden; margin-left: 15px; font-weight: 500; }
+        #dynamic-news { color: #ffffff !important; }
+
+        /* --- 6. CONTENT SECTIONS --- */
+        .content-row { background: white; margin-bottom: 30px; border-bottom: 1px solid #eee; }
+        .row-header { background-color: var(--gov-blue); padding: 12px; text-align: center; }
+        .row-header h2 { color: white !important; margin: 0; font-size: 1.4rem; text-transform: uppercase; }
+        
+        .welcome-section { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+        .services-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .service-card { background: white; border: 1px solid #ddd; padding: 25px; width: 250px; text-align: center; border-radius: 8px; border-bottom: 4px solid var(--gov-blue); }
+
+        #doc-table { width: 100%; max-width: 1000px; margin: 0 auto; border-collapse: collapse; }
+        #doc-table th { background: #f1f1f1; color: var(--gov-blue); padding: 12px; border: 1px solid #ddd; }
+        #doc-table td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+
+        .logo-track { display: flex; gap: 20px; overflow-x: auto; padding: 20px; justify-content: center; }
+        .logo-card { min-width: 260px; height: 90px; border: 1px solid #eee; display: flex; align-items: center; padding: 15px; background: white; text-decoration: none; border-radius: 6px; }
+        .logo-card img { height: 50px; margin-right: 15px; }
+
+        .gov-footer { background: var(--gov-blue); color: white; text-align: center; padding: 30px 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+    <header class="gov-header-group">
+        <div class="top-strip">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')">English</a> | 
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="color: var(--gov-orange);">मराठी</a>
+                </span>
+            </div>
+        </div>
+
+        <div class="main-brand">
+            <div class="brand-info">
+                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
+                <div style="text-align: left;">
+                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+        </div>
+        <nav class="main-nav" id="sidebarMenu">
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html" class="active" id="nav-home" onclick="closeMenu()">Home</a></li>
+                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
+                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
+                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
+                <li style="margin-left: auto;">
+                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
+                        <span id="btn-login-txt">Login</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="hero-slider" class="hero-section">
+        <div class="hero-overlay">
+            <h1 id="hero-title"></h1>
+            <p id="hero-sub"></p>
+        </div>
+        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1593352771143-6c8469c47142?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+    </div>
+
+    <div class="news-strip">
+        <span class="news-label" id="txt-news-label">LATEST UPDATE:</span>
+        <div class="marquee-container">
+            <marquee id="dynamic-news" behavior="scroll" direction="left" scrollamount="6">Welcome to the official e-Gram Panchayat Portal.</marquee>
+        </div>
+    </div>
+
+    <main>
+        <div class="content-row">
+            <div class="row-header"><h2 id="wel-head">e-Governance Initiative</h2></div>
+            <section class="welcome-section">
+                <p id="wel-text">We are committed to providing transparent, efficient, and time-bound services.</p>
+                <div class="services-grid">
+                    <div class="service-card"><i class="fas fa-file-signature fa-3x"></i><h3 id="card-1">Certificates</h3></div>
+                    <div class="service-card"><i class="fas fa-hand-holding-water fa-3x"></i><h3 id="card-2">Water Tax</h3></div>
+                    <div class="service-card"><i class="fas fa-home fa-3x"></i><h3 id="card-3">Property Tax</h3></div>
+                </div>
+            </section>
+        </div>
+
+        <div class="content-row">
+            <div class="row-header"><h2 id="txt-doc-title">Important Documents</h2></div>
+            <div style="overflow-x: auto; padding: 20px;">
+                <table id="doc-table">
+                    <thead><tr><th style="width: 10%;" id="th-sr">Sr. No</th><th id="th-name">Document Name</th><th id="th-download">Download</th></tr></thead>
+                    <tbody id="doc-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-row">
+            <div class="row-header"><h2 id="txt-imp-links">Important Links</h2></div>
+            <div class="logo-track">
+                <a href="https://www.maharashtra.gov.in" target="_blank" class="logo-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Government_of_Maharashtra_Logo.svg/1200px-Government_of_Maharashtra_Logo.svg.png">
+                    <span>Govt. of Maharashtra</span>
+                </a>
+                <a href="https://aaplesarkar.mahaonline.gov.in" target="_blank" class="logo-card">
+                    <img src="https://aaplesarkar.mahaonline.gov.in/Images/logo.png">
+                    <span>Aaple Sarkar</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="gov-footer"><p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p></footer>
+
+    <script>
+        function openMenu() {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+        }
+        function closeMenu() {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+        }
+
+        // FULLY UPDATED TRANSLATION LOGIC
+        function setLanguage(lang) {
+            const translations = {
+                en: { 
+                    helpline: "Help Line",
+                    title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur", 
+                    newsLabel: "LATEST UPDATE:",
+                    navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
+                    navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
+                    welHead: "e-Governance Initiative", 
+                    welText: "We are committed to providing transparent, efficient, and time-bound services.",
+                    card1: "Certificates", card2: "Water Tax", card3: "Property Tax",
+                    txtDocTitle: "Important Documents", 
+                    thSr: "Sr. No", thName: "Document Name", thDownload: "Download",
+                    txtImpLinks: "Important Links",
+                    footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
+                },
+                mr: { 
+                    helpline: "हेल्पलाइन",
+                    title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर", 
+                    newsLabel: "नवीन अपडेट:",
+                    navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
+                    navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+                    welHead: "ई-शासन उपक्रम", 
+                    welText: "आम्ही पारदर्शक, कार्यक्षम आणि वेळेवर सेवा देण्यासाठी कटिबद्ध आहोत.",
+                    card1: "दाखले", card2: "पाणीपट्टी", card3: "घरपट्टी",
+                    txtDocTitle: "महत्वाचे दस्तऐवज", 
+                    thSr: "अ. क्र.", thName: "दस्तऐवजाचे नाव", thDownload: "डाउनलोड",
+                    txtImpLinks: "महत्वाचे दुवे",
+                    footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
+                }
+            };
+
+            const t = translations[lang];
+            
+            // Header Info
+            document.getElementById('txt-helpline').innerText = t.helpline;
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            document.getElementById('txt-news-label').innerText = t.newsLabel;
+
+            // Nav Updates
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-about').innerText = t.navAbout;
+            document.getElementById('nav-admin').innerText = t.navAdmin;
+            document.getElementById('nav-services').innerText = t.navServices;
+            document.getElementById('nav-schemes').innerText = t.navSchemes;
+            document.getElementById('nav-works').innerText = t.navWorks;
+            document.getElementById('nav-gramsabha').innerText = t.navGram;
+            document.getElementById('nav-gallery').innerText = t.navGallery;
+            document.getElementById('nav-grievance').innerText = t.navGrievance;
+            document.getElementById('nav-rti').innerText = t.navRTI;
+            document.getElementById('nav-contact').innerText = t.navContact;
+            document.getElementById('btn-login-txt').innerText = t.navLogin;
+
+            // Content Updates
+            document.getElementById('wel-head').innerText = t.welHead;
+            document.getElementById('wel-text').innerText = t.welText;
+            document.getElementById('card-1').innerText = t.card1;
+            document.getElementById('card-2').innerText = t.card2;
+            document.getElementById('card-3').innerText = t.card3;
+            document.getElementById('txt-doc-title').innerText = t.txtDocTitle;
+            
+            // Table Headers
+            document.getElementById('th-sr').innerText = t.thSr;
+            document.getElementById('th-name').innerText = t.thName;
+            document.getElementById('th-download').innerText = t.thDownload;
+
+            document.getElementById('txt-imp-links').innerText = t.txtImpLinks;
+            document.getElementById('txt-footer').innerText = t.footer;
+            
+            localStorage.setItem('gp_lang_pref', lang);
+        }
+
+        window.onload = function() {
+            setLanguage(localStorage.getItem('gp_lang_pref') || 'en');
+            initSlider();
+            
+            // Dynamic News
+            const news = localStorage.getItem('gp_news_ticker');
+            if(news) document.getElementById('dynamic-news').innerText = news;
+
+            // Load Table
+            const savedDocs = JSON.parse(localStorage.getItem('gp_documents_data')) || [];
+            const tableBody = document.getElementById('doc-table-body');
+            if(tableBody) {
+                // Check if we need to show empty message (Optional Enhancement)
+                if (savedDocs.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="3" style="color:red; font-weight:bold;">No documents available currently.</td></tr>`;
+                } else {
+                    tableBody.innerHTML = savedDocs.map((doc, index) => `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${doc.name}</td>
+                            <td><a href="${doc.link}" target="_blank" style="color:var(--gov-orange); font-weight:bold;">View/Download</a></td>
+                        </tr>
+                    `).join('');
+                }
+            }
+        };
+
+        function initSlider() {
+            const container = document.getElementById('hero-slider');
+            const slides = JSON.parse(localStorage.getItem('gp_banner_slides')) || [];
+            
+            // If local storage has slides, use them. 
+            // Note: Currently code prepends. If you want ONLY dynamic slides, we would clear container first.
+            // Keeping "prepend" as per your existing logic to allow mixed mode if desired.
+            if(slides.length > 0) {
+                const overlay = container.querySelector('.hero-overlay').outerHTML;
+                // Optional: Clear existing static slide if dynamic ones exist to avoid mixing
+                // container.innerHTML = overlay; 
+                
+                slides.forEach((url, i) => {
+                    const div = document.createElement('div');
+                    // If we have dynamic slides, make the first one active immediately
+                    div.className = i === 0 ? 'hero-slide active' : 'hero-slide';
+                    div.style.backgroundImage = `url('${url}')`;
+                    container.prepend(div);
+                });
+            }
+
+            let current = 0;
+            const divs = document.querySelectorAll('.hero-slide');
+            const timing = (localStorage.getItem('gp_slider_timing') || 3) * 1000;
+            
+            if(divs.length > 1) {
+                setInterval(() => {
+                    divs[current].classList.remove('active');
+                    current = (current + 1) % divs.length;
+                    divs[current].classList.add('active');
+                }, timing);
+            }
+        }
+    </script>
+</body>
+</html>

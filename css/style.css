@@ -1,0 +1,211 @@
+/* Project: e-GramPanchayat Nandgaon
+   Component: Master Stylesheet (Final Updated)
+*/
+
+/* --- 1. GOVT STANDARDS (Design System) --- */
+:root {
+    --gov-blue: #003061;        /* Official Blue */
+    --gov-orange: #ff9933;      /* Alert Orange */
+    --gov-green: #198754;       /* Success Green */
+    --text-dark: #333333;
+    --text-light: #666666;
+    --header-height: 200px;     /* Total height of the fixed header area */
+}
+
+/* --- 2. GLOBAL RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: var(--text-dark);
+    line-height: 1.6;
+    
+    /* Pushes content down so Fixed Header doesn't cover it */
+    padding-top: var(--header-height); 
+}
+
+h1, h2, h3 { color: var(--gov-blue); font-weight: 700; }
+a { text-decoration: none; color: var(--gov-blue); }
+
+/* --- 3. HEADER ARCHITECTURE (Fixed Top) --- */
+.gov-header-group {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.top-strip {
+    background-color: #eee;
+    padding: 5px 0;
+    font-size: 13px;
+    border-bottom: 1px solid #ddd;
+}
+
+.main-brand {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+/* --- NAVIGATION STYLES --- */
+.main-nav {
+    background-color: var(--gov-blue);
+    color: white;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.main-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 18px;
+    color: white;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.3s;
+}
+
+.main-nav li a:hover, 
+.main-nav li a.active {
+    background-color: var(--gov-orange);
+    color: #fff;
+}
+
+/* Login Button Specific Highlight */
+.main-nav li a[href="admin.html"] {
+    background-color: #dc3545; /* Alert Red for visibility */
+}
+
+/* --- 4. HOME PAGE LAYOUT (Content Rows) --- */
+
+.content-row {
+    width: 100%;
+    margin-bottom: 30px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Full Width Dark Blue Heading Bars */
+.row-header {
+    background-color: var(--gov-blue);
+    padding: 12px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.row-header h2 {
+    color: #ffffff !important;
+    margin: 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Welcome & Info Sections */
+.welcome-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Quick Service Cards (Grid) */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.service-card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-bottom: 4px solid var(--gov-blue);
+    transition: 0.3s;
+}
+
+.service-card:hover { transform: translateY(-5px); }
+
+/* Important Documents Table */
+#doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+#doc-table th {
+    background-color: #f8f9fa;
+    color: var(--gov-blue);
+    padding: 15px;
+    border: 1px solid #dee2e6;
+}
+
+#doc-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+}
+
+/* Important Links Slider Card Fixes */
+.important-links-section {
+    padding: 30px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 20px;
+    scrollbar-width: thin;
+}
+
+.logo-card {
+    min-width: 250px;
+    height: 100px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: white;
+}
+
+.logo-card img { height: 60px; margin-right: 15px; }
+
+/* --- 5. FOOTER --- */
+.gov-footer {
+    background-color: #1a1a1a;
+    color: #bbb;
+    padding: 30px 0;
+    text-align: center;
+}
+
+/* --- 6. RESPONSIVE --- */
+@media (max-width: 992px) {
+    body { padding-top: 250px; }
+    .main-nav ul { flex-wrap: wrap; justify-content: center; }
+    .main-nav li a { padding: 10px 12px; font-size: 14px; }
+}
