@@ -2,214 +2,331 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gram Sabha | GRAM PANCHAYAT NANDGAON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gram Sabha | Gram Panchayat Nandgaon</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Shared Styles (Same as Works) */
+        /* --- CORE VARIABLES (Matched from Index) --- */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
+            --text-light: #ffffff;
             --header-height-desktop: 175px;
+            --gov-green: #28a745;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f6f9;
-            padding-top: var(--header-height-desktop);
+        body { 
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #f4f6f9; 
+            padding-top: var(--header-height-desktop); 
         }
 
+        /* --- HEADER & BRANDING --- */
         .gov-header-group {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: white;
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1000; background: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
+        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
+        .brand-info { display: flex; align-items: center; gap: 15px; }
+        
+        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
 
-        .top-strip {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-            padding: 5px 0;
-        }
+        /* --- NAVIGATION --- */
+        .main-nav { background-color: var(--gov-blue); }
+        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
+        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
+        .btn-login { background: #dc3545 !important; }
 
-        .main-brand {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: white;
-        }
-
-        .main-nav {
-            background-color: var(--gov-blue);
-        }
-
-            .main-nav ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                justify-content: center;
-            }
-
-            .main-nav li a {
-                display: block;
-                padding: 12px 18px;
-                color: white;
-                text-decoration: none;
-            }
-
-                .main-nav li a:hover, .main-nav li a.active {
-                    background-color: var(--gov-orange);
-                }
-
-        .btn-login {
-            background: #dc3545 !important;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* Meeting Card Styles */
-        .meeting-card {
-            background: white;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--gov-orange);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .meeting-date {
-            color: var(--gov-orange);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .meeting-title {
-            color: var(--gov-blue);
-            margin: 10px 0;
-            font-size: 1.4rem;
-        }
-
-        .meeting-info {
-            display: flex;
-            gap: 20px;
-            color: #666;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn-agenda {
-            background: var(--gov-blue);
-            color: white;
-            padding: 8px 15px;
-            text-decoration: none;
-            border-radius: 4px;
-            display: inline-block;
-            font-size: 0.9rem;
-        }
+        /* Mobile specific elements */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
 
         @media (max-width: 992px) {
-            body {
-                padding-top: 100px;
-            }
+            body { padding-top: 100px; }
+            .top-strip, .landmark-desktop { display: none; }
+            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
+            .main-brand img { height: 50px; }
+            #txt-title { font-size: 1.2rem; }
+            
+            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
+            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
+            .main-nav.active { left: 0; }
+            .main-nav ul { flex-direction: column; }
+            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
+        }
 
-            .top-strip, .landmark-desktop, .main-nav {
-                display: none;
-            }
+        /* --- Page Specific Styles --- */
+        .meeting-box {
+            background: white;
+            border-left: 5px solid #dc3545; /* Red warning line */
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .agenda-list {
+            list-style: none;
+            padding: 0;
+        }
+        .agenda-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        .agenda-list li::before {
+            content: "\f00c"; /* Checkmark icon */
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+            color: var(--gov-green);
+            margin-right: 10px;
+        }
+        
+        /* Grid responsive fix */
+        .page-grid {
+            display: grid; 
+            grid-template-columns: 2fr 1fr; 
+            gap: 40px;
+        }
+        @media (max-width: 768px) {
+            .page-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
     <header class="gov-header-group">
-        <div class="top-strip"><div style="max-width: 1200px; margin: 0 auto; text-align:right; padding:0 20px;">Help Line: +91-9922003344</div></div>
-        <div class="main-brand">
-            <div><h1 style="color:var(--gov-blue); margin:0;">GRAM PANCHAYAT NANDGAON</h1></div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="60">
+        <div class="top-strip">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> | 
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
+                </span>
+            </div>
         </div>
-        <nav class="main-nav">
+        <div class="main-brand">
+            <div class="brand-info">
+                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
+                <div style="text-align: left;">
+                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+        </div>
+        <nav class="main-nav" id="sidebarMenu">
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="administration.html">Administration</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="schemes.html">Schemes</a></li>
-                <li><a href="works.html">Works</a></li>
-                <li><a href="gramsabha.html" class="active">Gram Sabha</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="rti.html">RTI</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li style="margin-left:auto;"><a href="admin.html" class="btn-login">Login</a></li>
+                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
+                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
+                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
+                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
+                <li><a href="gramsabha.html" class="active" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
+                <li style="margin-left: auto;">
+                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
+                        <span id="btn-login-txt">Login</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
 
-    <div class="container">
-        <h1 style="color:var(--gov-blue); border-bottom:3px solid var(--gov-orange); display:inline-block; padding-bottom:10px;">Gram Sabha Meetings</h1>
-        <div id="loader" style="margin-top:20px;">Loading meetings...</div>
-        <div id="meetingList" style="margin-top:20px;"></div>
-    </div>
+    <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px;">
+            Gram Sabha & Meetings
+        </h2>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
-            authDomain: "ecogrampanchayatmandur.firebaseapp.com",
-            projectId: "ecogrampanchayatmandur",
-            storageBucket: "ecogrampanchayatmandur.firebasestorage.app",
-            messagingSenderId: "474255490054",
-            appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
+        <div class="page-grid">
+            
+            <div>
+                <h3 style="margin-bottom: 20px; color: #dc3545;">
+                    <i class="fas fa-bullhorn"></i> <span id="txt-upcoming-title">Upcoming Meeting Notice</span>
+                </h3>
+                <div id="upcoming-container">
+                    <p style="color:#666;">Loading...</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="margin-bottom: 20px; color: var(--gov-blue);">
+                    <i class="fas fa-file-contract"></i> <span id="txt-past-title">Proceedings (Tharav)</span>
+                </h3>
+                <p id="txt-past-desc" style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Download minutes and resolutions of past meetings.</p>
+
+                <div id="proceedings-container" style="background: white; border: 1px solid #ddd; border-radius: 8px;">
+                    <p style="padding:15px; text-align:center; color:#666;">Loading...</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="gov-footer">
+        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function openMenu() {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+        }
+        function closeMenu() {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+        }
+
+        const translations = {
+            en: {
+                helpline: "Help Line",
+                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
+                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
+                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
+                
+                pageTitle: "Gram Sabha & Meetings",
+                upcomingTitle: "Upcoming Meeting Notice",
+                pastTitle: "Proceedings (Tharav)",
+                pastDesc: "Download minutes and resolutions of past meetings.",
+                
+                // Card Labels
+                lblDate: "Date", lblTime: "Time", lblVenue: "Venue", lblAgenda: "Agenda (Vishay Patrika)",
+                lblUpcomingTag: "Upcoming", lblNoRec: "No records found.", lblNoUpcoming: "No upcoming meetings scheduled.",
+                
+                footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
+            },
+            mr: {
+                helpline: "हेल्पलाइन",
+                title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
+                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
+                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+                
+                pageTitle: "ग्रामसभा आणि बैठका",
+                upcomingTitle: "आगामी ग्रामसभा सूचना",
+                pastTitle: " इतिवृत्त (ठराव)",
+                pastDesc: "मागील सभांचे इतिवृत्त आणि ठराव डाउनलोड करा.",
+                
+                // Card Labels
+                lblDate: "दिनांक", lblTime: "वेळ", lblVenue: "ठिकाण", lblAgenda: "विषय पत्रिका",
+                lblUpcomingTag: "आगामी", lblNoRec: "कोणतीही नोंद सापडली नाही.", lblNoUpcoming: "कोणतीही आगामी सभा नियोजित नाही.",
+                
+                footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
+            }
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        async function loadGS() {
-            try {
-                const q = query(collection(db, "gramsabha"), orderBy("createdAt", "desc"));
-                const snap = await getDocs(q);
-
-                document.getElementById('loader').style.display = 'none';
-
-                if (snap.empty) {
-                    document.getElementById('meetingList').innerHTML = "<p>No upcoming meetings scheduled.</p>";
-                    return;
-                }
-
-                let html = "";
-                snap.forEach(doc => {
-                    const m = doc.data();
-                    html += `
-                            <div class="meeting-card">
-                                <div class="meeting-date"><i class="far fa-calendar-alt"></i> ${m.date}</div>
-                                <h2 class="meeting-title">${m.title}</h2>
-                                <div class="meeting-info">
-                                    <span><i class="far fa-clock"></i> ${m.time}</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> ${m.venue}</span>
-                                </div>
-                                <p style="color:#555; margin-bottom:15px;"><strong>Agenda:</strong> ${m.agenda}</p>
-                                ${m.link ? `<a href="${m.link}" target="_blank" class="btn-agenda"><i class="fas fa-file-pdf"></i> Download Agenda/Notice</a>` : ''}
-                            </div>
-                        `;
-                });
-                document.getElementById('meetingList').innerHTML = html;
-
-            } catch (error) { console.error(error); }
+        function setLanguage(lang) {
+            const t = translations[lang];
+            
+            // Header
+            document.getElementById('txt-helpline').innerText = t.helpline;
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            
+            // Nav
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-about').innerText = t.navAbout;
+            document.getElementById('nav-admin').innerText = t.navAdmin;
+            document.getElementById('nav-services').innerText = t.navServices;
+            document.getElementById('nav-schemes').innerText = t.navSchemes;
+            document.getElementById('nav-works').innerText = t.navWorks;
+            document.getElementById('nav-gramsabha').innerText = t.navGram;
+            document.getElementById('nav-gallery').innerText = t.navGallery;
+            document.getElementById('nav-grievance').innerText = t.navGrievance;
+            document.getElementById('nav-rti').innerText = t.navRTI;
+            document.getElementById('nav-contact').innerText = t.navContact;
+            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            
+            // Page Content
+            document.getElementById('page-title').innerText = t.pageTitle;
+            document.getElementById('txt-upcoming-title').innerText = t.upcomingTitle;
+            document.getElementById('txt-past-title').innerText = t.pastTitle;
+            document.getElementById('txt-past-desc').innerText = t.pastDesc;
+            
+            // Footer
+            document.getElementById('txt-footer').innerText = t.footer;
+            
+            localStorage.setItem('gp_lang_pref', lang);
+            
+            // Reload meetings to apply translation labels
+            loadMeetings(lang);
         }
-        loadGS();
+
+        function loadMeetings(lang) {
+            const t = translations[lang];
+            const meetings = JSON.parse(localStorage.getItem('gp_gramsabha_data')) || [];
+            const upcomingDiv = document.getElementById('upcoming-container');
+            const pastDiv = document.getElementById('proceedings-container');
+            
+            const today = new Date().setHours(0,0,0,0);
+            let upcomingHtml = '';
+            let pastHtml = '';
+            let hasUpcoming = false;
+            let hasPast = false;
+
+            // Sort by Date (Descending)
+            meetings.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            meetings.forEach(m => {
+                const mDate = new Date(m.date).setHours(0,0,0,0);
+                
+                if (mDate >= today) {
+                    // UPCOMING
+                    hasUpcoming = true;
+                    // Format Agenda items
+                    const agendaItems = m.agenda ? m.agenda.split(',').map(i => `<li>${i.trim()}</li>`).join('') : '<li>General Discussion</li>';
+                    
+                    upcomingHtml += `
+                    <div class="meeting-box">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h4 style="margin: 0; font-size: 1.2rem;">${m.title}</h4>
+                            <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem;">${t.lblUpcomingTag}</span>
+                        </div>
+                        <p><strong><i class="far fa-calendar-alt"></i> ${t.lblDate}:</strong> ${m.date}</p>
+                        <p><strong><i class="far fa-clock"></i> ${t.lblTime}:</strong> ${m.time}</p>
+                        <p><strong><i class="fas fa-map-marker-alt"></i> ${t.lblVenue}:</strong> ${m.venue}</p>
+                        <hr>
+                        <h5 style="margin-top: 15px;">${t.lblAgenda}:</h5>
+                        <ul class="agenda-list">
+                            ${agendaItems}
+                        </ul>
+                    </div>`;
+                } else {
+                    // PAST
+                    hasPast = true;
+                    const linkBtn = m.link ? `<a href="${m.link}" target="_blank" style="border: 1px solid var(--gov-blue); background: white; color: var(--gov-blue); padding: 5px 10px; border-radius: 4px; text-decoration:none;"><i class="fas fa-download"></i> PDF</a>` : `<span style="color:#999; font-size:0.8rem;">No File</span>`;
+                    
+                    pastHtml += `
+                    <div style="padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${m.date}</strong><br>
+                            <small class="text-muted">${m.title}</small>
+                        </div>
+                        ${linkBtn}
+                    </div>`;
+                }
+            });
+
+            upcomingDiv.innerHTML = hasUpcoming ? upcomingHtml : `<p style="color:#666;">${t.lblNoUpcoming}</p>`;
+            pastDiv.innerHTML = hasPast ? pastHtml : `<p style="padding:15px; text-align:center; color:#666;">${t.lblNoRec}</p>`;
+        }
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
+            setLanguage(savedLang);
+        };
     </script>
 </body>
 </html>
