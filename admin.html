@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Gram Panchayat Mandur</title>
+    <title>Admin Dashboard | Gram Panchayat Nandgaon</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -69,6 +69,15 @@
 
         .btn-danger {
             background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background-color: #10b981;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -189,7 +198,7 @@
         <nav class="sidebar">
             <h3 style="padding:20px; border-bottom:1px solid #334155; color:white;">GP ADMIN</h3>
             <ul class="menu">
-                <li><a onclick="switchTab('manage-home', this)" class="active">Home Page</a></li>
+                <li><a onclick="switchTab('manage-home', this)" class="active">Home & News</a></li>
                 <li><a onclick="switchTab('manage-docs', this)">Documents & RTI</a></li>
                 <li><a onclick="switchTab('manage-admin', this)">Administration</a></li>
                 <li><a onclick="switchTab('manage-services', this)">Services</a></li>
@@ -205,6 +214,12 @@
             <div class="page-content">
 
                 <div id="manage-home" class="view-section active">
+                    <div class="admin-card" style="border-left: 5px solid #e11d48;">
+                        <h3>Breaking News / Scrolling Updates</h3>
+                        <textarea id="newsText" class="form-control" placeholder="Enter scrolling news text here..." rows="3"></textarea>
+                        <button id="btnSaveNews" class="btn-primary" style="width:auto; background-color:#e11d48;">Update News</button>
+                    </div>
+
                     <div class="admin-card">
                         <h3>Home Slider</h3>
                         <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 10px;">
@@ -216,13 +231,23 @@
                 </div>
 
                 <div id="manage-docs" class="view-section">
-                    <div class="admin-card">
-                        <h3>RTI Info</h3>
+                    <div class="admin-card" style="border-left: 5px solid var(--admin-accent);">
+                        <h3>RTI Officer Info</h3>
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                             <input type="text" id="rtiName" class="form-control" placeholder="Officer Name">
                             <input type="text" id="rtiContact" class="form-control" placeholder="Contact">
                         </div>
                         <button id="btnSaveRti" class="btn-primary" style="width:auto;">Save RTI</button>
+                    </div>
+
+                    <div class="admin-card" style="border-left: 5px solid #10b981;">
+                        <h3>Important Documents (Uploads)</h3>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 0.5fr; gap:10px;">
+                            <input type="text" id="docTitle" class="form-control" placeholder="Document Name (e.g. Tax List 2026)">
+                            <input type="text" id="docLink" class="form-control" placeholder="PDF Link (URL)">
+                            <button onclick="savePublicDoc()" class="btn-success" style="margin-top:0;">+ Add Doc</button>
+                        </div>
+                        <div id="listPublicDocs" style="margin-top:15px;"></div>
                     </div>
                 </div>
 
@@ -387,15 +412,17 @@
             loadList('members', 'listMembers', 'name');
             loadList('staff', 'listStaff', 'name');
             loadList('anganwadi', 'listAng', 'name');
-            loadList('services', 'listServices', 'title'); // NEW
+            loadList('services', 'listServices', 'title');
             loadList('gallery', 'adminGalleryList', 'url', true);
+            loadList('documents', 'listPublicDocs', 'name'); // NEW
             loadRti();
+            loadNews(); // NEW
         }
 
         // --- GENERIC HELPERS ---
         async function loadList(colName, divId, displayField, isImage = false) {
             const div = document.getElementById(divId); if (!div) return;
-            const q = query(collection(db, colName), orderBy("createdAt", "desc")); // Simplified sort for now
+            const q = query(collection(db, colName), orderBy("createdAt", "desc"));
             const snap = await getDocs(q);
             let html = '';
             if (isImage) {
@@ -412,7 +439,26 @@
 
         window.delDoc = async function (col, id, divId) { if (confirm("Delete?")) { await deleteDoc(doc(db, col, id)); loadAll(); } }
 
-        // --- SPECIFIC SAVES ---
+        // --- NEW FEATURES ---
+
+        // 1. PUBLIC DOCUMENTS
+        window.savePublicDoc = async () => {
+            const name = document.getElementById('docTitle').value;
+            const link = document.getElementById('docLink').value;
+            if (!name || !link) return alert("Enter Name and Link");
+            try { await addDoc(collection(db, "documents"), { name: name, link: link, createdAt: Date.now() }); alert("Doc Added!"); loadAll(); } catch (e) { alert(e.message); }
+        }
+
+        // 2. BREAKING NEWS
+        if (document.getElementById('btnSaveNews')) document.getElementById('btnSaveNews').addEventListener('click', async () => {
+            try { await setDoc(doc(db, "content", "news"), { text: document.getElementById('newsText').value }); alert("News Updated!"); } catch (e) { alert(e.message); }
+        });
+        async function loadNews() {
+            const s = await getDoc(doc(db, "content", "news"));
+            if (s.exists()) { document.getElementById('newsText').value = s.data().text; }
+        }
+
+        // --- EXISTING SAVES ---
         window.saveBannerSlide = async () => { await addDoc(collection(db, "banners"), { url: document.getElementById('bannerInput').value, createdAt: Date.now() }); loadAll(); }
         window.saveScheme = async () => { await addDoc(collection(db, "schemes"), { title: document.getElementById('schTitle').value, category: document.getElementById('schCat').value, benefit: document.getElementById('schBenefit').value, link: document.getElementById('schLink').value, desc: document.getElementById('schDesc').value, createdAt: Date.now() }); loadAll(); }
         window.saveWork = async () => { await addDoc(collection(db, "works"), { title: document.getElementById('workTitle').value, status: document.getElementById('workStatus').value, cost: document.getElementById('workEstCost').value, exp: document.getElementById('workExp').value, start: document.getElementById('workStart').value, end: document.getElementById('workEnd').value, photo: document.getElementById('workPhoto').value, createdAt: Date.now(), rank: document.getElementById('workRank').value }); loadAll(); }
@@ -422,20 +468,7 @@
         window.saveStaff = async () => { await addDoc(collection(db, "staff"), { name: document.getElementById('staffName').value, role: document.getElementById('staffRole').value, phone: document.getElementById('staffPhone').value, createdAt: Date.now() }); loadAll(); }
         window.saveAng = async () => { await addDoc(collection(db, "anganwadi"), { name: document.getElementById('angName').value, role: document.getElementById('angRole').value, center: document.getElementById('angCenter').value, phone: document.getElementById('angPhone').value, createdAt: Date.now() }); loadAll(); }
         window.savePhoto = async () => { await addDoc(collection(db, "gallery"), { url: document.getElementById('galUrl').value, caption: document.getElementById('galCaption').value, createdAt: Date.now() }); loadAll(); }
-
-        // SERVICES SAVE (NEW)
-        window.saveService = async () => {
-            await addDoc(collection(db, "services"), {
-                rank: document.getElementById('svcRank').value,
-                title: document.getElementById('svcTitle').value,
-                icon: document.getElementById('svcIcon').value,
-                link: document.getElementById('svcLink').value,
-                desc: document.getElementById('svcDesc').value,
-                createdAt: Date.now()
-            });
-            alert("Service Added!");
-            loadAll();
-        }
+        window.saveService = async () => { await addDoc(collection(db, "services"), { rank: document.getElementById('svcRank').value, title: document.getElementById('svcTitle').value, icon: document.getElementById('svcIcon').value, link: document.getElementById('svcLink').value, desc: document.getElementById('svcDesc').value, createdAt: Date.now() }); alert("Service Added!"); loadAll(); }
 
         // RTI
         if (document.getElementById('btnSaveRti')) document.getElementById('btnSaveRti').addEventListener('click', async () => { await setDoc(doc(db, "content", "rti"), { officerName: document.getElementById('rtiName').value, officerContact: document.getElementById('rtiContact').value }); alert("RTI Saved!"); });

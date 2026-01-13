@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GRAM PANCHAYAT MANDUR</title>
+    <title>GRAM PANCHAYAT NANDGAON</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -247,6 +247,37 @@
                 color: var(--gov-blue);
             }
 
+        /* --- DOCUMENTS TABLE (NEW) --- */
+        .docs-section {
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+            .doc-table th, .doc-table td {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                text-align: left;
+            }
+
+            .doc-table th {
+                background-color: var(--gov-blue);
+                color: white;
+            }
+
+        .btn-download {
+            color: var(--gov-orange);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
         /* --- FOOTER --- */
         .gov-footer {
             background-color: #1a1a1a;
@@ -394,7 +425,7 @@
     <header class="gov-header-group">
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
-                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: +91-9922003344</span>
                 <span>
                     <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
                     <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
@@ -406,7 +437,7 @@
                 <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
-                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <h1 id="txt-title">GRAM PANCHAYAT NANDGAON</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
@@ -415,17 +446,17 @@
         <nav class="main-nav" id="sidebarMenu">
             <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
             <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="administration.html">Administration</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="schemes.html">Schemes</a></li>
-                <li><a href="works.html">Works</a></li>
-                <li><a href="gramsabha.html">Gram Sabha</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="grievance.html">Grievance</a></li>
-                <li><a href="rti.html">RTI</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html" class="active" id="nav-home">Home</a></li>
+                <li><a href="about.html" id="nav-about">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin">Administration</a></li>
+                <li><a href="services.html" id="nav-services">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes">Schemes</a></li>
+                <li><a href="works.html" id="nav-works">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact">Contact</a></li>
                 <li style="margin-left: auto;"><a href="admin.html" class="btn-login">Login</a></li>
             </ul>
         </nav>
@@ -436,7 +467,7 @@
 
         <div class="hero-overlay">
             <div class="hero-content">
-                <h2 id="hero-title">Welcome to Mandur</h2>
+                <h2 id="hero-title">Welcome to Nandgaon</h2>
                 <p id="hero-desc">Digital Gateway to Our Village Development</p>
                 <a href="services.html" class="feature-card" style="display:inline-block; padding:10px 30px; background:var(--gov-orange); color:white; border:none;">Explore Services</a>
             </div>
@@ -447,7 +478,7 @@
         <div class="ticker-label"><i class="fas fa-bullhorn"></i> UPDATES</div>
         <div class="marquee-container">
             <div class="marquee-content" id="news-marquee">
-                Loading updates...
+                Loading latest news from Gram Panchayat Nandgaon...
             </div>
         </div>
     </div>
@@ -475,13 +506,30 @@
         </a>
     </div>
 
+    <div class="docs-section">
+        <h2 style="color:var(--gov-blue); border-left:5px solid var(--gov-orange); padding-left:15px; margin-bottom:20px;">Important Documents & Downloads</h2>
+        <div style="overflow-x:auto;">
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Document Name</th>
+                        <th style="width:100px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="public-docs-body">
+                    <tr><td colspan="2" style="text-align:center;">Loading documents...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <footer class="gov-footer">
         <div class="footer-content">
             <div class="footer-col">
                 <h4>Contact Us</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Gram Panchayat Mandur<br>Tal: Gaganbawada, Dist: Kolhapur</p>
+                <p><i class="fas fa-map-marker-alt"></i> Gram Panchayat Nandgaon<br>Tal: Gaganbawada, Dist: Kolhapur</p>
                 <p><i class="fas fa-phone"></i> +91-9922003344</p>
-                <p><i class="fas fa-envelope"></i> contact@Mandur-gp.in</p>
+                <p><i class="fas fa-envelope"></i> contact@nandgaon-gp.in</p>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -493,13 +541,13 @@
             </div>
         </div>
         <div class="copyright">
-            <p>© 2026 GRAM PANCHAYAT Mandur. All Rights Reserved.</p>
+            <p>© 2026 GRAM PANCHAYAT NANDGAON. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
@@ -513,40 +561,66 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // SLIDER LOGIC
-        async function loadBanners() {
-            const container = document.getElementById('hero-slider');
-            const q = query(collection(db, "banners"), orderBy("createdAt", "desc"));
-            const snap = await getDocs(q);
-
-            if (!snap.empty) {
-                // Remove default slide
-                const defaultSlide = container.querySelector('.slide');
-                if (defaultSlide) defaultSlide.remove();
-
-                let slides = [];
-                snap.forEach(doc => {
-                    const div = document.createElement('div');
-                    div.className = 'slide';
-                    div.style.backgroundImage = `url('${doc.data().url}')`;
-                    container.insertBefore(div, container.firstChild); // Insert before overlay
-                    slides.push(div);
-                });
-
-                // Auto Rotate
-                let current = 0;
-                slides[0].classList.add('active');
-                if (slides.length > 1) {
-                    setInterval(() => {
-                        slides[current].classList.remove('active');
-                        current = (current + 1) % slides.length;
-                        slides[current].classList.add('active');
-                    }, 4000); // 4 Seconds
+        async function loadHomeData() {
+            // 1. SLIDER
+            const bannerContainer = document.getElementById('hero-slider');
+            try {
+                const qBanner = query(collection(db, "banners"), orderBy("createdAt", "desc"));
+                const snapBanner = await getDocs(qBanner);
+                if (!snapBanner.empty) {
+                    const defaultSlide = bannerContainer.querySelector('.slide');
+                    if (defaultSlide) defaultSlide.remove();
+                    let slides = [];
+                    snapBanner.forEach(doc => {
+                        const div = document.createElement('div');
+                        div.className = 'slide';
+                        div.style.backgroundImage = `url('${doc.data().url}')`;
+                        bannerContainer.insertBefore(div, bannerContainer.firstChild);
+                        slides.push(div);
+                    });
+                    let current = 0;
+                    slides[0].classList.add('active');
+                    if (slides.length > 1) {
+                        setInterval(() => {
+                            slides[current].classList.remove('active');
+                            current = (current + 1) % slides.length;
+                            slides[current].classList.add('active');
+                        }, 4000);
+                    }
                 }
-            }
+            } catch (e) { console.error("Banner error", e); }
+
+            // 2. NEWS
+            try {
+                const newsSnap = await getDoc(doc(db, "content", "news"));
+                if (newsSnap.exists()) {
+                    document.getElementById('news-marquee').innerText = newsSnap.data().text + "  |  " + newsSnap.data().text;
+                }
+            } catch (e) { console.error("News error", e); }
+
+            // 3. PUBLIC DOCUMENTS
+            try {
+                const qDocs = query(collection(db, "documents"), orderBy("createdAt", "desc"));
+                const snapDocs = await getDocs(qDocs);
+                const docBody = document.getElementById('public-docs-body');
+
+                if (snapDocs.empty) {
+                    docBody.innerHTML = '<tr><td colspan="2" style="text-align:center;">No documents available currently.</td></tr>';
+                } else {
+                    let html = '';
+                    snapDocs.forEach(d => {
+                        const doc = d.data();
+                        html += `<tr>
+                                <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
+                                <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
+                            </tr>`;
+                    });
+                    docBody.innerHTML = html;
+                }
+            } catch (e) { console.error("Docs error", e); }
         }
 
-        loadBanners();
+        loadHomeData();
 
         // UI Helpers
         window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
