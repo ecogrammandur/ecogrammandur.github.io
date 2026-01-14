@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grievance Redressal | Gram Panchayat Mandur</title>
+    <title>Development Works | Gram Panchayat Mandur</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* (Use same Header/Footer CSS as index.html) */
+        /* --- CORE VARIABLES (Matched from Index) --- */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
+            --text-light: #ffffff;
             --header-height-desktop: 175px;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
         }
 
-        /* HEADER & NAV STYLES (Paste from index.html if needed, keeping it simple here) */
+        /* --- HEADER & BRANDING --- */
         .gov-header-group {
             position: fixed;
             top: 0;
@@ -32,132 +33,379 @@
             background: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        /* ... (Include full header CSS here or link style.css) ... */
 
-        /* FORM STYLES */
-        .form-container {
-            max-width: 700px;
-            margin: 40px auto;
+        .top-strip {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .main-brand {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid #dc3545;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+        #txt-title {
+            margin: 0;
+            font-size: 1.8rem;
             color: var(--gov-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.2;
         }
 
-        .form-control {
+        #txt-subtitle {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--gov-blue) !important;
+            font-weight: 600;
+        }
+
+        /* --- NAVIGATION --- */
+        .main-nav {
+            background-color: var(--gov-blue);
+        }
+
+            .main-nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .main-nav li a {
+                display: block;
+                padding: 12px 18px;
+                color: white;
+                text-decoration: none;
+                font-weight: 500;
+                transition: 0.3s;
+                white-space: nowrap;
+            }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: var(--gov-orange);
+                }
+
+        .btn-login {
+            background: #dc3545 !important;
+        }
+
+        /* Mobile specific elements */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            body {
+                padding-top: 100px;
+            }
+
+            .top-strip, .landmark-desktop {
+                display: none;
+            }
+
+            .mobile-toggle-btn {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.8rem;
+                color: var(--gov-blue);
+                cursor: pointer;
+            }
+
+            .main-brand img {
+                height: 50px;
+            }
+
+            #txt-title {
+                font-size: 1.2rem;
+            }
+
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 1001;
+            }
+
+            .main-nav {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1002;
+                transition: 0.3s;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+                overflow-y: auto;
+            }
+
+                .main-nav.active {
+                    left: 0;
+                }
+
+                .main-nav ul {
+                    flex-direction: column;
+                }
+
+                .main-nav li {
+                    width: 100%;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+
+            .sidebar-close-btn {
+                display: block;
+                width: 100%;
+                text-align: right;
+                padding: 15px;
+                color: white;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* --- Works Page Grid Styles --- */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .work-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border: 1px solid #eee;
+        }
+
+            .work-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            }
+
+        .work-img {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            background-color: #f4f6f9;
         }
 
-        .btn-submit {
-            background: #dc3545;
+        .work-body {
+            padding: 20px;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .status-Completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-Ongoing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-Proposed {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .work-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gov-blue);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #555;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 5px;
+        }
+
+            .info-row:last-child {
+                border-bottom: none;
+            }
+
+        .info-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Button Styles */
+        .btn-main {
+            background-color: var(--gov-blue);
             color: white;
             border: none;
             padding: 12px 30px;
             border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
             cursor: pointer;
-            width: 100%;
+            font-weight: 600;
         }
-
-            .btn-submit:hover {
-                background: #b02a37;
-            }
     </style>
 </head>
 <body>
 
-    <main style="padding: 0 20px;">
-        <div class="form-container">
-            <h2 style="text-align: center; color: var(--gov-blue); margin-bottom: 30px;">
-                <i class="fas fa-exclamation-circle" style="color: #dc3545;"></i> Online Complaint / Takrar
-            </h2>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
-            <div class="form-group">
-                <label class="form-label">Full Name / पूर्ण नाव</label>
-                <input type="text" id="compName" class="form-control" placeholder="Enter your name">
+    <header class="gov-header-group">
+        <div class="top-strip">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
+                </span>
             </div>
-
-            <div class="form-group">
-                <label class="form-label">Mobile Number / मोबाईल नंबर</label>
-                <input type="number" id="compPhone" class="form-control" placeholder="10-digit mobile number">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Complaint Type / तक्रार प्रकार</label>
-                <select id="compType" class="form-control">
-                    <option value="Water Supply">Water Supply / पाणी पुरवठा</option>
-                    <option value="Street Light">Street Light / दिवाबत्ती</option>
-                    <option value="Cleaning">Cleaning & Drainage / स्वच्छता व गटार</option>
-                    <option value="Construction">Illegal Construction / अतिक्रमण</option>
-                    <option value="Other">Other / इतर</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Description / सविस्तर माहिती</label>
-                <textarea id="compDesc" class="form-control" rows="5" placeholder="Describe your issue here..."></textarea>
-            </div>
-
-            <button onclick="submitComplaint()" class="btn-submit">Submit Complaint</button>
         </div>
-    </main>
+        <div class="main-brand">
+            <div class="brand-info">
+                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
+                <div style="text-align: left;">
+                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+        </div>
+        <nav class="main-nav" id="sidebarMenu">
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
+                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
+                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
+                <li><a href="works.html" class="active" id="nav-works" onclick="closeMenu()">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
+                <li style="margin-left: auto;">
+                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
+                        <span id="btn-login-txt">Login</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <body>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        <main style="padding: 0 20px;">
+            <div class="form-container">
+                <h2 style="text-align: center; color: var(--gov-blue); margin-bottom: 30px;">
+                    <i class="fas fa-exclamation-circle" style="color: #dc3545;"></i> Online Complaint / Takrar
+                </h2>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
-            authDomain: "ecogrampanchayatmandur.firebaseapp.com",
-            projectId: "ecogrampanchayatmandur",
-            storageBucket: "ecogrampanchayatmandur.firebasestorage.app",
-            messagingSenderId: "474255490054",
-            appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
-        };
+                <div class="form-group">
+                    <label class="form-label">Full Name / पूर्ण नाव</label>
+                    <input type="text" id="compName" class="form-control" placeholder="Enter your name">
+                </div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+                <div class="form-group">
+                    <label class="form-label">Mobile Number / मोबाईल नंबर</label>
+                    <input type="number" id="compPhone" class="form-control" placeholder="10-digit mobile number">
+                </div>
 
-        window.submitComplaint = async function () {
-            const name = document.getElementById('compName').value;
-            const phone = document.getElementById('compPhone').value;
-            const type = document.getElementById('compType').value;
-            const desc = document.getElementById('compDesc').value;
+                <div class="form-group">
+                    <label class="form-label">Complaint Type / तक्रार प्रकार</label>
+                    <select id="compType" class="form-control">
+                        <option value="Water Supply">Water Supply / पाणी पुरवठा</option>
+                        <option value="Street Light">Street Light / दिवाबत्ती</option>
+                        <option value="Cleaning">Cleaning & Drainage / स्वच्छता व गटार</option>
+                        <option value="Construction">Illegal Construction / अतिक्रमण</option>
+                        <option value="Other">Other / इतर</option>
+                    </select>
+                </div>
 
-            if (!name || !phone || !desc) return alert("Please fill all fields");
+                <div class="form-group">
+                    <label class="form-label">Description / सविस्तर माहिती</label>
+                    <textarea id="compDesc" class="form-control" rows="5" placeholder="Describe your issue here..."></textarea>
+                </div>
 
-            try {
-                await addDoc(collection(db, "complaints"), {
-                    name: name,
-                    phone: phone,
-                    type: type,
-                    desc: desc,
-                    status: 'Open',
-                    createdAt: Date.now()
-                });
-                alert("✅ Complaint Registered Successfully!\nYour ID has been sent to the Gram Panchayat.");
-                location.reload();
-            } catch (e) {
-                alert("Error: " + e.message);
+                <button onclick="submitComplaint()" class="btn-submit">Submit Complaint</button>
+            </div>
+        </main>
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+            import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
+                authDomain: "ecogrampanchayatmandur.firebaseapp.com",
+                projectId: "ecogrampanchayatmandur",
+                storageBucket: "ecogrampanchayatmandur.firebasestorage.app",
+                messagingSenderId: "474255490054",
+                appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            window.submitComplaint = async function () {
+                const name = document.getElementById('compName').value;
+                const phone = document.getElementById('compPhone').value;
+                const type = document.getElementById('compType').value;
+                const desc = document.getElementById('compDesc').value;
+
+                if (!name || !phone || !desc) return alert("Please fill all fields");
+
+                try {
+                    await addDoc(collection(db, "complaints"), {
+                        name: name,
+                        phone: phone,
+                        type: type,
+                        desc: desc,
+                        status: 'Open',
+                        createdAt: Date.now()
+                    });
+                    alert("✅ Complaint Registered Successfully!\nYour ID has been sent to the Gram Panchayat.");
+                    location.reload();
+                } catch (e) {
+                    alert("Error: " + e.message);
+                }
             }
-        }
-    </script>
-</body>
+        </script>
+    </body>
 </html>
