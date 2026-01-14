@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* CORE VARIABLES */
+        /* --- CORE VARIABLES --- */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
@@ -23,7 +23,7 @@
             padding-top: var(--header-height-desktop);
         }
 
-        /* HEADER Styles (Same as Index) */
+        /* --- HEADER STYLES --- */
         .gov-header-group {
             position: fixed;
             top: 0;
@@ -73,7 +73,7 @@
             font-weight: 600;
         }
 
-        /* NAV */
+        /* --- NAVIGATION --- */
         .main-nav {
             background-color: var(--gov-blue);
         }
@@ -106,59 +106,65 @@
             background: #dc3545 !important;
         }
 
-        /* CONTACT PAGE SPECIFIC */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-top: 30px;
-        }
-
-        .info-card {
+        /* --- RTI PAGE SPECIFIC CSS (Added this) --- */
+        .rti-card {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            height: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--gov-blue);
         }
 
-        .info-item {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            align-items: flex-start;
+        .rti-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-            .info-item i {
-                font-size: 1.5rem;
-                color: var(--gov-orange);
-                margin-top: 5px;
+        .rti-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+            .doc-table th {
+                background: #f1f1f1;
+                text-align: left;
+                padding: 12px 15px;
+                border-bottom: 2px solid #ddd;
+                color: var(--gov-blue);
             }
 
-        .info-content h4 {
-            margin: 0 0 5px 0;
-            color: var(--gov-blue);
+            .doc-table td {
+                padding: 12px 15px;
+                border-bottom: 1px solid #eee;
+                vertical-align: middle;
+            }
+
+        .btn-download {
+            background-color: #d32f2f; /* PDF Red */
+            color: white;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            display: inline-block;
+            transition: 0.3s;
         }
 
-        .info-content p {
-            margin: 0;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .map-container {
-            height: 100%;
-            min-height: 300px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .map-frame {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+            .btn-download:hover {
+                background-color: #b71c1c;
+            }
 
         /* Mobile specific elements default hidden */
         .mobile-toggle-btn, .sidebar-close-btn, .menu {
@@ -196,7 +202,7 @@
                 grid-template-columns: 1fr;
             }
 
-            /* Overlay Background (Matches your HTML class "menu") */
+            /* Overlay Background */
             .menu, .menu-overlay {
                 position: fixed;
                 top: 0;
@@ -205,14 +211,13 @@
                 height: 100%;
                 background: rgba(0,0,0,0.5);
                 z-index: 1001;
-                /* display: none; is handled by JS toggling usually, or default CSS above */
             }
 
             /* Sliding Sidebar */
             .main-nav {
                 position: fixed;
                 top: 0;
-                left: -280px; /* Hidden off-screen */
+                left: -280px;
                 width: 280px;
                 height: 100vh;
                 z-index: 1002;
@@ -222,7 +227,7 @@
             }
 
                 .main-nav.active {
-                    left: 0; /* Slides in */
+                    left: 0;
                 }
 
                 .main-nav ul {
@@ -248,6 +253,49 @@
         }
     </style>
 </head>
+<body>
+
+    <div class="menu" id="menuOverlay" onclick="closeMenu()"></div>
+
+    <header class="gov-header-group">
+        <div class="top-strip">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
+                <span><i class="fas fa-phone-alt"></i> Help Line: +91-9922003344</span>
+                <span>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
+                </span>
+            </div>
+        </div>
+        <div class="main-brand">
+            <div class="brand-info">
+                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
+                <div style="text-align: left;">
+                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+        </div>
+        <nav class="main-nav" id="sidebarMenu">
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="administration.html">Administration</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="works.html">Works</a></li>
+                <li><a href="gramsabha.html">Gram Sabha</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="grievance.html">Grievance</a></li>
+                <li><a href="rti.html" class="active">RTI</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li style="margin-left: auto;"><a href="admin.html" class="btn-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
 
@@ -307,30 +355,33 @@
         const db = getFirestore(app);
 
         // UI Helpers
-        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+        window.openMenu = function () {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+        }
+        window.closeMenu = function () {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+        }
 
         // --- TRANSLATION LOGIC ---
         const translations = {
             en: {
-                helpline: "Help Line",
-                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
-                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
-                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login"
+                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur"
             },
             mr: {
-                helpline: "हेल्पलाइन",
-                title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
-                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
-                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन"
+                title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर"
             }
         };
 
         window.setLanguage = function (lang) {
             const t = translations[lang];
             // Header & Nav Text
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            const titleEl = document.getElementById('txt-title');
+            if (titleEl) {
+                titleEl.innerText = t.title;
+                document.getElementById('txt-subtitle').innerText = t.subtitle;
+            }
             localStorage.setItem('gp_lang_pref', lang);
         }
 
@@ -361,9 +412,9 @@
                     snapDocs.forEach(d => {
                         const doc = d.data();
                         html += `<tr>
-                                <td><i class="fas fa-file-pdf" style="color:#d32f2f; margin-right:10px;"></i> ${doc.name}</td>
-                                <td><a href="${doc.link}" target="_blank" class="btn-download">Download PDF <i class="fas fa-download"></i></a></td>
-                            </tr>`;
+                                    <td><i class="fas fa-file-pdf" style="color:#d32f2f; margin-right:10px;"></i> ${doc.name}</td>
+                                    <td><a href="${doc.link}" target="_blank" class="btn-download">Download PDF <i class="fas fa-download"></i></a></td>
+                                </tr>`;
                     });
                     docBody.innerHTML = html;
                 }
