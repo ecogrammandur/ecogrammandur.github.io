@@ -206,6 +206,7 @@
                 <li><a onclick="switchTab('manage-works', this)">Works</a></li>
                 <li><a onclick="switchTab('manage-gramsabha', this)">Gram Sabha</a></li>
                 <li><a onclick="switchTab('manage-gallery', this)">Gallery</a></li>
+                <li><a onclick="switchTab('manage-complaints', this)">Complaints / Takrar</a></li>
                 <li><a id="btnLogout" style="color:#f87171;">Logout</a></li>
             </ul>
         </nav>
@@ -374,6 +375,14 @@
                         <div id="adminGalleryList" style="margin-top:10px; display:grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap:10px;"></div>
                     </div>
                 </div>
+                <div id="manage-complaints" class="view-section">
+                    <div class="admin-card" style="border-left: 5px solid #ef4444;">
+                        <h3>Citizen Complaints & Grievances</h3>
+                        <div id="listComplaints" style="margin-top:15px;">
+                            <p>Loading complaints...</p>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </main>
@@ -482,6 +491,42 @@
             document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
         }
+		// --- 8. COMPLAINTS ---
+		// Add this to your loadAllData() function:
+		// loadCloudComplaints();
+
+		window.loadCloudComplaints = async function () {
+			const div = document.getElementById('listComplaints');
+			if (!div) return;
+
+			const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
+			const snap = await getDocs(q);
+
+			if (snap.empty) {
+				div.innerHTML = "<p>No complaints received yet.</p>";
+				return;
+			}
+
+			let html = '<table class="data-table"><tr><th>Date</th><th>Name/Phone</th><th>Issue</th><th>Action</th></tr>';
+			snap.forEach(d => {
+				const c = d.data();
+				const date = new Date(c.createdAt).toLocaleDateString();
+				html += `<tr>
+            <td>${date}</td>
+            <td><strong>${c.name}</strong><br>${c.phone}</td>
+            <td><strong style="color:#d32f2f">[${c.type}]</strong><br>${c.desc}</td>
+            <td><button onclick="deleteComplaint('${d.id}')" class="btn-success">Resolve</button></td>
+        </tr>`;
+			});
+			div.innerHTML = html + '</table>';
+		}
+
+		window.deleteComplaint = async function (id) {
+			if (confirm("Mark this complaint as Resolved/Done?")) {
+				await deleteDoc(doc(db, "complaints", id));
+				loadCloudComplaints();
+			}
+		}
     </script>
 </body>
 </html>

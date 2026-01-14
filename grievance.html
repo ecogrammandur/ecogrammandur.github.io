@@ -3,300 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grievance | Gram Panchayat Mandur</title>
+    <title>Grievance Redressal | Gram Panchayat Nandgaon</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- CORE VARIABLES (Matched from Index) --- */
+        /* (Use same Header/Footer CSS as index.html) */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
-            --text-light: #ffffff;
             --header-height-desktop: 175px;
         }
 
-        body { 
-            margin: 0; padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #f4f6f9; 
-            padding-top: var(--header-height-desktop); 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+            padding-top: var(--header-height-desktop);
         }
 
-        /* --- HEADER & BRANDING --- */
+        /* HEADER & NAV STYLES (Paste from index.html if needed, keeping it simple here) */
         .gov-header-group {
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 1000; background: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
-        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
-        .brand-info { display: flex; align-items: center; gap: 15px; }
-        
-        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
-        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
+        /* ... (Include full header CSS here or link style.css) ... */
 
-        /* --- NAVIGATION --- */
-        .main-nav { background-color: var(--gov-blue); }
-        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
-        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
-        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
-        .btn-login { background: #dc3545 !important; }
-
-        /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
-
-        @media (max-width: 992px) {
-            body { padding-top: 100px; }
-            .top-strip, .landmark-desktop { display: none; }
-            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
-            .main-brand img { height: 50px; }
-            #txt-title { font-size: 1.2rem; }
-            
-            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
-            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
-            .main-nav.active { left: 0; }
-            .main-nav ul { flex-direction: column; }
-            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
-        }
-
-        /* --- Page Specific Styles --- */
-        .wa-container {
-            max-width: 600px;
-            margin: 50px auto;
+        /* FORM STYLES */
+        .form-container {
+            max-width: 700px;
+            margin: 40px auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            overflow: hidden;
-            border-top: 6px solid #25D366;
-        }
-        .wa-header {
-            background-color: #f0fdf4;
-            padding: 30px 20px;
-            border-bottom: 1px solid #e1e1e1;
-        }
-        .wa-body {
-            padding: 40px 20px;
-        }
-        .qr-frame {
-            display: inline-block;
-            padding: 15px;
-            border: 2px dashed #25D366;
+            padding: 40px;
             border-radius: 10px;
-            margin-bottom: 25px;
-            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #dc3545;
         }
-        .qr-img {
-            width: 250px;
-            height: 250px;
-            object-fit: contain;
+
+        .form-group {
+            margin-bottom: 20px;
         }
-        .wa-btn {
-            background-color: #25D366;
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gov-blue);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-submit {
+            background: #dc3545;
             color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
             font-weight: bold;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            cursor: pointer;
+            width: 100%;
         }
-        .wa-btn:hover {
-            transform: translateY(-3px);
-            background-color: #128C7E;
-            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
-        }
+
+            .btn-submit:hover {
+                background: #b02a37;
+            }
     </style>
 </head>
 <body>
 
-    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+    <main style="padding: 0 20px;">
+        <div class="form-container">
+            <h2 style="text-align: center; color: var(--gov-blue); margin-bottom: 30px;">
+                <i class="fas fa-exclamation-circle" style="color: #dc3545;"></i> Online Complaint / Takrar
+            </h2>
 
-    <header class="gov-header-group">
-        <div class="top-strip">
-            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
-                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
-                <span>
-                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> | 
-                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
-                </span>
+            <div class="form-group">
+                <label class="form-label">Full Name / पूर्ण नाव</label>
+                <input type="text" id="compName" class="form-control" placeholder="Enter your name">
             </div>
+
+            <div class="form-group">
+                <label class="form-label">Mobile Number / मोबाईल नंबर</label>
+                <input type="number" id="compPhone" class="form-control" placeholder="10-digit mobile number">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Complaint Type / तक्रार प्रकार</label>
+                <select id="compType" class="form-control">
+                    <option value="Water Supply">Water Supply / पाणी पुरवठा</option>
+                    <option value="Street Light">Street Light / दिवाबत्ती</option>
+                    <option value="Cleaning">Cleaning & Drainage / स्वच्छता व गटार</option>
+                    <option value="Construction">Illegal Construction / अतिक्रमण</option>
+                    <option value="Other">Other / इतर</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description / सविस्तर माहिती</label>
+                <textarea id="compDesc" class="form-control" rows="5" placeholder="Describe your issue here..."></textarea>
+            </div>
+
+            <button onclick="submitComplaint()" class="btn-submit">Submit Complaint</button>
         </div>
-        <div class="main-brand">
-            <div class="brand-info">
-                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
-                <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
-                <div style="text-align: left;">
-                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
-                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
-                </div>
-            </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
-        </div>
-        <nav class="main-nav" id="sidebarMenu">
-            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
-            <ul>
-                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
-                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
-                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
-                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
-                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
-                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
-                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
-                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
-                <li><a href="grievance.html" class="active" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
-                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
-                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
-                <li style="margin-left: auto;">
-                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
-                        <span id="btn-login-txt">Login</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        
-        <div class="wa-container">
-            <div class="wa-header">
-                <i class="fab fa-whatsapp" style="font-size: 4rem; color: #25D366; margin-bottom: 15px;"></i>
-                <h2 id="wa-title" style="color: #075e54; margin-bottom: 5px;">Citizen Grievance Group</h2>
-                <p id="wa-subtitle" style="color: #666;">Official WhatsApp Complaint Redressal System</p>
-            </div>
-
-            <div class="wa-body">
-                <p id="wa-desc" style="margin-bottom: 25px; font-size: 1.1rem; color: #444;">
-                    Scan the QR code below or click the button to join our official WhatsApp Complaint Group.
-                </p>
-
-                <div id="qr-display" class="qr-frame" style="display: none;">
-                    <img id="wa-qr-img" src="" class="qr-img" alt="Scan to Join">
-                </div>
-                
-                <div id="no-qr-msg" style="display: none; color: #999; margin-bottom: 20px;">
-                    (QR Code updating...)
-                </div>
-
-                <br>
-
-                <a id="wa-link-btn" href="#" target="_blank" class="wa-btn">
-                    <i class="fab fa-whatsapp"></i> <span id="btn-join-txt">Join Group Now</span>
-                </a>
-            </div>
-        </div>
-
     </main>
 
-    <footer class="gov-footer">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <script>
-        function openMenu() {
-            document.getElementById('sidebarMenu').classList.add('active');
-            document.getElementById('menuOverlay').style.display = 'block';
-        }
-        function closeMenu() {
-            document.getElementById('sidebarMenu').classList.remove('active');
-            document.getElementById('menuOverlay').style.display = 'none';
-        }
-
-        const translations = {
-            en: {
-                helpline: "Help Line",
-                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
-                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
-                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
-                
-                waTitle: "Citizen Grievance Group",
-                waSubtitle: "Official WhatsApp Complaint Redressal System",
-                waDesc: "Scan the QR code below or click the button to join our official WhatsApp Complaint Group.",
-                btnJoin: "Join Group Now",
-                
-                footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
-            },
-            mr: {
-                helpline: "हेल्पलाइन",
-                title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
-                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
-                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
-                
-                waTitle: "नागरिक तक्रार निवारण गट",
-                waSubtitle: "अधिकृत व्हॉट्सअ‍ॅप तक्रार निवारण प्रणाली",
-                waDesc: "आमच्या अधिकृत व्हॉट्सअ‍ॅप तक्रार गटात सामील होण्यासाठी खालील QR कोड स्कॅन करा किंवा बटणावर क्लिक करा.",
-                btnJoin: "आत्ताच ग्रुप जॉईन करा",
-                
-                footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
-            }
+        const firebaseConfig = {
+            apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
+            authDomain: "ecogrampanchayatmandur.firebaseapp.com",
+            projectId: "ecogrampanchayatmandur",
+            storageBucket: "ecogrampanchayatmandur.firebasestorage.app",
+            messagingSenderId: "474255490054",
+            appId: "1:474255490054:web:f0a1ed7fdb51fd339c5787"
         };
 
-        function setLanguage(lang) {
-            const t = translations[lang];
-            
-            // Header
-            document.getElementById('txt-helpline').innerText = t.helpline;
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
-            
-            // Nav
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
-            
-            // Page Content
-            document.getElementById('wa-title').innerText = t.waTitle;
-            document.getElementById('wa-subtitle').innerText = t.waSubtitle;
-            document.getElementById('wa-desc').innerText = t.waDesc;
-            document.getElementById('btn-join-txt').innerText = t.btnJoin;
-            
-            // Footer
-            document.getElementById('txt-footer').innerText = t.footer;
-            
-            localStorage.setItem('gp_lang_pref', lang);
-        }
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        window.onload = function() {
-            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
-            setLanguage(savedLang);
+        window.submitComplaint = async function () {
+            const name = document.getElementById('compName').value;
+            const phone = document.getElementById('compPhone').value;
+            const type = document.getElementById('compType').value;
+            const desc = document.getElementById('compDesc').value;
 
-            // --- LOAD WHATSAPP DATA ---
-            const waSettings = JSON.parse(localStorage.getItem('gp_wa_settings'));
-            
-            if (waSettings && waSettings.link) {
-                // Set Link
-                document.getElementById('wa-link-btn').href = waSettings.link;
-                
-                // Set QR if exists
-                if (waSettings.qr) {
-                    const qrImg = document.getElementById('wa-qr-img');
-                    qrImg.src = waSettings.qr;
-                    document.getElementById('qr-display').style.display = 'inline-block';
-                } else {
-                    document.getElementById('no-qr-msg').style.display = 'block';
-                }
-            } else {
-                // If no settings found
-                document.getElementById('wa-link-btn').style.background = '#ccc';
-                document.getElementById('wa-link-btn').style.pointerEvents = 'none'; 
-                // We keep text dynamic via translation, but maybe append " (Not Active)" if needed
-                document.getElementById('no-qr-msg').style.display = 'block';
+            if (!name || !phone || !desc) return alert("Please fill all fields");
+
+            try {
+                await addDoc(collection(db, "complaints"), {
+                    name: name,
+                    phone: phone,
+                    type: type,
+                    desc: desc,
+                    status: 'Open',
+                    createdAt: Date.now()
+                });
+                alert("✅ Complaint Registered Successfully!\nYour ID has been sent to the Gram Panchayat.");
+                location.reload();
+            } catch (e) {
+                alert("Error: " + e.message);
             }
-        };
+        }
     </script>
 </body>
 </html>

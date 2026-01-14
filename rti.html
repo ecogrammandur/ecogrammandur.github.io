@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTI | GRAM PANCHAYAT MANDUR</title>
+    <title>RTI & Public Documents | Gram Panchayat Nandgaon</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Keep existing styles */
+        /* --- CSS VARIABLES & RESET --- */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
@@ -23,6 +23,7 @@
             padding-top: var(--header-height-desktop);
         }
 
+        /* HEADER & NAV (Same as Index) */
         .gov-header-group {
             position: fixed;
             top: 0;
@@ -104,53 +105,66 @@
             background: #dc3545 !important;
         }
 
-        .rti-container {
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 0 20px;
-            line-height: 1.6;
-        }
-
+        /* RTI OFFICER CARD */
         .rti-card {
             background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            border-top: 4px solid var(--gov-orange);
-        }
-
-        .officer-box {
-            background: #f9f9f9;
-            padding: 20px;
             border-left: 5px solid var(--gov-blue);
-            margin-top: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-radius: 8px;
         }
 
-        h2 {
+        .rti-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rti-value {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* DOCUMENTS TABLE */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+            .doc-table th, .doc-table td {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                text-align: left;
+            }
+
+            .doc-table th {
+                background-color: var(--gov-orange);
+                color: white;
+            }
+
+        .btn-download {
             color: var(--gov-blue);
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            border: 1px solid var(--gov-blue);
+            padding: 5px 15px;
+            border-radius: 4px;
+            transition: 0.2s;
         }
 
-        .rti-list {
-            list-style: none;
-            padding: 0;
-        }
-
-            .rti-list li {
-                margin-bottom: 15px;
-                display: flex;
-                align-items: flex-start;
-                gap: 10px;
+            .btn-download:hover {
+                background: var(--gov-blue);
+                color: white;
             }
 
-            .rti-list i {
-                color: var(--gov-orange);
-                margin-top: 5px;
-            }
-
+        /* MOBILE */
         .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
             display: none;
         }
@@ -230,12 +244,13 @@
     </style>
 </head>
 <body>
+
     <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
-                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span><i class="fas fa-phone-alt"></i> Help Line: +91-9922003344</span>
                 <span>
                     <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
                     <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
@@ -247,7 +262,7 @@
                 <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
-                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <h1 id="txt-title">GRAM PANCHAYAT NANDGAON</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
@@ -256,64 +271,67 @@
         <nav class="main-nav" id="sidebarMenu">
             <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
             <ul>
-                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
-                <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
-                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
-                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
-                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
-                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
-                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
-                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
-                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
-                <li><a href="rti.html" class="active" id="nav-rti" onclick="closeMenu()">RTI</a></li>
-                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
-                <li style="margin-left: auto;">
-                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
-                        <span id="btn-login-txt">Login</span>
-                    </a>
-                </li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="administration.html">Administration</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="works.html">Works</a></li>
+                <li><a href="gramsabha.html">Gram Sabha</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="grievance.html">Grievance</a></li>
+                <li><a href="rti.html" class="active">RTI</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li style="margin-left: auto;"><a href="admin.html" class="btn-login">Login</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="rti-container">
-        <h1 id="rti-main-title" style="text-align: center; color: var(--gov-blue); margin-bottom: 40px;">Right to Information (RTI)</h1>
+    <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+
+        <h2 style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; color:var(--gov-blue); margin-bottom: 30px;">
+            Right to Information (RTI) & Public Documents
+        </h2>
 
         <div class="rti-card">
-            <h2 id="rti-sec-1">RTI Act 2005</h2>
-            <p id="rti-text-1">The Right to Information Act 2005 mandates timely response to citizen requests for government information. It is an initiative to provide transparency and accountability in the working of every public authority.</p>
-        </div>
-
-        <div class="rti-card">
-            <h2 id="rti-sec-2">Public Information Officer (PIO)</h2>
-            <p id="rti-text-2">For any information related to Gram Panchayat Mandur, citizens can contact the following designated officer:</p>
-
-            <div class="officer-box">
-                <p><strong><i class="fas fa-user-tie"></i> <span id="display-rti-label">Name</span>:</strong> <span id="rti-officer-name" style="color:var(--gov-orange); font-weight:bold;">Loading...</span></p>
-                <p><strong><i class="fas fa-envelope"></i> <span id="display-rti-contact-label">Contact/Email</span>:</strong> <span id="rti-officer-contact">Loading...</span></p>
+            <h3 style="margin-top:0; color:var(--gov-blue);"><i class="fas fa-user-shield"></i> Public Information Officer</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div>
+                    <div class="rti-label">Officer Name</div>
+                    <div class="rti-value" id="dispName">Loading...</div>
+                </div>
+                <div>
+                    <div class="rti-label">Contact Number</div>
+                    <div class="rti-value" id="dispContact">Loading...</div>
+                </div>
             </div>
         </div>
 
-        <div class="rti-card">
-            <h2 id="rti-sec-3">How to Apply</h2>
-            <ul class="rti-list">
-                <li><i class="fas fa-check-circle"></i> <span id="step-1">Write your application on a plain paper in English or Marathi.</span></li>
-                <li><i class="fas fa-check-circle"></i> <span id="step-2">Address it to the Public Information Officer mentioned above.</span></li>
-                <li><i class="fas fa-check-circle"></i> <span id="step-3">Attach the prescribed fee (Court Fee Stamp or Demand Draft).</span></li>
-                <li><i class="fas fa-check-circle"></i> <span id="step-4">Submit it by post or in person at the Gram Panchayat office.</span></li>
-            </ul>
+        <h3 style="color:var(--gov-blue); margin-bottom: 15px;"><i class="fas fa-folder-open"></i> Public Documents & Lists</h3>
+        <div style="overflow-x:auto;">
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Document Name / Description</th>
+                        <th style="width:150px;">Download</th>
+                    </tr>
+                </thead>
+                <tbody id="public-docs-body">
+                    <tr><td colspan="2" style="text-align:center;">Loading documents...</td></tr>
+                </tbody>
+            </table>
         </div>
-    </div>
 
-    <footer class="gov-footer">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+    </main>
+
+    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:40px 0; margin-top:50px; text-align:center;">
+        <p>© 2026 GRAM PANCHAYAT NANDGAON. All Rights Reserved.</p>
     </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
             authDomain: "ecogrampanchayatmandur.firebaseapp.com",
@@ -326,110 +344,74 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // FETCH RTI DATA
-        async function fetchRti() {
-            const officerName = document.getElementById('rti-officer-name');
-            const officerContact = document.getElementById('rti-officer-contact');
+        // UI Helpers
+        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
+        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
 
-            try {
-                const docRef = doc(db, "content", "rti");
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    officerName.innerText = data.officerName;
-                    officerContact.innerText = data.officerContact;
-                } else {
-                    officerName.innerText = "Information Not Updated";
-                    officerContact.innerText = "-";
-                }
-            } catch (error) {
-                console.error("Error fetching RTI:", error);
-                officerName.innerText = "Network Error";
-            }
-        }
-
-        fetchRti();
-    </script>
-
-    <script>
-        // UI & Translation Logic
-        function openMenu() { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        function closeMenu() { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
-
+        // --- TRANSLATION LOGIC ---
         const translations = {
             en: {
-                helpline: "Help Line", title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
+                helpline: "Help Line",
+                title: "GRAM PANCHAYAT NANDGAON", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
                 navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
-                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
-                mainTitle: "Right to Information (RTI)",
-                sec1: "RTI Act 2005", text1: "The Right to Information Act 2005 mandates timely response to citizen requests for government information...",
-                sec2: "Public Information Officer (PIO)", text2: "For any information related to Gram Panchayat Mandur, citizens can contact the following designated officer:",
-                lblOfficerName: "Name", lblOfficerContact: "Contact/Email",
-                sec3: "How to Apply",
-                step1: "Write your application on a plain paper in English or Marathi.",
-                step2: "Address it to the Public Information Officer mentioned above.",
-                step3: "Attach the prescribed fee (Court Fee Stamp or Demand Draft).",
-                step4: "Submit it by post or in person at the Gram Panchayat office.",
-                footer: "© 2026 GRAM PANCHAYAT Mandur. All Rights Reserved."
+                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login"
             },
             mr: {
-                helpline: "हेल्पलाइन", title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
+                helpline: "हेल्पलाइन",
+                title: "ग्रामपंचायत नांदगाव", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
                 navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
-                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
-                mainTitle: "माहितीचा अधिकार (RTI)",
-                sec1: "माहिती अधिकार अधिनियम २००५", text1: "माहिती अधिकार अधिनियम २००५ अंतर्गत नागरिकांना सरकारी कामकाजाची माहिती मिळवण्याचा अधिकार आहे.",
-                sec2: "जन माहिती अधिकारी (PIO)", text2: "ग्रामपंचायत संबंधित कोणत्याही माहितीसाठी नागरिक खालील नियुक्त अधिकाऱ्याशी संपर्क साधू शकतात:",
-                lblOfficerName: "नाव", lblOfficerContact: "संपर्क/ईमेल",
-                sec3: "अर्ज कसा करावा",
-                step1: "आपला अर्ज साध्या कागदावर मराठी किंवा इंग्रजी भाषेत लिहा.",
-                step2: "हा अर्ज वर नमूद केलेल्या जन माहिती अधिकाऱ्यास संबोधित करा.",
-                step3: "विहित शुल्क (कोर्ट फी स्टॅम्प किंवा डिमांड ड्राफ्ट) जोडा.",
-                step4: "अर्ज पोस्टाने किंवा प्रत्यक्ष ग्रामपंचायत कार्यालयात जमा करा.",
-                footer: "© २०२६ ग्रामपंचायत मणदूर. सर्व हक्क राखीव."
+                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन"
             }
         };
 
-        function setLanguage(lang) {
+        window.setLanguage = function (lang) {
             const t = translations[lang];
-            // Header
-            document.getElementById('txt-helpline').innerText = t.helpline;
+            // Header & Nav Text
             document.getElementById('txt-title').innerText = t.title;
             document.getElementById('txt-subtitle').innerText = t.subtitle;
-            // Nav
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
-            // Body
-            document.getElementById('rti-main-title').innerText = t.mainTitle;
-            document.getElementById('rti-sec-1').innerText = t.sec1;
-            document.getElementById('rti-text-1').innerText = t.text1;
-            document.getElementById('rti-sec-2').innerText = t.sec2;
-            document.getElementById('rti-text-2').innerText = t.text2;
-            document.getElementById('display-rti-label').innerText = t.lblOfficerName;
-            document.getElementById('display-rti-contact-label').innerText = t.lblOfficerContact;
-            document.getElementById('rti-sec-3').innerText = t.sec3;
-            document.getElementById('step-1').innerText = t.step1;
-            document.getElementById('step-2').innerText = t.step2;
-            document.getElementById('step-3').innerText = t.step3;
-            document.getElementById('step-4').innerText = t.step4;
-            // Footer
-            document.getElementById('txt-footer').innerText = t.footer;
             localStorage.setItem('gp_lang_pref', lang);
+        }
+
+        // --- LOAD DATA ---
+        async function loadRtiData() {
+            // 1. Load Officer Info
+            try {
+                const docSnap = await getDoc(doc(db, "content", "rti"));
+                if (docSnap.exists()) {
+                    document.getElementById('dispName').innerText = docSnap.data().officerName || "Not Available";
+                    document.getElementById('dispContact').innerText = docSnap.data().officerContact || "Not Available";
+                } else {
+                    document.getElementById('dispName').innerText = "Not Updated";
+                    document.getElementById('dispContact').innerText = "-";
+                }
+            } catch (error) { console.error("RTI Error:", error); }
+
+            // 2. Load Public Documents
+            try {
+                const qDocs = query(collection(db, "documents"), orderBy("createdAt", "desc"));
+                const snapDocs = await getDocs(qDocs);
+                const docBody = document.getElementById('public-docs-body');
+
+                if (snapDocs.empty) {
+                    docBody.innerHTML = '<tr><td colspan="2" style="text-align:center;">No documents available currently.</td></tr>';
+                } else {
+                    let html = '';
+                    snapDocs.forEach(d => {
+                        const doc = d.data();
+                        html += `<tr>
+                                <td><i class="fas fa-file-pdf" style="color:#d32f2f; margin-right:10px;"></i> ${doc.name}</td>
+                                <td><a href="${doc.link}" target="_blank" class="btn-download">Download PDF <i class="fas fa-download"></i></a></td>
+                            </tr>`;
+                    });
+                    docBody.innerHTML = html;
+                }
+            } catch (e) { console.error("Docs error", e); }
         }
 
         window.onload = function () {
             const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
             setLanguage(savedLang);
+            loadRtiData();
         };
     </script>
 </body>
