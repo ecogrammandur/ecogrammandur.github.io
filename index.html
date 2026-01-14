@@ -684,14 +684,14 @@
                     }
                 }
             } catch (e) { console.error("Banner error", e); }
-
-            // 2. NEWS
-            try {
-                const newsSnap = await getDoc(doc(db, "content", "news"));
-                if (newsSnap.exists()) {
-                    document.getElementById('news-marquee').innerText = newsSnap.data().text + "  |  " + newsSnap.data().text;
-                }
-            } catch (e) { console.error("News error", e); }
+			// 2. NEWS
+			try {
+				const newsSnap = await getDoc(doc(db, "content", "news"));
+				if (newsSnap.exists()) {
+					// CHANGED: Removed the second part so it only shows once
+					document.getElementById('news-marquee').innerText = newsSnap.data().text;
+				}
+			} catch (e) { console.error("News error", e); }
 
             // 3. PUBLIC DOCUMENTS
             try {
