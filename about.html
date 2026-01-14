@@ -6,9 +6,8 @@
     <title>About Us | Gram Panchayat Mandur</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
-        /* --- CORE VARIABLES (Matched from Index) --- */
+        /* CORE VARIABLES */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
@@ -16,96 +15,161 @@
             --header-height-desktop: 175px;
         }
 
-        body { 
-            margin: 0; padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #f4f6f9; 
-            padding-top: var(--header-height-desktop); 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding-top: var(--header-height-desktop);
         }
 
-        /* --- HEADER & BRANDING (Matched from Index) --- */
+        /* HEADER Styles (Same as Index) */
         .gov-header-group {
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 1000; background: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .top-strip { background-color: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 5px 0; font-size: 0.9rem; }
-        .main-brand { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; background: white; }
-        .brand-info { display: flex; align-items: center; gap: 15px; }
-        
-        #txt-title { margin: 0; font-size: 1.8rem; color: var(--gov-blue); font-weight: 800; text-transform: uppercase; line-height: 1.2; }
-        #txt-subtitle { margin: 0; font-size: 0.95rem; color: var(--gov-blue) !important; font-weight: 600; }
 
-        /* --- NAVIGATION --- */
-        .main-nav { background-color: var(--gov-blue); }
-        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
-        .main-nav li a { display: block; padding: 12px 18px; color: white; text-decoration: none; font-weight: 500; transition: 0.3s; white-space: nowrap; }
-        .main-nav li a:hover, .main-nav li a.active { background-color: var(--gov-orange); }
-        .btn-login { background: #dc3545 !important; }
-
-        /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay { display: none; }
-
-        @media (max-width: 992px) {
-            body { padding-top: 100px; }
-            .top-strip, .landmark-desktop { display: none; }
-            .mobile-toggle-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--gov-blue); cursor: pointer; }
-            .main-brand img { height: 50px; }
-            #txt-title { font-size: 1.2rem; }
-            
-            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
-            .main-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; z-index: 1002; transition: 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; }
-            .main-nav.active { left: 0; }
-            .main-nav ul { flex-direction: column; }
-            .main-nav li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .sidebar-close-btn { display: block; width: 100%; text-align: right; padding: 15px; color: white; background: none; border: none; font-size: 1.5rem; }
-        }
-
-        /* --- Page Specific Styles for About Us --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-        }
-        
-        .vision-mission-box {
-            background: #fff;
-            padding: 20px;
-            border-left: 5px solid var(--gov-blue);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .stats-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 20px;
-            border: 1px solid #eee;
-        }
-
-        .stats-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-        
-        .stats-table th, .stats-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-            text-align: left;
-        }
-        
-        .stats-table th {
+        .top-strip {
             background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .main-brand {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+        }
+
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #txt-title {
+            margin: 0;
+            font-size: 1.8rem;
             color: var(--gov-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        #txt-subtitle {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--gov-blue) !important;
             font-weight: 600;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .about-section-grid {
-                grid-template-columns: 1fr !important;
+        /* NAV */
+        .main-nav {
+            background-color: var(--gov-blue);
+        }
+
+            .main-nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .main-nav li a {
+                display: block;
+                padding: 12px 18px;
+                color: white;
+                text-decoration: none;
+                font-weight: 500;
+                transition: 0.3s;
+                white-space: nowrap;
+            }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: var(--gov-orange);
+                }
+
+        .btn-login {
+            background: #dc3545 !important;
+        }
+
+        /* ABOUT PAGE CONTENT */
+        .content-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+            .content-box h3 {
+                color: var(--gov-orange);
+                border-bottom: 2px solid #eee;
+                padding-bottom: 10px;
+                margin-top: 0;
+            }
+
+            .content-box p {
+                line-height: 1.8;
+                color: #444;
+                margin-bottom: 15px;
+            }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: var(--gov-blue);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: var(--gov-orange);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            body {
+                padding-top: 100px;
+            }
+
+            .top-strip, .landmark-desktop {
+                display: none;
+            }
+
+            .mobile-toggle-btn {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.8rem;
+                color: var(--gov-blue);
+                cursor: pointer;
             }
         }
     </style>
@@ -113,18 +177,16 @@
 <body>
 
     <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-
     <header class="gov-header-group">
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
-                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: <span id="help-line-display">+91-9922003344</span></span>
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: +91-9922003344</span>
                 <span>
-                    <a href="javascript:void(0)" onclick="setLanguage('en')">English</a> | 
-                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="color: var(--gov-orange);">मराठी</a>
+                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
+                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
                 </span>
             </div>
         </div>
-
         <div class="main-brand">
             <div class="brand-info">
                 <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
@@ -136,247 +198,98 @@
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
         </div>
-        
         <nav class="main-nav" id="sidebarMenu">
             <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
             <ul>
-                <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
-                <li><a href="about.html" class="active" id="nav-about" onclick="closeMenu()">About Us</a></li>
-                <li><a href="administration.html" id="nav-admin" onclick="closeMenu()">Administration</a></li>
-                <li><a href="services.html" id="nav-services" onclick="closeMenu()">Services</a></li>
-                <li><a href="schemes.html" id="nav-schemes" onclick="closeMenu()">Schemes</a></li>
-                <li><a href="works.html" id="nav-works" onclick="closeMenu()">Works</a></li>
-                <li><a href="gramsabha.html" id="nav-gramsabha" onclick="closeMenu()">Gram Sabha</a></li>
-                <li><a href="gallery.html" id="nav-gallery" onclick="closeMenu()">Gallery</a></li>
-                <li><a href="grievance.html" id="nav-grievance" onclick="closeMenu()">Grievance</a></li>
-                <li><a href="rti.html" id="nav-rti" onclick="closeMenu()">RTI</a></li>
-                <li><a href="contact.html" id="nav-contact" onclick="closeMenu()">Contact</a></li>
-                <li style="margin-left: auto;">
-                    <a href="admin.html" class="btn-login" onclick="closeMenu()">
-                        <span id="btn-login-txt">Login</span>
-                    </a>
-                </li>
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="about.html" class="active" id="nav-about">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin">Administration</a></li>
+                <li><a href="services.html" id="nav-services">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes">Schemes</a></li>
+                <li><a href="works.html" id="nav-works">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact">Contact</a></li>
+                <li style="margin-left: auto;"><a href="admin.html" class="btn-login" id="btn-login-txt">Login</a></li>
             </ul>
         </nav>
     </header>
 
     <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-        <h2 id="about-main-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px;">
+        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px; color:var(--gov-blue);">
             About Our Village
         </h2>
-        
-        <div class="about-section-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px;">
-            
-            <div class="about-text" style="font-size: 1.1rem; line-height: 1.8; color: #444;">
-                <p>
-                    <strong id="txt-establishment-title">Establishment:</strong><br>
-                    <span id="txt-establishment-desc">Gram Panchayat Mandur was established on 10th December 1957. It includes two revenue villages, 'Mandur' and 'Patilwadi'.</span>
-                </p>
-                <p>
-                    <strong id="txt-geo-title">Geography:</strong><br>
-                    <span id="txt-geo-desc">Mandur village is situated on the banks of the scenic Kumbhi river. It is 25 km from Gaganbawada and 35 km from Kolhapur district.</span>
-                </p>
-                <p>
-                    <strong id="txt-economy-title">Economy:</strong><br>
-                    <span id="txt-economy-desc">90% of the villagers rely on agriculture. Sugarcane is the main crop, along with rice and nachani in the rainy season.</span>
-                </p>
-                <p>
-                    <strong id="txt-culture-title">Culture:</strong><br>
-                    <span id="txt-culture-desc">The village has two major temples, Khamba Devi (Patilwadi) and Rameshwar (Mandur), where festivals are celebrated with great enthusiasm.</span>
-                </p>
-            </div>
 
-            <div class="stats-card">
-                <h3 id="stats-header" style="background:var(--gov-blue); color:white; padding:15px; margin:-20px -20px 20px -20px; border-radius:8px 8px 0 0; text-align: center;">
-                    Village Statistics
-                </h3>
-                <table class="info-table" style="width: 100%; border-collapse: collapse;">
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <th id="th-area" style="padding: 10px; text-align: left; color: var(--gov-blue);">Total Area</th>
-                        <td id="td-area" style="padding: 10px; text-align: right; font-weight: bold;">546.11 Hectare</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <th id="th-pop" style="padding: 10px; text-align: left; color: var(--gov-blue);">Total Population</th>
-                        <td id="td-pop" style="padding: 10px; text-align: right; font-weight: bold;">1598</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <th id="th-male" style="padding: 10px; text-align: left; padding-left: 20px; font-size: 0.9rem;">- Male</th>
-                        <td id="td-male" style="padding: 10px; text-align: right;">832</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <th id="th-female" style="padding: 10px; text-align: left; padding-left: 20px; font-size: 0.9rem;">- Female</th>
-                        <td id="td-female" style="padding: 10px; text-align: right;">766</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <th id="th-families" style="padding: 10px; text-align: left; color: var(--gov-blue);">No. of Families</th>
-                        <td id="td-families" style="padding: 10px; text-align: right; font-weight: bold;">395</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <th id="th-anganwadi" style="padding: 10px; text-align: left; color: var(--gov-blue);">Anganwadi</th>
-                        <td id="td-anganwadi" style="padding: 10px; text-align: right; font-weight: bold;">03</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <th id="th-primary" style="padding: 10px; text-align: left; color: var(--gov-blue);">Primary Schools</th>
-                        <td id="td-primary" style="padding: 10px; text-align: right; font-weight: bold;">03</td>
-                    </tr>
-                    <tr>
-                        <th id="th-secondary" style="padding: 10px; text-align: left; color: var(--gov-blue);">Secondary Schools</th>
-                        <td id="td-secondary" style="padding: 10px; text-align: right; font-weight: bold;">01</td>
-                    </tr>
-                </table>
+        <div class="content-box">
+            <h3><i class="fas fa-history"></i> History & Introduction</h3>
+            <p>Mandur is a progressive village located in the Gaganbawada Taluka of Kolhapur District. Known for its scenic beauty and agricultural heritage, our Gram Panchayat is dedicated to the holistic development of all its residents. We strive to provide transparent governance and efficient services.</p>
+            <p>Established with the vision of 'Adarsh Gaon' (Ideal Village), we focus on sustainable development, education, sanitation, and health for every citizen.</p>
+        </div>
+
+        <div class="content-box">
+            <h3><i class="fas fa-bullseye"></i> Mission & Vision</h3>
+            <p><strong>Mission:</strong> To ensure 100% literacy, sanitation, and employment opportunities within the village through effective implementation of government schemes.</p>
+            <p><strong>Vision:</strong> A digital, green, and self-sufficient Mandur that sets an example for rural development in Maharashtra.</p>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-number">2,500+</div>
+                <div class="stat-label">Population</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">450+</div>
+                <div class="stat-label">Households</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Schools</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Electrified</div>
             </div>
         </div>
     </main>
 
-    <footer class="gov-footer">
+    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:40px 0; margin-top:50px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
     </footer>
 
     <script>
-        function openMenu() {
-            document.getElementById('sidebarMenu').classList.add('active');
-            document.getElementById('menuOverlay').style.display = 'block';
-        }
-        function closeMenu() {
-            document.getElementById('sidebarMenu').classList.remove('active');
-            document.getElementById('menuOverlay').style.display = 'none';
-        }
-
-        // FULLY INTEGRATED TRANSLATION LOGIC
+        const translations = {
+            en: { helpline: "Help Line", title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur", navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works", navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login", pageTitle: "About Our Village", footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved." },
+            mr: { helpline: "हेल्पलाइन", title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर", navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे", navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन", pageTitle: "आमच्या गावाबद्दल", footer: "© २०२६ ग्रामपंचायत मणदूर. सर्व हक्क राखीव." }
+        };
         function setLanguage(lang) {
-            const translations = {
-                en: {
-                    helpline: "Help Line",
-                    title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
-                    navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
-                    navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
-                    
-                    // About Page Content
-                    mainTitle: "About Our Village",
-                    estTitle: "Establishment:",
-                    estDesc: "Gram Panchayat Mandur was established on 10th December 1957. It includes two revenue villages, 'Mandur' and 'Patilwadi'.",
-                    geoTitle: "Geography:",
-                    geoDesc: "Mandur village is situated on the banks of the scenic Kumbhi river. It is 25 km from Gaganbawada and 35 km from Kolhapur district.",
-                    ecoTitle: "Economy:",
-                    ecoDesc: "90% of the villagers rely on agriculture. Sugarcane is the main crop, along with rice and nachani in the rainy season.",
-                    culTitle: "Culture:",
-                    culDesc: "The village has two major temples, Khamba Devi (Patilwadi) and Rameshwar (Mandur), where festivals are celebrated with great enthusiasm.",
-                    
-                    // Stats Table
-                    statsHeader: "Village Statistics",
-                    thArea: "Total Area", tdArea: "546.11 Hectare",
-                    thPop: "Total Population", tdPop: "1598",
-                    thMale: "- Male", tdMale: "832",
-                    thFemale: "- Female", tdFemale: "766",
-                    thFamilies: "No. of Families", tdFamilies: "395",
-                    thAnganwadi: "Anganwadi", tdAnganwadi: "03",
-                    thPrimary: "Primary Schools", tdPrimary: "03",
-                    thSecondary: "Secondary Schools", tdSecondary: "01",
-                    
-                    footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
-                },
-                mr: {
-                    helpline: "हेल्पलाइन",
-                    title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
-                    navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
-                    navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
-
-                    // About Page Content
-                    mainTitle: "आमचे गाव - मांडूर",
-                    estTitle: "स्थापना आणि रचना:",
-                    estDesc: "ग्रामपंचायत मणदूरची स्थापना १० डिसेंबर १९५७ रोजी झाली आहे. या ग्रामपंचायती अंतर्गत 'मणदूर' आणि 'पाटीलवाडी' या दोन महसूल गावांचा समावेश होतो.",
-                    geoTitle: "भौगोलिक स्थान:",
-                    geoDesc: "मणदूर हे गाव निसर्गरम्य कुंभी नदीच्या काठावर वसलेले आहे. हे गाव गगनबावडा तालुक्यापासून २५ कि.मी. अंतरावर, तर कोल्हापूर जिल्ह्यापासून ३५ कि.मी. अंतरावर आहे.",
-                    ecoTitle: "व्यवसाय आणि शेती:",
-                    ecoDesc: "गावातील ९०% लोकांचा मुख्य व्यवसाय शेती आहे. ऊस हे येथील मुख्य पीक असून, पावसाळ्यात भात, नाचणी आणि वरी ही पिके घेतली जातात.",
-                    culTitle: "पर्यटन आणि संस्कृती:",
-                    culDesc: "गावात खांब्या देवालय (पाटीलवाडी) आणि रामेश्वर देवालय (मणदूर) ही दोन प्रमुख मंदिरे आहेत. या दोन्ही ठिकाणी यात्रा आणि उत्सव उत्साहात साजरे केले जातात.",
-
-                    // Stats Table
-                    statsHeader: "गावची आकडेवारी",
-                    thArea: "एकुण क्षेत्रफळ", tdArea: "५४६.११ हेक्टर",
-                    thPop: "एकूण लोकसंख्या", tdPop: "१५९८",
-                    thMale: "- पुरुष", tdMale: "८३२",
-                    thFemale: "- स्त्रिया", tdFemale: "७६६",
-                    thFamilies: "कुटुंब संख्या", tdFamilies: "३९५",
-                    thAnganwadi: "अंगणवाडी", tdAnganwadi: "०३",
-                    thPrimary: "प्राथमिक शाळा", tdPrimary: "०३",
-                    thSecondary: "माध्यमिक शाळा", tdSecondary: "०१",
-
-                    footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
-                }
-            };
-
             const t = translations[lang];
-
-            // Header Updates
-            document.getElementById('txt-helpline').innerText = t.helpline;
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
-            
-            // Nav Updates
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
-
-            // Content Updates
-            document.getElementById('about-main-title').innerText = t.mainTitle;
-            
-            document.getElementById('txt-establishment-title').innerText = t.estTitle;
-            document.getElementById('txt-establishment-desc').innerText = t.estDesc;
-            
-            document.getElementById('txt-geo-title').innerText = t.geoTitle;
-            document.getElementById('txt-geo-desc').innerText = t.geoDesc;
-            
-            document.getElementById('txt-economy-title').innerText = t.ecoTitle;
-            document.getElementById('txt-economy-desc').innerText = t.ecoDesc;
-            
-            document.getElementById('txt-culture-title').innerText = t.culTitle;
-            document.getElementById('txt-culture-desc').innerText = t.culDesc;
-
-            // Stats Table Updates
-            document.getElementById('stats-header').innerText = t.statsHeader;
-            
-            document.getElementById('th-area').innerText = t.thArea;
-            document.getElementById('td-area').innerText = t.tdArea;
-            
-            document.getElementById('th-pop').innerText = t.thPop;
-            document.getElementById('td-pop').innerText = t.tdPop;
-            
-            document.getElementById('th-male').innerText = t.thMale;
-            document.getElementById('td-male').innerText = t.tdMale;
-            
-            document.getElementById('th-female').innerText = t.thFemale;
-            document.getElementById('td-female').innerText = t.tdFemale;
-            
-            document.getElementById('th-families').innerText = t.thFamilies;
-            document.getElementById('td-families').innerText = t.tdFamilies;
-            
-            document.getElementById('th-anganwadi').innerText = t.thAnganwadi;
-            document.getElementById('td-anganwadi').innerText = t.tdAnganwadi;
-            
-            document.getElementById('th-primary').innerText = t.thPrimary;
-            document.getElementById('td-primary').innerText = t.tdPrimary;
-            
-            document.getElementById('th-secondary').innerText = t.thSecondary;
-            document.getElementById('td-secondary').innerText = t.tdSecondary;
-
-            document.getElementById('txt-footer').innerText = t.footer;
-            
+            if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
+            if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
+            if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
+            if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
+            if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
+            if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
+            if (document.getElementById('nav-services')) document.getElementById('nav-services').innerText = t.navServices;
+            if (document.getElementById('nav-schemes')) document.getElementById('nav-schemes').innerText = t.navSchemes;
+            if (document.getElementById('nav-works')) document.getElementById('nav-works').innerText = t.navWorks;
+            if (document.getElementById('nav-gramsabha')) document.getElementById('nav-gramsabha').innerText = t.navGram;
+            if (document.getElementById('nav-gallery')) document.getElementById('nav-gallery').innerText = t.navGallery;
+            if (document.getElementById('nav-grievance')) document.getElementById('nav-grievance').innerText = t.navGrievance;
+            if (document.getElementById('nav-rti')) document.getElementById('nav-rti').innerText = t.navRTI;
+            if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
+            if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
+            if (document.getElementById('page-title')) document.getElementById('page-title').innerText = t.pageTitle;
+            if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
             localStorage.setItem('gp_lang_pref', lang);
         }
+        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
+        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
 
-        window.onload = function() {
-            setLanguage(localStorage.getItem('gp_lang_pref') || 'en');
+        window.onload = function () {
+            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
+            setLanguage(savedLang);
         };
     </script>
 </body>
