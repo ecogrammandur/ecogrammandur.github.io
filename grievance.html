@@ -6,6 +6,8 @@
     <title>Grievance Redressal | Gram Panchayat Nandgaon</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+
     <style>
         :root {
             --gov-blue: #003366;
@@ -22,7 +24,7 @@
             padding-top: var(--header-height-desktop);
         }
 
-        /* HEADER Styles (Same as Index) */
+        /* HEADER Styles */
         .gov-header-group {
             position: fixed;
             top: 0;
@@ -342,9 +344,11 @@
 
         window.setLanguage = function (lang) {
             const t = translations[lang];
+            // Safety checks for elements
             if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
             if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
             if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
+            // Nav
             if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
             if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
             if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
@@ -358,10 +362,11 @@
             if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
             if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
             if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
+
             localStorage.setItem('gp_lang_pref', lang);
         }
 
-        // Submit Complaint Logic
+        // Submit Complaint
         window.submitComplaint = async function () {
             const name = document.getElementById('compName').value;
             const phone = document.getElementById('compPhone').value;
@@ -379,8 +384,8 @@
                     status: 'Open',
                     createdAt: Date.now()
                 });
-                alert("✅ Complaint Registered Successfully!\nYour ID has been sent to the Gram Panchayat.");
-                location.reload(); // Refresh to clear form
+                alert("✅ Complaint Registered Successfully!");
+                location.reload();
             } catch (e) {
                 alert("Error: " + e.message);
             }
