@@ -522,6 +522,101 @@
             </table>
         </div>
     </div>
+    <div class="links-section" style="background:#fff; padding:40px 0; border-top:5px solid var(--gov-orange);">
+        <div style="max-width:1200px; margin:0 auto; padding:0 20px;">
+            <h2 style="text-align:center; color:var(--gov-blue); margin-bottom:30px; text-transform:uppercase;">
+                <i class="fas fa-external-link-alt"></i> Important Government Links
+            </h2>
+
+            <div class="links-grid">
+
+                <a href="https://aaplesarkar.mahaonline.gov.in/" target="_blank" class="link-card">
+                    <img src="https://aaplesarkar.mahaonline.gov.in/Content/assets/images/emblem.png" alt="Aaple Sarkar">
+                    <span>Aaple Sarkar</span>
+                </a>
+
+                <a href="https://bhulekh.mahabhumi.gov.in/" target="_blank" class="link-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Bhulekh">
+                    <span>Mahabhulekh (7/12)</span>
+                </a>
+
+                <a href="https://mahadbt.maharashtra.gov.in/" target="_blank" class="link-card">
+                    <img src="https://mahadbt.maharashtra.gov.in/images/Maharashtra_shasan.png" alt="MahaDBT">
+                    <span>MahaDBT</span>
+                </a>
+
+                <a href="https://pmkisan.gov.in/" target="_blank" class="link-card">
+                    <img src="https://pmkisan.gov.in/images/logo.png" alt="PM Kisan">
+                    <span>PM Kisan Samman</span>
+                </a>
+
+                <a href="https://uidai.gov.in/" target="_blank" class="link-card">
+                    <img src="https://uidai.gov.in/images/lang/en/logo.png" alt="Aadhar">
+                    <span>Download Aadhar</span>
+                </a>
+
+                <a href="https://voters.eci.gov.in/" target="_blank" class="link-card">
+                    <img src="https://voters.eci.gov.in/assets/images/eci-logo.svg" alt="Voter ID">
+                    <span>Voter Services</span>
+                </a>
+
+                <a href="https://rcms.mahafood.gov.in/" target="_blank" class="link-card">
+                    <img src="https://rcms.mahafood.gov.in/Images/logo.png" alt="Ration Card">
+                    <span>Ration Card</span>
+                </a>
+
+                <a href="https://rdd.maharashtra.gov.in/" target="_blank" class="link-card">
+                    <img src="https://rdd.maharashtra.gov.in/sites/default/files/emblem.png" alt="RDD">
+                    <span>Rural Dev. Dept</span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .link-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: 0.3s;
+            background: #f9f9f9;
+            height: 140px;
+        }
+
+            .link-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                background: white;
+                border-color: var(--gov-orange);
+            }
+
+            .link-card img {
+                height: 50px;
+                width: auto;
+                margin-bottom: 10px;
+                object-fit: contain;
+            }
+
+            .link-card span {
+                font-size: 0.9rem;
+                font-weight: 600;
+                line-height: 1.2;
+            }
+    </style>
 
     <footer class="gov-footer">
         <div class="footer-content">
@@ -611,9 +706,9 @@
                     snapDocs.forEach(d => {
                         const doc = d.data();
                         html += `<tr>
-                                <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
-                                <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
-                            </tr>`;
+                                    <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
+                                    <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
+                                </tr>`;
                     });
                     docBody.innerHTML = html;
                 }
