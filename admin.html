@@ -26,6 +26,7 @@
             overflow: hidden;
         }
 
+        /* --- LOGIN SCREEN --- */
         #login-screen {
             position: fixed;
             top: 0;
@@ -55,6 +56,7 @@
             border-radius: 6px;
         }
 
+        /* --- BUTTONS --- */
         .btn-primary {
             background-color: var(--admin-accent);
             color: white;
@@ -85,10 +87,12 @@
             cursor: pointer;
         }
 
+        /* --- DASHBOARD LAYOUT --- */
         #dashboard-container {
-            display: none;
+            display: none; /* Hidden until login */
             height: 100vh;
             display: flex;
+            position: relative;
         }
 
         .sidebar {
@@ -97,6 +101,9 @@
             color: white;
             display: flex;
             flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
         }
 
         .menu {
@@ -125,10 +132,12 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         .page-content {
             padding: 30px;
+            padding-top: 60px; /* Space for mobile toggle */
         }
 
         .admin-card {
@@ -156,6 +165,7 @@
                 animation: fadeIn 0.3s;
             }
 
+        /* Tables */
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -180,6 +190,59 @@
             border-bottom: 2px solid #f1f5f9;
             padding-bottom: 10px;
         }
+
+        /* --- MOBILE TOGGLE BUTTON --- */
+        .mobile-toggle {
+            display: none; /* Hidden on desktop */
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--admin-dark);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            z-index: 1100;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* --- RESPONSIVE CSS (MOBILE FIX) --- */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block; /* Show button on mobile */
+            }
+
+            .sidebar {
+                position: absolute;
+                left: -260px; /* Hide sidebar off-screen */
+                z-index: 1000;
+                height: 100%;
+            }
+
+                .sidebar.active {
+                    left: 0; /* Slide in sidebar */
+                    transform: translateX(0);
+                }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .page-content {
+                padding: 15px;
+                padding-top: 70px; /* Space for button */
+            }
+
+            .login-card {
+                width: 90%;
+            }
+
+            /* Make tables scrollable on mobile */
+            .admin-card {
+                overflow-x: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -195,7 +258,12 @@
     </div>
 
     <div id="dashboard-container">
-        <nav class="sidebar">
+
+        <button class="mobile-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i> Menu
+        </button>
+
+        <nav class="sidebar" id="adminSidebar">
             <h3 style="padding:20px; border-bottom:1px solid #334155; color:white;">GP ADMIN</h3>
             <ul class="menu">
                 <li><a onclick="switchTab('manage-home', this)" class="active">Home & News</a></li>
@@ -375,6 +443,7 @@
                         <div id="adminGalleryList" style="margin-top:10px; display:grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap:10px;"></div>
                     </div>
                 </div>
+
                 <div id="manage-complaints" class="view-section">
                     <div class="admin-card" style="border-left: 5px solid #ef4444;">
                         <h3>Citizen Complaints & Grievances</h3>
@@ -409,10 +478,26 @@
         // AUTH
         const btnLogin = document.getElementById('btnLogin');
         if (btnLogin) btnLogin.addEventListener('click', () => { signInWithEmailAndPassword(auth, document.getElementById('adminUser').value, document.getElementById('adminPass').value).catch(e => alert(e.message)); });
-        //document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => location.reload()));
-		document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => window.location.href = "index.html"));
-        onAuthStateChanged(auth, (user) => { if (user) { document.getElementById('login-screen').style.display = 'none'; document.getElementById('dashboard-container').style.display = 'flex'; loadAll(); } else { document.getElementById('login-screen').style.display = 'flex'; document.getElementById('dashboard-container').style.display = 'none'; } });
 
+        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => window.location.href = "index.html"));
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard-container').style.display = 'flex';
+                loadAll();
+            } else {
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('dashboard-container').style.display = 'none';
+            }
+        });
+
+        // Mobile Toggle Logic
+        window.toggleSidebar = function () {
+            document.getElementById('adminSidebar').classList.toggle('active');
+        }
+
+        // --- DATA LOADING ---
         function loadAll() {
             loadList('banners', 'bannerList', 'url', true);
             loadList('schemes', 'listSchemes', 'title');
@@ -424,9 +509,10 @@
             loadList('anganwadi', 'listAng', 'name');
             loadList('services', 'listServices', 'title');
             loadList('gallery', 'adminGalleryList', 'url', true);
-            loadList('documents', 'listPublicDocs', 'name'); // NEW
+            loadList('documents', 'listPublicDocs', 'name');
             loadRti();
-            loadNews(); // NEW
+            loadNews();
+            loadCloudComplaints(); // FIXED: Added this call here!
         }
 
         // --- GENERIC HELPERS ---
@@ -490,43 +576,46 @@
             document.getElementById(id).classList.add('active');
             document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
+
+            // Auto close menu on mobile when clicking a tab
+            if (window.innerWidth < 768) {
+                document.getElementById('adminSidebar').classList.remove('active');
+            }
         }
-		// --- 8. COMPLAINTS ---
-		// Add this to your loadAllData() function:
-		// loadCloudComplaints();
 
-		window.loadCloudComplaints = async function () {
-			const div = document.getElementById('listComplaints');
-			if (!div) return;
+        // --- COMPLAINTS LOGIC ---
+        window.loadCloudComplaints = async function () {
+            const div = document.getElementById('listComplaints');
+            if (!div) return;
 
-			const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
-			const snap = await getDocs(q);
+            const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
+            const snap = await getDocs(q);
 
-			if (snap.empty) {
-				div.innerHTML = "<p>No complaints received yet.</p>";
-				return;
-			}
+            if (snap.empty) {
+                div.innerHTML = "<p>No complaints received yet.</p>";
+                return;
+            }
 
-			let html = '<table class="data-table"><tr><th>Date</th><th>Name/Phone</th><th>Issue</th><th>Action</th></tr>';
-			snap.forEach(d => {
-				const c = d.data();
-				const date = new Date(c.createdAt).toLocaleDateString();
-				html += `<tr>
-            <td>${date}</td>
-            <td><strong>${c.name}</strong><br>${c.phone}</td>
-            <td><strong style="color:#d32f2f">[${c.type}]</strong><br>${c.desc}</td>
-            <td><button onclick="deleteComplaint('${d.id}')" class="btn-success">Resolve</button></td>
-        </tr>`;
-			});
-			div.innerHTML = html + '</table>';
-		}
+            let html = '<table class="data-table"><tr><th>Date</th><th>Name/Phone</th><th>Issue</th><th>Action</th></tr>';
+            snap.forEach(d => {
+                const c = d.data();
+                const date = new Date(c.createdAt).toLocaleDateString();
+                html += `<tr>
+                        <td>${date}</td>
+                        <td><strong>${c.name}</strong><br>${c.phone}</td>
+                        <td><strong style="color:#d32f2f">[${c.type}]</strong><br>${c.desc}</td>
+                        <td><button onclick="deleteComplaint('${d.id}')" class="btn-success">Resolve</button></td>
+                    </tr>`;
+            });
+            div.innerHTML = html + '</table>';
+        }
 
-		window.deleteComplaint = async function (id) {
-			if (confirm("Mark this complaint as Resolved/Done?")) {
-				await deleteDoc(doc(db, "complaints", id));
-				loadCloudComplaints();
-			}
-		}
+        window.deleteComplaint = async function (id) {
+            if (confirm("Mark this complaint as Resolved/Done?")) {
+                await deleteDoc(doc(db, "complaints", id));
+                loadCloudComplaints();
+            }
+        }
     </script>
 </body>
 </html>
