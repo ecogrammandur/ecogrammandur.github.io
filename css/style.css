@@ -4,12 +4,12 @@
 
 /* --- 1. GOVT STANDARDS (Design System) --- */
 :root {
-    --gov-blue: #003061;        /* Official Blue */
-    --gov-orange: #ff9933;      /* Alert Orange */
-    --gov-green: #198754;       /* Success Green */
+    --gov-blue: #003061; /* Official Blue */
+    --gov-orange: #ff9933; /* Alert Orange */
+    --gov-green: #198754; /* Success Green */
     --text-dark: #333333;
     --text-light: #666666;
-    --header-height: 200px;     /* Total height of the fixed header area */
+    --header-height: 200px; /* Total height of the fixed header area */
 }
 
 /* --- 2. GLOBAL RESET --- */
@@ -24,18 +24,26 @@ body {
     background-color: #f4f6f9;
     color: var(--text-dark);
     line-height: 1.6;
-    
     /* Pushes content down so Fixed Header doesn't cover it */
-    padding-top: var(--header-height); 
+    padding-top: var(--header-height);
 }
 
-h1, h2, h3 { color: var(--gov-blue); font-weight: 700; }
-a { text-decoration: none; color: var(--gov-blue); }
+h1, h2, h3 {
+    color: var(--gov-blue);
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: var(--gov-blue);
+}
 
 /* --- 3. HEADER ARCHITECTURE (Fixed Top) --- */
 .gov-header-group {
     position: fixed;
-    top: 0; left: 0; width: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
     background: white;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -64,36 +72,36 @@ a { text-decoration: none; color: var(--gov-blue); }
     color: white;
 }
 
-.main-nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-}
+    .main-nav ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0;
+    }
 
-.main-nav li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 18px;
-    color: white;
-    font-weight: 500;
-    white-space: nowrap;
-    transition: background 0.3s;
-}
+    .main-nav li a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 18px;
+        color: white;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background 0.3s;
+    }
 
-.main-nav li a:hover, 
-.main-nav li a.active {
-    background-color: var(--gov-orange);
-    color: #fff;
-}
+        .main-nav li a:hover,
+        .main-nav li a.active {
+            background-color: var(--gov-orange);
+            color: #fff;
+        }
 
-/* Login Button Specific Highlight */
-.main-nav li a[href="admin.html"] {
-    background-color: #dc3545; /* Alert Red for visibility */
-}
+        /* Login Button Specific Highlight */
+        .main-nav li a[href="admin.html"] {
+            background-color: #dc3545; /* Alert Red for visibility */
+        }
 
 /* --- 4. HOME PAGE LAYOUT (Content Rows) --- */
 
@@ -112,13 +120,13 @@ a { text-decoration: none; color: var(--gov-blue); }
     width: 100%;
 }
 
-.row-header h2 {
-    color: #ffffff !important;
-    margin: 0;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+    .row-header h2 {
+        color: #ffffff !important;
+        margin: 0;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 
 /* Welcome & Info Sections */
 .welcome-section {
@@ -146,7 +154,9 @@ a { text-decoration: none; color: var(--gov-blue); }
     transition: 0.3s;
 }
 
-.service-card:hover { transform: translateY(-5px); }
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
 
 /* Important Documents Table */
 #doc-table {
@@ -156,17 +166,17 @@ a { text-decoration: none; color: var(--gov-blue); }
     background: white;
 }
 
-#doc-table th {
-    background-color: #f8f9fa;
-    color: var(--gov-blue);
-    padding: 15px;
-    border: 1px solid #dee2e6;
-}
+    #doc-table th {
+        background-color: #f8f9fa;
+        color: var(--gov-blue);
+        padding: 15px;
+        border: 1px solid #dee2e6;
+    }
 
-#doc-table td {
-    padding: 12px;
-    border: 1px solid #dee2e6;
-}
+    #doc-table td {
+        padding: 12px;
+        border: 1px solid #dee2e6;
+    }
 
 /* Important Links Slider Card Fixes */
 .important-links-section {
@@ -193,7 +203,10 @@ a { text-decoration: none; color: var(--gov-blue); }
     background: white;
 }
 
-.logo-card img { height: 60px; margin-right: 15px; }
+    .logo-card img {
+        height: 60px;
+        margin-right: 15px;
+    }
 
 /* --- 5. FOOTER --- */
 .gov-footer {
@@ -205,7 +218,59 @@ a { text-decoration: none; color: var(--gov-blue); }
 
 /* --- 6. RESPONSIVE --- */
 @media (max-width: 992px) {
-    body { padding-top: 250px; }
-    .main-nav ul { flex-wrap: wrap; justify-content: center; }
-    .main-nav li a { padding: 10px 12px; font-size: 14px; }
+    body {
+        padding-top: 250px;
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-nav li a {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+}
+
+/* --- 7. FOOTER CREDIT (L&G Tech) - RAINBOW EFFECT --- */
+.lg-tech-credit {
+    display: block;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #333; /* subtle separator line */
+    font-weight: 900; /* Extra Bold */
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    /* The Rainbow Gradient */
+    background: linear-gradient( 90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000 /* Repeat red at end for smooth loop */
+    );
+    background-size: 200% auto;
+    /* Clip background to text */
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Animation */
+    animation: rainbow-lighting 3s linear infinite;
+    /* Optional: Glow Effect */
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.4));
+}
+
+/* Contact number specific style (white color for readability) */
+.lg-contact {
+    font-size: 0.9em;
+    color: #ffffff; /* White text */
+    -webkit-text-fill-color: #ffffff; /* Override transparent gradient */
+    text-transform: none;
+    font-weight: normal;
+    display: block;
+    margin-top: 5px;
+}
+
+@keyframes rainbow-lighting {
+    to {
+        background-position: 200% center;
+    }
 }
