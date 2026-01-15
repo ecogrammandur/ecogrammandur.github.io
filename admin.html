@@ -72,7 +72,6 @@
 
             .btn-primary.updating {
                 background-color: #f59e0b; /* Orange for Update mode */
-                content: "Update Data";
             }
 
         .btn-danger {
@@ -357,9 +356,10 @@
 
                     <div class="admin-card">
                         <h3>2. Committee Members</h3>
-                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr 1fr; gap:10px;">
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr; gap:10px;">
                             <input type="number" id="memRank" class="form-control" placeholder="Rank">
                             <input type="text" id="memName" class="form-control" placeholder="Name">
+                            <input type="text" id="memRole" class="form-control" placeholder="Role">
                             <input type="text" id="memWard" class="form-control" placeholder="Ward">
                             <input type="text" id="memPhone" class="form-control" placeholder="Contact">
                         </div>
@@ -560,10 +560,10 @@
             loadList('leaders', 'listLeaders', 'name', false, true);
             loadList('members', 'listMembers', 'name', false, true);
             loadList('staff', 'listStaff', 'name', false, true);
-            loadList('phc', 'listPhc', 'name', false, true); // NEW
-            loadList('subcenter', 'listSubCenter', 'name', false, true); // NEW
+            loadList('phc', 'listPhc', 'name', false, true);
+            loadList('subcenter', 'listSubCenter', 'name', false, true);
             loadList('anganwadi', 'listAng', 'name', false, true);
-            loadList('rti', 'listRti', 'name', false, true); // NEW
+            loadList('rti', 'listRti', 'name', false, true);
 
             loadList('services', 'listServices', 'title');
             loadList('gallery', 'adminGalleryList', 'url', true);
@@ -613,15 +613,12 @@
         }
 
         // --- CORE SAVE/UPDATE LOGIC ---
-        // Helper to handle Add vs Edit automatically
         async function handleSave(colName, data, btnId, inputIdsToClear) {
             try {
                 if (currentEdit.col === colName && currentEdit.id) {
-                    // Update
                     await setDoc(doc(db, colName, currentEdit.id), data);
                     alert("Updated Successfully!");
                 } else {
-                    // Create New
                     data.createdAt = Date.now();
                     await addDoc(collection(db, colName), data);
                     alert("Added Successfully!");
@@ -633,7 +630,7 @@
                 // Reset Edit Mode
                 currentEdit = { col: null, id: null };
                 const btn = document.getElementById(btnId);
-                if (btn) { btn.innerText = btn.innerText.replace('Update', 'Add'); btn.classList.remove('updating'); }
+                if (btn) { btn.innerText = btn.innerText.replace('Update', 'Add').replace('Record', 'Member'); btn.classList.remove('updating'); }
 
                 loadAll();
 
@@ -647,7 +644,6 @@
             const data = JSON.parse(decodeURIComponent(dataEncoded));
             currentEdit = { col: colName, id: id };
 
-            // Map fields based on collection
             if (colName === 'leaders') {
                 document.getElementById('leadRank').value = data.rank || '';
                 document.getElementById('leadName').value = data.name || '';
@@ -659,6 +655,7 @@
             else if (colName === 'members') {
                 document.getElementById('memRank').value = data.rank || '';
                 document.getElementById('memName').value = data.name || '';
+                document.getElementById('memRole').value = data.role || ''; // Added
                 document.getElementById('memWard').value = data.ward || '';
                 document.getElementById('memPhone').value = data.phone || '';
                 toggleBtn('btnSaveMember');
@@ -700,7 +697,6 @@
                 toggleBtn('btnSaveRti');
             }
 
-            // Scroll to top of section
             document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -725,9 +721,10 @@
         window.saveMember = () => handleSave('members', {
             rank: parseInt(document.getElementById('memRank').value),
             name: document.getElementById('memName').value,
+            role: document.getElementById('memRole').value, // Added
             ward: document.getElementById('memWard').value,
             phone: document.getElementById('memPhone').value
-        }, 'btnSaveMember', ['memRank', 'memName', 'memWard', 'memPhone']);
+        }, 'btnSaveMember', ['memRank', 'memName', 'memRole', 'memWard', 'memPhone']);
 
         window.saveStaff = () => handleSave('staff', {
             rank: parseInt(document.getElementById('staffRank').value),
@@ -765,8 +762,7 @@
             phone: document.getElementById('rtiPhone').value
         }, 'btnSaveRti', ['rtiRank', 'rtiName', 'rtiRole', 'rtiPhone']);
 
-
-        // --- OTHER SAVES (Simple Add Only for simplicity unless requested) ---
+        // --- OTHER SAVES ---
         window.savePublicDoc = async () => {
             const name = document.getElementById('docTitle').value;
             const link = document.getElementById('docLink').value;
