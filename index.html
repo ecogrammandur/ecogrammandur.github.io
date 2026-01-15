@@ -22,7 +22,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', 'Mukta', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
         }
@@ -247,7 +247,7 @@
                 color: var(--gov-blue);
             }
 
-        /* --- DOCUMENTS TABLE (NEW) --- */
+        /* --- DOCUMENTS TABLE --- */
         .docs-section {
             max-width: 1200px;
             margin: 0 auto 50px auto;
@@ -287,49 +287,47 @@
             font-size: 0.9rem;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            text-align: center;
         }
 
-        .footer-col h4 {
-            color: var(--gov-orange);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .link-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: 0.3s;
+            background: #f9f9f9;
+            height: 140px;
         }
 
-        .footer-col ul {
-            list-style: none;
-            padding: 0;
-        }
-
-            .footer-col ul li {
-                margin-bottom: 10px;
+            .link-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                background: white;
+                border-color: var(--gov-orange);
             }
 
-                .footer-col ul li a {
-                    color: #ccc;
-                    text-decoration: none;
-                    transition: 0.3s;
-                }
+            .link-card img {
+                height: 50px;
+                width: auto;
+                margin-bottom: 10px;
+                object-fit: contain;
+            }
 
-                    .footer-col ul li a:hover {
-                        color: var(--gov-orange);
-                        padding-left: 5px;
-                    }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-            margin-top: 40px;
-            color: #777;
-        }
+            .link-card span {
+                font-size: 0.9rem;
+                font-weight: 600;
+                line-height: 1.2;
+            }
 
         /* --- MOBILE --- */
         .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
@@ -425,7 +423,7 @@
     <header class="gov-header-group">
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
-                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: +91-</span>
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: +91-7378418453</span>
                 <span>
                     <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
                     <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
@@ -457,7 +455,7 @@
                 <li><a href="grievance.html" id="nav-grievance">Grievance</a></li>
                 <li><a href="rti.html" id="nav-rti">RTI</a></li>
                 <li><a href="contact.html" id="nav-contact">Contact</a></li>
-                <li style="margin-left: auto;"><a href="admin.html" class="btn-login">Login</a></li>
+                <li style="margin-left: auto;"><a href="admin.html" class="btn-login" id="btn-login-txt">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -469,13 +467,13 @@
             <div class="hero-content">
                 <h2 id="hero-title">Welcome to Mandur</h2>
                 <p id="hero-desc">Digital Gateway to Our Village Development</p>
-                <a href="services.html" class="feature-card" style="display:inline-block; padding:10px 30px; background:var(--gov-orange); color:white; border:none;">Explore Services</a>
+                <a href="services.html" class="feature-card" style="display:inline-block; padding:10px 30px; background:var(--gov-orange); color:white; border:none;" id="btn-explore">Explore Services</a>
             </div>
         </div>
     </div>
 
     <div class="news-ticker">
-        <div class="ticker-label"><i class="fas fa-bullhorn"></i> UPDATES</div>
+        <div class="ticker-label"><i class="fas fa-bullhorn"></i> <span id="txt-updates">UPDATES</span></div>
         <div class="marquee-container">
             <div class="marquee-content" id="news-marquee">
                 Loading latest news from Gram Panchayat Mandur...
@@ -487,33 +485,33 @@
         <a href="schemes.html" class="feature-card">
             <i class="fas fa-hand-holding-heart"></i>
             <h3 id="card-schemes">Govt Schemes</h3>
-            <p>Beneficiary schemes & applications</p>
+            <p id="desc-schemes">Beneficiary schemes & applications</p>
         </a>
         <a href="works.html" class="feature-card">
             <i class="fas fa-hard-hat"></i>
             <h3 id="card-works">Development Works</h3>
-            <p>Track ongoing village projects</p>
+            <p id="desc-works">Track ongoing village projects</p>
         </a>
         <a href="gramsabha.html" class="feature-card">
             <i class="fas fa-users"></i>
             <h3 id="card-gramsabha">Gram Sabha</h3>
-            <p>Meeting schedules & resolutions</p>
+            <p id="desc-gramsabha">Meeting schedules & resolutions</p>
         </a>
         <a href="rti.html" class="feature-card">
             <i class="fas fa-file-alt"></i>
             <h3 id="card-rti">RTI / Documents</h3>
-            <p>Transparency & public records</p>
+            <p id="desc-rti">Transparency & public records</p>
         </a>
     </div>
 
     <div class="docs-section">
-        <h2 style="color:var(--gov-blue); border-left:5px solid var(--gov-orange); padding-left:15px; margin-bottom:20px;">Important Documents & Downloads</h2>
+        <h2 style="color:var(--gov-blue); border-left:5px solid var(--gov-orange); padding-left:15px; margin-bottom:20px;" id="sec-docs">Important Documents & Downloads</h2>
         <div style="overflow-x:auto;">
             <table class="doc-table">
                 <thead>
                     <tr>
-                        <th>Document Name</th>
-                        <th style="width:100px;">Action</th>
+                        <th id="th-doc-name">Document Name</th>
+                        <th id="th-action" style="width:100px;">Action</th>
                     </tr>
                 </thead>
                 <tbody id="public-docs-body">
@@ -522,105 +520,54 @@
             </table>
         </div>
     </div>
+
     <div class="links-section" style="background:#fff; padding:40px 0; border-top:5px solid var(--gov-orange);">
         <div style="max-width:1200px; margin:0 auto; padding:0 20px;">
             <h2 style="text-align:center; color:var(--gov-blue); margin-bottom:30px; text-transform:uppercase;">
-                <i class="fas fa-external-link-alt"></i> Important Government Links
+                <i class="fas fa-external-link-alt"></i> <span id="sec-links">Important Government Links</span>
             </h2>
 
             <div class="links-grid">
-
                 <a href="https://aaplesarkar.mahaonline.gov.in/" target="_blank" class="link-card">
                     <img src="https://aaplesarkar.mahaonline.gov.in/Content/assets/images/emblem.png" alt="Aaple Sarkar">
                     <span>Aaple Sarkar</span>
                 </a>
-
                 <a href="https://bhulekh.mahabhumi.gov.in/" target="_blank" class="link-card">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Bhulekh">
                     <span>Mahabhulekh (7/12)</span>
                 </a>
-
                 <a href="https://mahadbt.maharashtra.gov.in/" target="_blank" class="link-card">
                     <img src="https://mahadbt.maharashtra.gov.in/images/Maharashtra_shasan.png" alt="MahaDBT">
                     <span>MahaDBT</span>
                 </a>
-
                 <a href="https://pmkisan.gov.in/" target="_blank" class="link-card">
                     <img src="https://pmkisan.gov.in/images/logo.png" alt="PM Kisan">
                     <span>PM Kisan Samman</span>
                 </a>
-
                 <a href="https://uidai.gov.in/" target="_blank" class="link-card">
                     <img src="https://uidai.gov.in/images/lang/en/logo.png" alt="Aadhar">
                     <span>Download Aadhar</span>
                 </a>
-
                 <a href="https://voters.eci.gov.in/" target="_blank" class="link-card">
                     <img src="https://voters.eci.gov.in/assets/images/eci-logo.svg" alt="Voter ID">
                     <span>Voter Services</span>
                 </a>
-
                 <a href="https://rcms.mahafood.gov.in/" target="_blank" class="link-card">
-                    <img src="" alt="Ration Card">
+                    <img src="https://rcms.mahafood.gov.in/Content/Images/emblem.png" alt="Ration Card">
                     <span>Ration Card</span>
                 </a>
-
                 <a href="https://rdd.maharashtra.gov.in/" target="_blank" class="link-card">
                     <img src="https://rdd.maharashtra.gov.in/sites/default/files/emblem.png" alt="RDD">
                     <span>Rural Dev. Dept</span>
                 </a>
-
             </div>
         </div>
     </div>
 
-    <style>
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-
-        .link-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            text-decoration: none;
-            color: #333;
-            transition: 0.3s;
-            background: #f9f9f9;
-            height: 140px;
-        }
-
-            .link-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                background: white;
-                border-color: var(--gov-orange);
-            }
-
-            .link-card img {
-                height: 50px;
-                width: auto;
-                margin-bottom: 10px;
-                object-fit: contain;
-            }
-
-            .link-card span {
-                font-size: 0.9rem;
-                font-weight: 600;
-                line-height: 1.2;
-            }
-    </style>
     <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
         <div class="lg-tech-credit">
-            Designed &amp; Developed by: L&amp;G Tech Solution
+            Designed & Developed by: L&G Tech Solution
             <span class="lg-contact">📞 Contact: 7378418453</span>
         </div>
     </footer>
@@ -641,6 +588,107 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // --- TRANSLATION LOGIC ---
+        const translations = {
+            en: {
+                helpline: "Help Line",
+                title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
+                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works", navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
+
+                heroTitle: "Welcome to Mandur",
+                heroDesc: "Digital Gateway to Our Village Development",
+                btnExplore: "Explore Services",
+
+                txtUpdates: "UPDATES",
+
+                cardSchemes: "Govt Schemes", descSchemes: "Beneficiary schemes & applications",
+                cardWorks: "Development Works", descWorks: "Track ongoing village projects",
+                cardGram: "Gram Sabha", descGram: "Meeting schedules & resolutions",
+                cardRti: "RTI / Documents", descRti: "Transparency & public records",
+
+                secDocs: "Important Documents & Downloads",
+                thDocName: "Document Name", thAction: "Action",
+
+                secLinks: "Important Government Links",
+                footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
+            },
+            mr: {
+                helpline: "हेल्पलाइन",
+                title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
+                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे", navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+
+                heroTitle: "ग्रामपंचायत मणदूर मध्ये आपले स्वागत आहे",
+                heroDesc: "आमच्या गाव विकासाचे डिजिटल माध्यम",
+                btnExplore: "सेवा एक्सप्लोर करा",
+
+                txtUpdates: "ताज्या बातम्या",
+
+                cardSchemes: "शासकीय योजना", descSchemes: "लाभार्थी योजना आणि अर्ज",
+                cardWorks: "विकास कामे", descWorks: "गावातील चालू प्रकल्प पहा",
+                cardGram: "ग्रामसभा", descGram: "बैठकांचे वेळापत्रक आणि ठराव",
+                cardRti: "माहिती अधिकार / कागदपत्रे", descRti: "पारदर्शकता आणि सार्वजनिक नोंदी",
+
+                secDocs: "महत्त्वाची कागदपत्रे आणि डाउनलोड",
+                thDocName: "कागदपत्राचे नाव", thAction: "कृती",
+
+                secLinks: "महत्वाच्या शासकीय लिंक्स",
+                footer: "© २०२६ ग्रामपंचायत मणदूर. सर्व हक्क राखीव."
+            }
+        };
+
+        window.setLanguage = function (lang) {
+            const t = translations[lang];
+
+            // Header
+            if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
+            if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
+            if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
+
+            // Nav
+            if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
+            if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
+            if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
+            if (document.getElementById('nav-services')) document.getElementById('nav-services').innerText = t.navServices;
+            if (document.getElementById('nav-schemes')) document.getElementById('nav-schemes').innerText = t.navSchemes;
+            if (document.getElementById('nav-works')) document.getElementById('nav-works').innerText = t.navWorks;
+            if (document.getElementById('nav-gramsabha')) document.getElementById('nav-gramsabha').innerText = t.navGram;
+            if (document.getElementById('nav-gallery')) document.getElementById('nav-gallery').innerText = t.navGallery;
+            if (document.getElementById('nav-grievance')) document.getElementById('nav-grievance').innerText = t.navGrievance;
+            if (document.getElementById('nav-rti')) document.getElementById('nav-rti').innerText = t.navRTI;
+            if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
+            if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
+
+            // Hero
+            if (document.getElementById('hero-title')) document.getElementById('hero-title').innerText = t.heroTitle;
+            if (document.getElementById('hero-desc')) document.getElementById('hero-desc').innerText = t.heroDesc;
+            if (document.getElementById('btn-explore')) document.getElementById('btn-explore').innerText = t.btnExplore;
+
+            // Updates
+            if (document.getElementById('txt-updates')) document.getElementById('txt-updates').innerText = t.txtUpdates;
+
+            // Cards
+            if (document.getElementById('card-schemes')) document.getElementById('card-schemes').innerText = t.cardSchemes;
+            if (document.getElementById('desc-schemes')) document.getElementById('desc-schemes').innerText = t.descSchemes;
+            if (document.getElementById('card-works')) document.getElementById('card-works').innerText = t.cardWorks;
+            if (document.getElementById('desc-works')) document.getElementById('desc-works').innerText = t.descWorks;
+            if (document.getElementById('card-gramsabha')) document.getElementById('card-gramsabha').innerText = t.cardGram;
+            if (document.getElementById('desc-gramsabha')) document.getElementById('desc-gramsabha').innerText = t.descGram;
+            if (document.getElementById('card-rti')) document.getElementById('card-rti').innerText = t.cardRti;
+            if (document.getElementById('desc-rti')) document.getElementById('desc-rti').innerText = t.descRti;
+
+            // Sections
+            if (document.getElementById('sec-docs')) document.getElementById('sec-docs').innerText = t.secDocs;
+            if (document.getElementById('th-doc-name')) document.getElementById('th-doc-name').innerText = t.thDocName;
+            if (document.getElementById('th-action')) document.getElementById('th-action').innerText = t.thAction;
+            if (document.getElementById('sec-links')) document.getElementById('sec-links').innerText = t.secLinks;
+
+            // Footer
+            if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
+
+            localStorage.setItem('gp_lang_pref', lang);
+        }
+
+        // --- DATA LOADING ---
         async function loadHomeData() {
             // 1. SLIDER
             const bannerContainer = document.getElementById('hero-slider');
@@ -669,14 +717,14 @@
                     }
                 }
             } catch (e) { console.error("Banner error", e); }
-			// 2. NEWS
-			try {
-				const newsSnap = await getDoc(doc(db, "content", "news"));
-				if (newsSnap.exists()) {
-					// CHANGED: Removed the second part so it only shows once
-					document.getElementById('news-marquee').innerText = newsSnap.data().text;
-				}
-			} catch (e) { console.error("News error", e); }
+
+            // 2. NEWS (Fixed: Only shows once)
+            try {
+                const newsSnap = await getDoc(doc(db, "content", "news"));
+                if (newsSnap.exists()) {
+                    document.getElementById('news-marquee').innerText = newsSnap.data().text;
+                }
+            } catch (e) { console.error("News error", e); }
 
             // 3. PUBLIC DOCUMENTS
             try {
@@ -691,9 +739,9 @@
                     snapDocs.forEach(d => {
                         const doc = d.data();
                         html += `<tr>
-                                    <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
-                                    <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
-                                </tr>`;
+                                        <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
+                                        <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
+                                    </tr>`;
                     });
                     docBody.innerHTML = html;
                 }
@@ -705,6 +753,11 @@
         // UI Helpers
         window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
         window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+
+        window.onload = function () {
+            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
+            setLanguage(savedLang);
+        };
     </script>
 </body>
 </html>

@@ -23,7 +23,7 @@
             padding-top: var(--header-height-desktop);
         }
 
-        /* HEADER Styles (Same as Index) */
+        /* HEADER Styles */
         .gov-header-group {
             position: fixed;
             top: 0;
@@ -160,6 +160,11 @@
             border: 0;
         }
 
+        /* MOBILE MENU & RESPONSIVE FIXES */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+            display: none;
+        }
+
         @media (max-width: 992px) {
             body {
                 padding-top: 100px;
@@ -178,16 +183,73 @@
                 cursor: pointer;
             }
 
+            .main-brand img {
+                height: 50px;
+            }
+
+            #txt-title {
+                font-size: 1.2rem;
+            }
+
             .contact-grid {
                 grid-template-columns: 1fr;
             }
-            /* Mobile menu logic hidden for brevity, include if needed */
+
+            /* Overlay Background */
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 1001;
+            }
+
+            /* Sliding Sidebar */
+            .main-nav {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1002;
+                transition: 0.3s;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+                overflow-y: auto;
+            }
+
+                .main-nav.active {
+                    left: 0;
+                }
+
+                .main-nav ul {
+                    flex-direction: column;
+                }
+
+                .main-nav li {
+                    width: 100%;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+
+            .sidebar-close-btn {
+                display: block;
+                width: 100%;
+                text-align: right;
+                padding: 15px;
+                color: white;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menu" onclick="closeMenu()"></div>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
     <header class="gov-header-group">
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
@@ -210,7 +272,7 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
         </div>
         <nav class="main-nav" id="sidebarMenu">
-            <!--//<button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>//-->
+            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index.html" id="nav-home">Home</a></li>
                 <li><a href="about.html" id="nav-about">About Us</a></li>
@@ -266,7 +328,7 @@
             </div>
 
             <div class="map-container">
-                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3826.664797067984!2d73.83098761486333!3d16.44192798865154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc07a77d5555555%3A0x5555555555555555!2sGaganbawada%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1625555555555!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.696123456789!2d73.856743!3d16.805904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1000000000000%3A0x0!2sMandur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </main>
@@ -274,17 +336,17 @@
     <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
         <div class="lg-tech-credit">
-            Designed &amp; Developed by: L&amp;G Tech Solution
+            Designed & Developed by: L&G Tech Solution
             <span class="lg-contact">📞 Contact: 7378418453</span>
         </div>
     </footer>
 
     <script>
-        // Simple Translation Script
         const translations = {
             en: { helpline: "Help Line", title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur", navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works", navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login", pageTitle: "Contact Us", footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved." },
             mr: { helpline: "हेल्पलाइन", title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर", navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे", navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन", pageTitle: "संपर्क साधा", footer: "© २०२६ ग्रामपंचायत मणदूर. सर्व हक्क राखीव." }
         };
+
         function setLanguage(lang) {
             const t = translations[lang];
             if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
@@ -306,6 +368,7 @@
             if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
             localStorage.setItem('gp_lang_pref', lang);
         }
+
         window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
         window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
 
