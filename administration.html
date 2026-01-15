@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* --- CORE VARIABLES (Matched from Index) --- */
+        /* --- CORE VARIABLES --- */
         :root {
             --gov-blue: #003366;
             --gov-orange: #ff9933;
+            --gov-green: #28a745; /* Health */
+            --gov-purple: #6f42c1; /* RTI */
             --text-light: #ffffff;
             --header-height-desktop: 175px;
         }
@@ -19,7 +21,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', 'Mukta', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
         }
@@ -267,11 +269,28 @@
             padding-left: 15px;
             margin-bottom: 20px;
         }
+
+        /* Special Header Colors */
+        .health-header {
+            background: var(--gov-green) !important;
+        }
+
+        .health-border {
+            border-left-color: var(--gov-green) !important;
+        }
+
+        .rti-header {
+            background: var(--gov-purple) !important;
+        }
+
+        .rti-border {
+            border-left-color: var(--gov-purple) !important;
+        }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menu" onclick="closeMenu()"></div>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -359,6 +378,38 @@
             </table>
         </div>
 
+        <h3 id="sec-phc" class="section-heading health-border">Primary Health Center (PHC)</h3>
+        <div class="data-table-container">
+            <table class="gov-table">
+                <thead class="health-header">
+                    <tr>
+                        <th id="th-phc-name">Name</th>
+                        <th id="th-phc-role">Designation</th>
+                        <th id="th-phc-phone">Phone</th>
+                    </tr>
+                </thead>
+                <tbody id="dynamic-phc">
+                    <tr><td colspan="3" style="text-align:center;">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 id="sec-subcenter" class="section-heading health-border">Health Sub Center</h3>
+        <div class="data-table-container">
+            <table class="gov-table">
+                <thead class="health-header">
+                    <tr>
+                        <th id="th-sc-name">Name</th>
+                        <th id="th-sc-role">Designation</th>
+                        <th id="th-sc-phone">Phone</th>
+                    </tr>
+                </thead>
+                <tbody id="dynamic-subcenter">
+                    <tr><td colspan="3" style="text-align:center;">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
         <h3 id="sec-anganwadi" class="section-heading" style="border-left-color: #e11d48;">Anganwadi Sevika & Helpers</h3>
         <div class="data-table-container">
             <table class="gov-table">
@@ -378,7 +429,7 @@
 
     </main>
 
-    <footer class="gov-footer">
+    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:40px 0; margin-top:50px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
     </footer>
 
@@ -386,6 +437,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
             authDomain: "ecogrampanchayatmandur.firebaseapp.com",
@@ -408,15 +460,18 @@
                 helpline: "Help Line",
                 title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
                 navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works",
-                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
+                navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance",
+                navRti: "RTI",
+                navContact: "Contact", navLogin: "Login",
 
                 pageTitle: "Administration",
                 secElected: "Elected Body",
                 secMembers: "Committee Members",
                 secStaff: "Gram Panchayat Staff",
+                secSubCenter: "Health Sub Center",
+                secPHC: "Primary Health Center (PHC)",
                 secAnganwadi: "Anganwadi Sevika & Helpers",
 
-                // Table Headers
                 thName: "Name", thDesig: "Designation", thWard: "Ward", thContact: "Contact",
                 thPhone: "Phone", thRole: "Role", thAngName: "Anganwadi Name",
 
@@ -424,116 +479,115 @@
             },
             mr: {
                 helpline: "हेल्पलाइन",
-                title: "ग्रामपंचायत मांडूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
+                title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
                 navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
-                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण",
+                navRti: "माहिती अधिकार",
+                navContact: "संपर्क", navLogin: "लॉगिन",
 
                 pageTitle: "प्रशासन",
                 secElected: "लोकनियुक्त पदाधिकारी",
                 secMembers: "सदस्य मंडळ",
                 secStaff: "ग्रामपंचायत कर्मचारी",
+                secSubCenter: "आरोग्य उपकेंद्र",
+                secPHC: "प्राथमिक आरोग्य केंद्र (PHC)",
                 secAnganwadi: "अंगणवाडी सेविका व मदतनीस",
 
-                // Table Headers
                 thName: "नाव", thDesig: "पद", thWard: "प्रभाग", thContact: "संपर्क",
                 thPhone: "संपर्क", thRole: "पद", thAngName: "अंगणवाडी नाव",
 
-                footer: "© २०२६ ग्रामपंचायत मांडूर. सर्व हक्क राखीव."
+                footer: "© २०२६ ग्रामपंचायत मणदूर. सर्व हक्क राखीव."
             }
         };
 
         window.setLanguage = function (lang) {
             const t = translations[lang];
 
-            // Header & Nav
-            document.getElementById('txt-helpline').innerText = t.helpline;
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            // 1. Header & Nav
+            if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
+            if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
+            if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
 
-            // Page Content
-            document.getElementById('page-title').innerText = t.pageTitle;
-            document.getElementById('sec-elected').innerText = t.secElected;
-            document.getElementById('sec-members').innerText = t.secMembers;
-            document.getElementById('sec-staff').innerText = t.secStaff;
-            document.getElementById('sec-anganwadi').innerText = t.secAnganwadi;
+            if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
+            if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
+            if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
+            if (document.getElementById('nav-services')) document.getElementById('nav-services').innerText = t.navServices;
+            if (document.getElementById('nav-schemes')) document.getElementById('nav-schemes').innerText = t.navSchemes;
+            if (document.getElementById('nav-works')) document.getElementById('nav-works').innerText = t.navWorks;
+            if (document.getElementById('nav-gramsabha')) document.getElementById('nav-gramsabha').innerText = t.navGram;
+            if (document.getElementById('nav-gallery')) document.getElementById('nav-gallery').innerText = t.navGallery;
+            if (document.getElementById('nav-grievance')) document.getElementById('nav-grievance').innerText = t.navGrievance;
+            if (document.getElementById('nav-rti')) document.getElementById('nav-rti').innerText = t.navRti;
+            if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
+            if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
 
-            // Table Headers
-            document.getElementById('th-mem-name').innerText = t.thName;
-            document.getElementById('th-mem-desig').innerText = t.thDesig;
-            document.getElementById('th-mem-ward').innerText = t.thWard;
-            document.getElementById('th-mem-contact').innerText = t.thContact;
-            document.getElementById('th-staff-name').innerText = t.thName;
-            document.getElementById('th-staff-desig').innerText = t.thDesig;
-            document.getElementById('th-staff-phone').innerText = t.thPhone;
-            document.getElementById('th-ang-name').innerText = t.thName;
-            document.getElementById('th-ang-role').innerText = t.thRole;
-            document.getElementById('th-ang-center').innerText = t.thAngName;
-            document.getElementById('th-ang-phone').innerText = t.thPhone;
+            // 2. Page Headers
+            if (document.getElementById('page-title')) document.getElementById('page-title').innerText = t.pageTitle;
+            if (document.getElementById('sec-elected')) document.getElementById('sec-elected').innerText = t.secElected;
+            if (document.getElementById('sec-members')) document.getElementById('sec-members').innerText = t.secMembers;
+            if (document.getElementById('sec-staff')) document.getElementById('sec-staff').innerText = t.secStaff;
+            if (document.getElementById('sec-subcenter')) document.getElementById('sec-subcenter').innerText = t.secSubCenter;
+            if (document.getElementById('sec-phc')) document.getElementById('sec-phc').innerText = t.secPHC;
+            if (document.getElementById('sec-anganwadi')) document.getElementById('sec-anganwadi').innerText = t.secAnganwadi;
 
-            // Footer
-            document.getElementById('txt-footer').innerText = t.footer;
+            // 3. Table Headers
+            const thIds = {
+                'th-mem-name': t.thName, 'th-mem-desig': t.thDesig, 'th-mem-ward': t.thWard, 'th-mem-contact': t.thContact,
+                'th-staff-name': t.thName, 'th-staff-desig': t.thDesig, 'th-staff-phone': t.thPhone,
+                'th-sc-name': t.thName, 'th-sc-role': t.thDesig, 'th-sc-phone': t.thPhone,
+                'th-phc-name': t.thName, 'th-phc-role': t.thDesig, 'th-phc-phone': t.thPhone,
+                'th-ang-name': t.thName, 'th-ang-role': t.thRole, 'th-ang-center': t.thAngName, 'th-ang-phone': t.thPhone
+            };
+            for (let id in thIds) { if (document.getElementById(id)) document.getElementById(id).innerText = thIds[id]; }
+
+            // 4. Footer
+            if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
 
             localStorage.setItem('gp_lang_pref', lang);
-
-            // Reload Data
             loadAllData(lang);
         }
 
         // --- FIREBASE DATA LOADER ---
         async function loadAllData(lang) {
-            const t = translations[lang];
 
-            // 1. LEADERS (Elected Body)
+            // Helper to get Data Safely
+            const getVal = (data, field) => {
+                return data[field + '_' + lang] || data[field + '_en'] || data[field] || '-';
+            };
+
+            // 1. LEADERS
             const leadersDiv = document.getElementById('dynamic-leaders');
             try {
                 const q = query(collection(db, "leaders"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-
-                if (!snap.empty) {
-                    snap.forEach(doc => {
-                        const l = doc.data();
-                        const photo = l.photo ? l.photo : 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-                        html += `
+                snap.forEach(doc => {
+                    const l = doc.data();
+                    html += `
                             <div class="profile-card">
-                                <img src="${photo}" class="profile-img" alt="Leader">
+                                <img src="${l.photo || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" class="profile-img" alt="Leader">
                                 <div class="profile-info">
-                                    <span class="role-badge">${l.role}</span>
-                                    <h3 style="color: var(--gov-blue); margin-bottom: 5px;">${l.name}</h3>
+                                    <span class="role-badge">${getVal(l, 'role')}</span>
+                                    <h3 style="color: var(--gov-blue); margin-bottom: 5px;">${getVal(l, 'name')}</h3>
                                     <p style="color: #666;">${l.phone || ''}</p>
                                 </div>
                             </div>`;
-                    });
-                    leadersDiv.innerHTML = html;
-                } else { leadersDiv.innerHTML = '<p>No data available.</p>'; }
-            } catch (e) { console.error(e); leadersDiv.innerHTML = '<p style="color:red">Failed to load leaders.</p>'; }
+                });
+                leadersDiv.innerHTML = html || '<p>No elected body data.</p>';
+            } catch (e) { console.error("Leaders Error:", e); }
 
-            // 2. MEMBERS (Future Proofing)
+            // 2. MEMBERS
             const memDiv = document.getElementById('dynamic-members');
             try {
                 const q = query(collection(db, "members"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                if (!snap.empty) {
-                    snap.forEach(doc => {
-                        const m = doc.data();
-                        html += `<tr><td>${m.name}</td><td>${m.role || 'Member'}</td><td>${m.ward || '-'}</td><td>${m.phone || '-'}</td></tr>`;
-                    });
-                    memDiv.innerHTML = html;
-                } else { memDiv.innerHTML = '<tr><td colspan="4" style="text-align:center;">No members listed.</td></tr>'; }
-            } catch (e) { memDiv.innerHTML = '<tr><td colspan="4" style="text-align:center;">Data unavailable.</td></tr>'; }
+                snap.forEach(doc => {
+                    const m = doc.data();
+                    html += `<tr><td>${getVal(m, 'name')}</td><td>${getVal(m, 'role')}</td><td>${m.ward || '-'}</td><td>${m.phone || '-'}</td></tr>`;
+                });
+                memDiv.innerHTML = html || '<tr><td colspan="4" style="text-align:center;">No members found.</td></tr>';
+            } catch (e) { console.error("Members Error:", e); }
 
             // 3. STAFF
             const staffDiv = document.getElementById('dynamic-staff');
@@ -541,29 +595,52 @@
                 const q = query(collection(db, "staff"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                if (!snap.empty) {
-                    snap.forEach(doc => {
-                        const s = doc.data();
-                        html += `<tr><td>${s.name}</td><td>${s.role}</td><td>${s.phone || '-'}</td></tr>`;
-                    });
-                    staffDiv.innerHTML = html;
-                } else { staffDiv.innerHTML = '<tr><td colspan="3" style="text-align:center;">No staff listed.</td></tr>'; }
-            } catch (e) { staffDiv.innerHTML = '<tr><td colspan="3" style="text-align:center;">Data unavailable.</td></tr>'; }
+                snap.forEach(doc => {
+                    const s = doc.data();
+                    html += `<tr><td>${getVal(s, 'name')}</td><td>${getVal(s, 'role')}</td><td>${s.phone || '-'}</td></tr>`;
+                });
+                staffDiv.innerHTML = html || '<tr><td colspan="3" style="text-align:center;">No staff found.</td></tr>';
+            } catch (e) { console.error("Staff Error:", e); }
 
-            // 4. ANGANWADI
+            // 4. PHC (Fetched Physically from Cloud)
+            const phcDiv = document.getElementById('dynamic-phc');
+            try {
+                const q = query(collection(db, "phc"), orderBy("rank", "asc"));
+                const snap = await getDocs(q);
+                let html = '';
+                snap.forEach(doc => {
+                    const p = doc.data();
+                    html += `<tr><td>${getVal(p, 'name')}</td><td>${getVal(p, 'role')}</td><td>${p.phone || '-'}</td></tr>`;
+                });
+                phcDiv.innerHTML = html || '<tr><td colspan="3" style="text-align:center;">No PHC staff found.</td></tr>';
+            } catch (e) { console.error("PHC Error:", e); }
+
+            // 5. SUB CENTER (Fetched Physically from Cloud)
+            const scDiv = document.getElementById('dynamic-subcenter');
+            try {
+                const q = query(collection(db, "subcenter"), orderBy("rank", "asc"));
+                const snap = await getDocs(q);
+                let html = '';
+                snap.forEach(doc => {
+                    const s = doc.data();
+                    html += `<tr><td>${getVal(s, 'name')}</td><td>${getVal(s, 'role')}</td><td>${s.phone || '-'}</td></tr>`;
+                });
+                scDiv.innerHTML = html || '<tr><td colspan="3" style="text-align:center;">No Sub Center staff found.</td></tr>';
+            } catch (e) { console.error("Sub Center Error:", e); }
+
+            // 6. ANGANWADI
             const angDiv = document.getElementById('dynamic-anganwadi');
             try {
                 const q = query(collection(db, "anganwadi"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                if (!snap.empty) {
-                    snap.forEach(doc => {
-                        const a = doc.data();
-                        html += `<tr><td>${a.name}</td><td>${a.role}</td><td>${a.center || '-'}</td><td>${a.phone || '-'}</td></tr>`;
-                    });
-                    angDiv.innerHTML = html;
-                } else { angDiv.innerHTML = '<tr><td colspan="4" style="text-align:center;">No Anganwadi staff listed.</td></tr>'; }
-            } catch (e) { angDiv.innerHTML = '<tr><td colspan="4" style="text-align:center;">Data unavailable.</td></tr>'; }
+                snap.forEach(doc => {
+                    const a = doc.data();
+                    html += `<tr><td>${getVal(a, 'name')}</td><td>${getVal(a, 'role')}</td><td>${getVal(a, 'center')}</td><td>${a.phone || '-'}</td></tr>`;
+                });
+                angDiv.innerHTML = html || '<tr><td colspan="4" style="text-align:center;">No Anganwadi staff found.</td></tr>';
+            } catch (e) { console.error("Anganwadi Error:", e); }
+
         }
 
         window.onload = function () {
