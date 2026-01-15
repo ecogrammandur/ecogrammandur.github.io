@@ -287,6 +287,7 @@
             font-size: 0.9rem;
         }
 
+        /* --- IMPORTANT LINKS GRID (FIXED FOR ICONS) --- */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -316,11 +317,16 @@
                 border-color: var(--gov-orange);
             }
 
-            .link-card img {
-                height: 50px;
-                width: auto;
-                margin-bottom: 10px;
-                object-fit: contain;
+                .link-card:hover i {
+                    color: var(--gov-orange);
+                    transform: scale(1.1);
+                }
+
+            .link-card i {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+                color: var(--gov-blue);
+                transition: 0.3s;
             }
 
             .link-card span {
@@ -529,35 +535,35 @@
 
             <div class="links-grid">
                 <a href="https://aaplesarkar.mahaonline.gov.in/" target="_blank" class="link-card">
-                    <img src="https://aaplesarkar.mahaonline.gov.in/Content/assets/images/emblem.png" alt="Aaple Sarkar">
+                    <i class="fas fa-landmark"></i>
                     <span>Aaple Sarkar</span>
                 </a>
                 <a href="https://bhulekh.mahabhumi.gov.in/" target="_blank" class="link-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Bhulekh">
+                    <i class="fas fa-map"></i>
                     <span>Mahabhulekh (7/12)</span>
                 </a>
                 <a href="https://mahadbt.maharashtra.gov.in/" target="_blank" class="link-card">
-                    <img src="https://mahadbt.maharashtra.gov.in/images/Maharashtra_shasan.png" alt="MahaDBT">
+                    <i class="fas fa-rupee-sign"></i>
                     <span>MahaDBT</span>
                 </a>
                 <a href="https://pmkisan.gov.in/" target="_blank" class="link-card">
-                    <img src="https://pmkisan.gov.in/images/logo.png" alt="PM Kisan">
+                    <i class="fas fa-tractor"></i>
                     <span>PM Kisan Samman</span>
                 </a>
                 <a href="https://uidai.gov.in/" target="_blank" class="link-card">
-                    <img src="https://uidai.gov.in/images/lang/en/logo.png" alt="Aadhar">
+                    <i class="fas fa-fingerprint"></i>
                     <span>Download Aadhar</span>
                 </a>
                 <a href="https://voters.eci.gov.in/" target="_blank" class="link-card">
-                    <img src="https://voters.eci.gov.in/assets/images/eci-logo.svg" alt="Voter ID">
+                    <i class="fas fa-id-card"></i>
                     <span>Voter Services</span>
                 </a>
                 <a href="https://rcms.mahafood.gov.in/" target="_blank" class="link-card">
-                    <img src="https://rcms.mahafood.gov.in/Content/Images/emblem.png" alt="Ration Card">
+                    <i class="fas fa-utensils"></i>
                     <span>Ration Card</span>
                 </a>
                 <a href="https://rdd.maharashtra.gov.in/" target="_blank" class="link-card">
-                    <img src="https://rdd.maharashtra.gov.in/sites/default/files/emblem.png" alt="RDD">
+                    <i class="fas fa-leaf"></i>
                     <span>Rural Dev. Dept</span>
                 </a>
             </div>
@@ -615,7 +621,8 @@
             mr: {
                 helpline: "हेल्पलाइन",
                 title: "ग्रामपंचायत मणदूर", subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
-                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे", navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
+                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे",
+                navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
 
                 heroTitle: "ग्रामपंचायत मणदूर मध्ये आपले स्वागत आहे",
                 heroDesc: "आमच्या गाव विकासाचे डिजिटल माध्यम",
