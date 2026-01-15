@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="mr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>आमच्याबद्दल | ग्रामपंचायत मणदूर</title>
+    <title>About Us | Gram Panchayat Mandur</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -17,7 +17,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', 'Mukta', Arial, sans-serif; /* Added Mukta for better Marathi rendering if available */
+            font-family: 'Segoe UI', 'Mukta', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
         }
@@ -174,7 +174,7 @@
             display: none;
         }
 
-        /* STATS GRID (Custom adjustment for layout) */
+        /* STATS GRID */
         .stat-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -292,11 +292,12 @@
 </head>
 <body>
 
-    <div class="menu" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
     <header class="gov-header-group">
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
-                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">हेल्पलाइन</span>: +91-7378418453</span>
+                <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: +91-7378418453</span>
                 <span>
                     <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
                     <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
@@ -308,8 +309,8 @@
                 <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
-                    <h1 id="txt-title">ग्रामपंचायत मणदूर</h1>
-                    <p id="txt-subtitle">तालुका: गगनबावडा | जिल्हा: कोल्हापूर</p>
+                    <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
+                    <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
@@ -317,55 +318,55 @@
         <nav class="main-nav" id="sidebarMenu">
             <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
             <ul>
-                <li><a href="index.html" id="nav-home">मुख्य पृष्ठ</a></li>
-                <li><a href="about.html" class="active" id="nav-about">आमच्याबद्दल</a></li>
-                <li><a href="administration.html" id="nav-admin">प्रशासन</a></li>
-                <li><a href="services.html" id="nav-services">सुविधा</a></li>
-                <li><a href="schemes.html" id="nav-schemes">योजना</a></li>
-                <li><a href="works.html" id="nav-works">कामे</a></li>
-                <li><a href="gramsabha.html" id="nav-gramsabha">ग्रामसभा</a></li>
-                <li><a href="gallery.html" id="nav-gallery">छायाचित्र</a></li>
-                <li><a href="grievance.html" id="nav-grievance">तक्रार निवारण</a></li>
-                <li><a href="rti.html" id="nav-rti">माहिती अधिकार</a></li>
-                <li><a href="contact.html" id="nav-contact">संपर्क</a></li>
-                <li style="margin-left: auto;"><a href="admin.html" class="btn-login" id="btn-login-txt">लॉगिन</a></li>
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="about.html" class="active" id="nav-about">About Us</a></li>
+                <li><a href="administration.html" id="nav-admin">Administration</a></li>
+                <li><a href="services.html" id="nav-services">Services</a></li>
+                <li><a href="schemes.html" id="nav-schemes">Schemes</a></li>
+                <li><a href="works.html" id="nav-works">Works</a></li>
+                <li><a href="gramsabha.html" id="nav-gramsabha">Gram Sabha</a></li>
+                <li><a href="gallery.html" id="nav-gallery">Gallery</a></li>
+                <li><a href="grievance.html" id="nav-grievance">Grievance</a></li>
+                <li><a href="rti.html" id="nav-rti">RTI</a></li>
+                <li><a href="contact.html" id="nav-contact">Contact</a></li>
+                <li style="margin-left: auto;"><a href="admin.html" class="btn-login" id="btn-login-txt">Login</a></li>
             </ul>
         </nav>
     </header>
 
     <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
         <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px; color:var(--gov-blue);">
-            आमच्या गावाबद्दल
+            About Our Village
         </h2>
 
         <div class="content-box">
-            <h3><i class="fas fa-history"></i> प्रस्तावना व इतिहास</h3>
-            <p>ग्रामपंचायत मणदूरची स्थापना <strong>१० डिसेंबर १९७९</strong> रोजी झाली. या ग्रामपंचायती अंतर्गत <strong>मणदूर</strong> आणि <strong>पाटिलवाडी</strong> ही दोन महसूल गावे येतात. मणदूर हे गाव कुंभी नदीच्या काठावर वसलेले निसर्गरम्य गाव आहे.</p>
-            <p>हे गाव गगनबावडा तालुक्यापासून २५ कि.मी. आणि कोल्हापूर जिल्ह्यापासून ३५ कि.मी. अंतरावर आहे. गावाचे एकूण क्षेत्रफळ ५४६.११ हेक्टर आहे.</p>
+            <h3><i class="fas fa-history"></i> <span id="sec-intro-title">Introduction & History</span></h3>
+            <p id="sec-intro-text1">Gram Panchayat Mandur was established on <strong>10 December 1979</strong>. It includes two revenue villages: <strong>Mandur</strong> and <strong>Patilwadi</strong>. Mandur is situated on the scenic banks of the Kumbhi river.</p>
+            <p id="sec-intro-text2">The village is 25 km from Gaganbawada Taluka and 35 km from Kolhapur District. The total area of the village is 546.11 hectares.</p>
         </div>
 
         <div class="content-box">
-            <h3><i class="fas fa-leaf"></i> सामाजिक व आर्थिक स्थिती</h3>
-            <p><strong>व्यवसाय:</strong> गावातील ९०% लोकांचा मुख्य व्यवसाय शेती आहे. शेतकऱ्यांचे मुख्य पीक ऊस असून, पावसाळ्यामध्ये भात, नाचणी आणि वरी ही पिके घेतली जातात.</p>
-            <p><strong>सांस्कृतिक वारसा:</strong> गावात खंडोबा देवालय (पाटिलवाडी) आणि रामेश्वर देवालय (मणदूर) ही प्रमुख पर्यटन स्थळे आहेत. येथे दसरा आणि महाशिवरात्री उत्सव मोठ्या उत्साहात साजरे केले जातात.</p>
+            <h3><i class="fas fa-leaf"></i> <span id="sec-socio-title">Socio-Economic Status</span></h3>
+            <p id="sec-socio-text1"><strong>Occupation:</strong> 90% of the population is engaged in agriculture. The main crop is Sugarcane, while Rice, Nachani, and Vari are grown during the monsoon.</p>
+            <p id="sec-socio-text2"><strong>Cultural Heritage:</strong> Major temples include Khandoba Temple (Patilwadi) and Rameshwar Temple (Mandur). Dasara and Mahashivratri are celebrated with great enthusiasm.</p>
         </div>
 
         <div class="stat-grid">
             <div class="stat-card">
-                <div class="stat-number">१५९८</div>
-                <div class="stat-label">एकूण लोकसंख्या</div>
+                <div class="stat-number">1598</div>
+                <div class="stat-label" id="lbl-pop">Total Population</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">३९५</div>
-                <div class="stat-label">कुटुंब संख्या</div>
+                <div class="stat-number">395</div>
+                <div class="stat-label" id="lbl-house">Total Households</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">०४</div>
-                <div class="stat-label">एकूण शाळा</div>
+                <div class="stat-number">04</div>
+                <div class="stat-label" id="lbl-school">Total Schools</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">०२</div>
-                <div class="stat-label">प्रमुख मंदिरे</div>
+                <div class="stat-number">02</div>
+                <div class="stat-label" id="lbl-temple">Major Temples</div>
             </div>
         </div>
     </main>
@@ -373,62 +374,66 @@
     <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
         <div class="lg-tech-credit">
-            Designed &amp; Developed by: L&amp;G Tech Solution
+            Designed & Developed by: L&G Tech Solution
             <span class="lg-contact">📞 Contact: 7378418453</span>
         </div>
     </footer>
 
     <script>
-        // Update logic to default to Marathi and handle toggling back to English if needed
         const translations = {
             en: {
                 helpline: "Help Line",
                 title: "GRAM PANCHAYAT MANDUR",
                 subtitle: "Taluka: Gaganbawada | District: Kolhapur",
-                navHome: "Home",
-                navAbout: "About Us",
-                navAdmin: "Administration",
-                navServices: "Services",
-                navSchemes: "Schemes",
-                navWorks: "Works",
-                navGram: "Gram Sabha",
-                navGallery: "Gallery",
-                navGrievance: "Grievance",
-                navRTI: "RTI",
-                navContact: "Contact",
-                navLogin: "Login",
+                navHome: "Home", navAbout: "About Us", navAdmin: "Administration", navServices: "Services", navSchemes: "Schemes", navWorks: "Works", navGram: "Gram Sabha", navGallery: "Gallery", navGrievance: "Grievance", navRTI: "RTI", navContact: "Contact", navLogin: "Login",
                 pageTitle: "About Our Village",
+
+                introTitle: "Introduction & History",
+                introText1: "Gram Panchayat Mandur was established on <strong>10 December 1979</strong>. It includes two revenue villages: <strong>Mandur</strong> and <strong>Patilwadi</strong>. Mandur is situated on the scenic banks of the Kumbhi river.",
+                introText2: "The village is 25 km from Gaganbawada Taluka and 35 km from Kolhapur District. The total area of the village is 546.11 hectares.",
+
+                socioTitle: "Socio-Economic Status",
+                socioText1: "<strong>Occupation:</strong> 90% of the population is engaged in agriculture. The main crop is Sugarcane, while Rice, Nachani, and Vari are grown during the monsoon.",
+                socioText2: "<strong>Cultural Heritage:</strong> Major temples include Khandoba Temple (Patilwadi) and Rameshwar Temple (Mandur). Dasara and Mahashivratri are celebrated with great enthusiasm.",
+
+                lblPop: "Total Population",
+                lblHouse: "Total Households",
+                lblSchool: "Total Schools",
+                lblTemple: "Major Temples",
+
                 footer: "© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved."
             },
             mr: {
                 helpline: "हेल्पलाइन",
                 title: "ग्रामपंचायत मणदूर",
                 subtitle: "तालुका: गगनबावडा | जिल्हा: कोल्हापूर",
-                navHome: "मुख्य पृष्ठ",
-                navAbout: "आमच्याबद्दल",
-                navAdmin: "प्रशासन",
-                navServices: "सुविधा",
-                navSchemes: "योजना",
-                navWorks: "कामे",
-                navGram: "ग्रामसभा",
-                navGallery: "छायाचित्र",
-                navGrievance: "तक्रार निवारण",
-                navRTI: "माहिती अधिकार",
-                navContact: "संपर्क",
-                navLogin: "लॉगिन",
+                navHome: "मुख्य पृष्ठ", navAbout: "आमच्याबद्दल", navAdmin: "प्रशासन", navServices: "सुविधा", navSchemes: "योजना", navWorks: "कामे", navGram: "ग्रामसभा", navGallery: "छायाचित्र", navGrievance: "तक्रार निवारण", navRTI: "माहिती अधिकार", navContact: "संपर्क", navLogin: "लॉगिन",
                 pageTitle: "आमच्या गावाबद्दल",
+
+                introTitle: "प्रस्तावना व इतिहास",
+                introText1: "ग्रामपंचायत मणदूरची स्थापना <strong>१० डिसेंबर १९७९</strong> रोजी झाली. या ग्रामपंचायती अंतर्गत <strong>मणदूर</strong> आणि <strong>पाटिलवाडी</strong> ही दोन महसूल गावे येतात. मणदूर हे गाव कुंभी नदीच्या काठावर वसलेले निसर्गरम्य गाव आहे.",
+                introText2: "हे गाव गगनबावडा तालुक्यापासून २५ कि.मी. आणि कोल्हापूर जिल्ह्यापासून ३५ कि.मी. अंतरावर आहे. गावाचे एकूण क्षेत्रफळ ५४६.११ हेक्टर आहे.",
+
+                socioTitle: "सामाजिक व आर्थिक स्थिती",
+                socioText1: "<strong>व्यवसाय:</strong> गावातील ९०% लोकांचा मुख्य व्यवसाय शेती आहे. शेतकऱ्यांचे मुख्य पीक ऊस असून, पावसाळ्यामध्ये भात, नाचणी आणि वरी ही पिके घेतली जातात.",
+                socioText2: "<strong>सांस्कृतिक वारसा:</strong> गावात खंडोबा देवालय (पाटिलवाडी) आणि रामेश्वर देवालय (मणदूर) ही प्रमुख पर्यटन स्थळे आहेत. येथे दसरा आणि महाशिवरात्री उत्सव मोठ्या उत्साहात साजरे केले जातात.",
+
+                lblPop: "एकूण लोकसंख्या",
+                lblHouse: "कुटुंब संख्या",
+                lblSchool: "एकूण शाळा",
+                lblTemple: "प्रमुख मंदिरे",
+
                 footer: "© २०२६ ग्रामपंचायत मणदूर. सर्व हक्क राखीव."
             }
         };
 
         function setLanguage(lang) {
             const t = translations[lang];
-            // Only updating Header/Footer elements dynamically to avoid breaking the custom body content
+
+            // Header & Nav
             if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
             if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
             if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
-
-            // Nav Updates
             if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
             if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
             if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
@@ -442,8 +447,22 @@
             if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
             if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
 
-            // Page specifics
+            // Content
             if (document.getElementById('page-title')) document.getElementById('page-title').innerText = t.pageTitle;
+
+            if (document.getElementById('sec-intro-title')) document.getElementById('sec-intro-title').innerText = t.introTitle;
+            if (document.getElementById('sec-intro-text1')) document.getElementById('sec-intro-text1').innerHTML = t.introText1;
+            if (document.getElementById('sec-intro-text2')) document.getElementById('sec-intro-text2').innerHTML = t.introText2;
+
+            if (document.getElementById('sec-socio-title')) document.getElementById('sec-socio-title').innerText = t.socioTitle;
+            if (document.getElementById('sec-socio-text1')) document.getElementById('sec-socio-text1').innerHTML = t.socioText1;
+            if (document.getElementById('sec-socio-text2')) document.getElementById('sec-socio-text2').innerHTML = t.socioText2;
+
+            if (document.getElementById('lbl-pop')) document.getElementById('lbl-pop').innerText = t.lblPop;
+            if (document.getElementById('lbl-house')) document.getElementById('lbl-house').innerText = t.lblHouse;
+            if (document.getElementById('lbl-school')) document.getElementById('lbl-school').innerText = t.lblSchool;
+            if (document.getElementById('lbl-temple')) document.getElementById('lbl-temple').innerText = t.lblTemple;
+
             if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
 
             localStorage.setItem('gp_lang_pref', lang);
@@ -453,8 +472,8 @@
         window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
 
         window.onload = function () {
-            // Default to Marathi ('mr') if no preference is saved
-            const savedLang = localStorage.getItem('gp_lang_pref') || 'mr';
+            // Default to 'en' (English) if no preference is saved
+            const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
             setLanguage(savedLang);
         };
     </script>
