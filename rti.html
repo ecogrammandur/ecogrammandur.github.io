@@ -315,12 +315,11 @@
 
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:40px 0; margin-top:50px; text-align:center;">
+    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-
         <div class="lg-tech-credit">
-            Designed & Developed by: L&G Tech Solution
-            <span class="lg-contact">📞 Contact: 9922003344</span>
+            Designed &amp; Developed by: L&amp;G Tech Solution
+            <span class="lg-contact">📞 Contact: 7378418453</span>
         </div>
     </footer>
 
@@ -433,10 +432,10 @@
                     snap.forEach(d => {
                         const r = d.data();
                         html += `<tr>
-                                <td>${getVal(r, 'name')}</td>
-                                <td>${getVal(r, 'role')}</td>
-                                <td>${r.phone || '-'}</td>
-                            </tr>`;
+                                    <td>${getVal(r, 'name')}</td>
+                                    <td>${getVal(r, 'role')}</td>
+                                    <td>${r.phone || '-'}</td>
+                                </tr>`;
                     });
                 }
                 document.getElementById('rti-officers-body').innerHTML = html;
@@ -455,9 +454,9 @@
                     snapDocs.forEach(d => {
                         const doc = d.data();
                         html += `<tr>
-                                        <td><i class="fas fa-file-pdf" style="color:#d32f2f; margin-right:10px;"></i> ${doc.name}</td>
-                                        <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
-                                    </tr>`;
+                                            <td><i class="fas fa-file-pdf" style="color:#d32f2f; margin-right:10px;"></i> ${doc.name}</td>
+                                            <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
+                                        </tr>`;
                     });
                     docBody.innerHTML = html;
                 }

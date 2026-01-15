@@ -347,12 +347,11 @@
 
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:40px 0; margin-top:50px; text-align:center;">
+    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-
         <div class="lg-tech-credit">
-            Designed & Developed by: L&G Tech Solution
-            <span class="lg-contact">📞 Contact: 9922003344</span>
+            Designed &amp; Developed by: L&amp;G Tech Solution
+            <span class="lg-contact">📞 Contact: 7378418453</span>
         </div>
     </footer>
 
@@ -472,30 +471,30 @@
                     const imgUrl = w.photo ? w.photo : 'https://via.placeholder.com/400x200?text=No+Image';
 
                     html += `
-                        <div class="work-card">
-                            <img src="${imgUrl}" class="work-img" alt="Work Image">
-                            <div class="work-body">
-                                <span class="status-badge status-${w.status}">${w.status}</span>
-                                <h3 class="work-title">${w.title}</h3>
+                            <div class="work-card">
+                                <img src="${imgUrl}" class="work-img" alt="Work Image">
+                                <div class="work-body">
+                                    <span class="status-badge status-${w.status}">${w.status}</span>
+                                    <h3 class="work-title">${w.title}</h3>
 
-                                <div class="info-row">
-                                    <span class="info-label">${t.lblCost}:</span>
-                                    <span>${w.cost || '-'}</span>
+                                    <div class="info-row">
+                                        <span class="info-label">${t.lblCost}:</span>
+                                        <span>${w.cost || '-'}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">${t.lblExp}:</span>
+                                        <span>${w.exp || '-'}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">${t.lblStart}:</span>
+                                        <span>${w.start || '-'}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">${t.lblEnd}:</span>
+                                        <span>${w.end || '-'}</span>
+                                    </div>
                                 </div>
-                                <div class="info-row">
-                                    <span class="info-label">${t.lblExp}:</span>
-                                    <span>${w.exp || '-'}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">${t.lblStart}:</span>
-                                    <span>${w.start || '-'}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">${t.lblEnd}:</span>
-                                    <span>${w.end || '-'}</span>
-                                </div>
-                            </div>
-                        </div>`;
+                            </div>`;
                 });
                 container.innerHTML = html;
 

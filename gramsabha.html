@@ -306,12 +306,11 @@
 
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:40px 0; margin-top:50px; text-align:center;">
+    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
         <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-
         <div class="lg-tech-credit">
-            Designed & Developed by: L&G Tech Solution
-            <span class="lg-contact">📞 Contact: 9922003344</span>
+            Designed &amp; Developed by: L&amp;G Tech Solution
+            <span class="lg-contact">📞 Contact: 7378418453</span>
         </div>
     </footer>
 
@@ -442,34 +441,34 @@
                         const agendaItems = m.agenda ? m.agenda.split(',').map(i => `<li>${i.trim()}</li>`).join('') : `<li>${m.agenda}</li>`;
 
                         upcomingHtml += `
-                            <div class="meeting-box">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                                    <h4 style="margin: 0; font-size: 1.2rem;">${m.title}</h4>
-                                    <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem;">${t.lblUpcomingTag}</span>
-                                </div>
-                                <p><strong><i class="far fa-calendar-alt"></i> ${t.lblDate}:</strong> ${m.date}</p>
-                                <p><strong><i class="far fa-clock"></i> ${t.lblTime}:</strong> ${m.time}</p>
-                                <p><strong><i class="fas fa-map-marker-alt"></i> ${t.lblVenue}:</strong> ${m.venue}</p>
-                                <hr style="border-top: 1px dashed #ccc;">
-                                <h5 style="margin-top: 15px;">${t.lblAgenda}:</h5>
-                                <ul class="agenda-list">
-                                    ${agendaItems}
-                                </ul>
-                                ${m.link ? `<div style="margin-top:10px;"><a href="${m.link}" target="_blank" class="btn-primary" style="background:var(--gov-blue); color:white; padding:5px 15px; text-decoration:none; border-radius:4px;">Download Notice PDF</a></div>` : ''}
-                            </div>`;
+                                <div class="meeting-box">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                        <h4 style="margin: 0; font-size: 1.2rem;">${m.title}</h4>
+                                        <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem;">${t.lblUpcomingTag}</span>
+                                    </div>
+                                    <p><strong><i class="far fa-calendar-alt"></i> ${t.lblDate}:</strong> ${m.date}</p>
+                                    <p><strong><i class="far fa-clock"></i> ${t.lblTime}:</strong> ${m.time}</p>
+                                    <p><strong><i class="fas fa-map-marker-alt"></i> ${t.lblVenue}:</strong> ${m.venue}</p>
+                                    <hr style="border-top: 1px dashed #ccc;">
+                                    <h5 style="margin-top: 15px;">${t.lblAgenda}:</h5>
+                                    <ul class="agenda-list">
+                                        ${agendaItems}
+                                    </ul>
+                                    ${m.link ? `<div style="margin-top:10px;"><a href="${m.link}" target="_blank" class="btn-primary" style="background:var(--gov-blue); color:white; padding:5px 15px; text-decoration:none; border-radius:4px;">Download Notice PDF</a></div>` : ''}
+                                </div>`;
                     } else {
                         // PAST (Right Side)
                         hasPast = true;
                         const linkBtn = m.link ? `<a href="${m.link}" target="_blank" style="border: 1px solid var(--gov-blue); background: white; color: var(--gov-blue); padding: 5px 10px; border-radius: 4px; text-decoration:none;"><i class="fas fa-download"></i> PDF</a>` : `<span style="color:#999; font-size:0.8rem;">No File</span>`;
 
                         pastHtml += `
-                            <div style="padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <strong>${m.date}</strong><br>
-                                    <small class="text-muted">${m.title}</small>
-                                </div>
-                                ${linkBtn}
-                            </div>`;
+                                <div style="padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>${m.date}</strong><br>
+                                        <small class="text-muted">${m.title}</small>
+                                    </div>
+                                    ${linkBtn}
+                                </div>`;
                     }
                 });
 
