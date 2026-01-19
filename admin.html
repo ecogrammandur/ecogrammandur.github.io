@@ -285,8 +285,8 @@
         <nav class="sidebar" id="adminSidebar">
             <h3 style="padding:20px; border-bottom:1px solid #334155; color:white;">GP ADMIN</h3>
             <ul class="menu">
-                <li><a onclick="switchTab('manage-home', this)" class="active">Home & News</a></li>
-                <li><a onclick="switchTab('manage-docs', this)">Documents & RTI</a></li>
+                <li><a onclick="switchTab('manage-home', this)" class="active">Home Page & Docs</a></li>
+                <li><a onclick="switchTab('manage-rti', this)">RTI Info</a></li>
                 <li><a onclick="switchTab('manage-admin', this)">Administration</a></li>
                 <li><a onclick="switchTab('manage-services', this)">Services</a></li>
                 <li><a onclick="switchTab('manage-schemes', this)">Schemes</a></li>
@@ -307,6 +307,7 @@
                         <textarea id="newsText" class="form-control" placeholder="Enter scrolling news text..." rows="3"></textarea>
                         <button id="btnSaveNews" class="btn-primary" style="width:auto; background-color:#e11d48;">Update News</button>
                     </div>
+
                     <div class="admin-card">
                         <h3>Home Slider</h3>
                         <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 10px;">
@@ -314,20 +315,6 @@
                             <button onclick="saveBannerSlide()" class="btn-primary" style="margin-top:0;">+ Add</button>
                         </div>
                         <div id="bannerList" style="margin-top:20px; display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:10px;"></div>
-                    </div>
-                </div>
-
-                <div id="manage-docs" class="view-section">
-                    <div class="admin-card" style="border-left: 5px solid var(--admin-accent);">
-                        <h3>RTI Officers</h3>
-                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr 1fr; gap:10px;">
-                            <input type="number" id="rtiRank" class="form-control" placeholder="Rank">
-                            <input type="text" id="rtiName" class="form-control" placeholder="Name">
-                            <input type="text" id="rtiRole" class="form-control" placeholder="Designation">
-                            <input type="text" id="rtiPhone" class="form-control" placeholder="Phone">
-                        </div>
-                        <button id="btnSaveRti" onclick="saveRtiDoc()" class="btn-primary" style="width:auto;">Add RTI Officer</button>
-                        <div id="listRti" style="margin-top:15px;"></div>
                     </div>
 
                     <div class="admin-card" style="border-left: 5px solid #10b981;">
@@ -339,6 +326,20 @@
                             <button id="btnSaveDoc" onclick="savePublicDoc()" class="btn-success" style="margin-top:0;">+ Add</button>
                         </div>
                         <div id="listPublicDocs" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
+                <div id="manage-rti" class="view-section">
+                    <div class="admin-card" style="border-left: 5px solid var(--admin-accent);">
+                        <h3>RTI Officers</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr 1fr; gap:10px;">
+                            <input type="number" id="rtiRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="rtiName" class="form-control" placeholder="Name">
+                            <input type="text" id="rtiRole" class="form-control" placeholder="Designation">
+                            <input type="text" id="rtiPhone" class="form-control" placeholder="Phone">
+                        </div>
+                        <button id="btnSaveRti" onclick="saveRtiDoc()" class="btn-primary" style="width:auto;">Add RTI Officer</button>
+                        <div id="listRti" style="margin-top:15px;"></div>
                     </div>
                 </div>
 
@@ -558,7 +559,7 @@
         function loadAll() {
             loadList('banners', 'bannerList', 'url', true);
             loadList('schemes', 'listSchemes', 'title');
-            loadList('works', 'listWorks', 'title', false, true); // Works often have Rank
+            loadList('works', 'listWorks', 'title', false, true);
             loadList('gramsabha', 'listGS', 'title');
 
             // Admin Sections (Ordered by Rank)
@@ -570,10 +571,10 @@
             loadList('anganwadi', 'listAng', 'name', false, true);
             loadList('rti', 'listRti', 'name', false, true);
 
-            loadList('services', 'listServices', 'title', false, true); // Services can have rank
+            loadList('services', 'listServices', 'title', false, true);
             loadList('gallery', 'adminGalleryList', 'url', true);
 
-            // UPDATED: Documents now load by Rank
+            // Home Documents
             loadList('documents', 'listPublicDocs', 'name', false, true);
 
             loadNews();
@@ -639,7 +640,7 @@
                 currentEdit = { col: null, id: null };
                 const btn = document.getElementById(btnId);
                 if (btn) {
-                    btn.innerText = btn.innerText.replace('Update', 'Add').replace('Record', 'Member').replace('News', 'News'); // Simple reset logic
+                    btn.innerText = btn.innerText.replace('Update', 'Add').replace('Record', 'Member').replace('News', 'News');
                     if (btnId === "btnSaveDoc") btn.innerText = "+ Add";
                     else if (btnId.includes("Save")) btn.innerText = "Add " + btnId.replace("btnSave", "");
                     btn.classList.remove('updating');
@@ -664,6 +665,7 @@
                 document.getElementById('leadPhone').value = data.phone || '';
                 document.getElementById('leadPhoto').value = data.photo || '';
                 toggleBtn('btnSaveLeader');
+                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
             }
             else if (colName === 'members') {
                 document.getElementById('memRank').value = data.rank || '';
@@ -672,6 +674,7 @@
                 document.getElementById('memWard').value = data.ward || '';
                 document.getElementById('memPhone').value = data.phone || '';
                 toggleBtn('btnSaveMember');
+                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
             }
             else if (colName === 'staff') {
                 document.getElementById('staffRank').value = data.rank || '';
@@ -679,6 +682,7 @@
                 document.getElementById('staffRole').value = data.role || '';
                 document.getElementById('staffPhone').value = data.phone || '';
                 toggleBtn('btnSaveStaff');
+                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
             }
             else if (colName === 'phc') {
                 document.getElementById('phcRank').value = data.rank || '';
@@ -686,6 +690,7 @@
                 document.getElementById('phcRole').value = data.role || '';
                 document.getElementById('phcPhone').value = data.phone || '';
                 toggleBtn('btnSavePhc');
+                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
             }
             else if (colName === 'subcenter') {
                 document.getElementById('scRank').value = data.rank || '';
@@ -693,6 +698,7 @@
                 document.getElementById('scRole').value = data.role || '';
                 document.getElementById('scPhone').value = data.phone || '';
                 toggleBtn('btnSaveSc');
+                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
             }
             else if (colName === 'anganwadi') {
                 document.getElementById('angRank').value = data.rank || '';
@@ -701,6 +707,7 @@
                 document.getElementById('angCenter').value = data.center || '';
                 document.getElementById('angPhone').value = data.phone || '';
                 toggleBtn('btnSaveAng');
+                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
             }
             else if (colName === 'rti') {
                 document.getElementById('rtiRank').value = data.rank || '';
@@ -708,14 +715,17 @@
                 document.getElementById('rtiRole').value = data.role || '';
                 document.getElementById('rtiPhone').value = data.phone || '';
                 toggleBtn('btnSaveRti');
+                // Updated scroll target for RTI
+                document.getElementById('manage-rti').scrollIntoView({ behavior: 'smooth' });
+                return;
             }
-            // --- UPDATED EDIT LOGIC ---
             else if (colName === 'documents') {
                 document.getElementById('docRank').value = data.rank || '';
                 document.getElementById('docTitle').value = data.name || '';
                 document.getElementById('docLink').value = data.link || '';
                 toggleBtn('btnSaveDoc');
-                document.getElementById('manage-docs').scrollIntoView({ behavior: 'smooth' });
+                // Updated scroll target for Home Docs
+                document.getElementById('manage-home').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             else if (colName === 'services') {
@@ -762,8 +772,6 @@
                 document.getElementById('manage-gramsabha').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
-
-            document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
         }
 
         function toggleBtn(btnId) {
@@ -828,7 +836,6 @@
             phone: document.getElementById('rtiPhone').value
         }, 'btnSaveRti', ['rtiRank', 'rtiName', 'rtiRole', 'rtiPhone']);
 
-        // --- UPDATED SAVE FUNCTIONS (Uses handleSave) ---
         window.savePublicDoc = () => handleSave('documents', {
             rank: parseInt(document.getElementById('docRank').value) || 99,
             name: document.getElementById('docTitle').value,
