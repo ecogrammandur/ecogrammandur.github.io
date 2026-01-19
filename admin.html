@@ -341,10 +341,20 @@
                         <button id="btnSaveRti" onclick="saveRtiDoc()" class="btn-primary" style="width:auto;">Add RTI Officer</button>
                         <div id="listRti" style="margin-top:15px;"></div>
                     </div>
+
+                    <div class="admin-card" style="border-left: 5px solid var(--admin-accent);">
+                        <h3>RTI Documents (RTI Page)</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr 0.5fr; gap:10px;">
+                            <input type="number" id="rtiDocRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="rtiDocTitle" class="form-control" placeholder="Doc Name">
+                            <input type="text" id="rtiDocLink" class="form-control" placeholder="PDF Link">
+                            <button id="btnSaveRtiDoc" onclick="saveRtiDocFile()" class="btn-primary" style="margin-top:0;">+ Add</button>
+                        </div>
+                        <div id="listRtiDocs" style="margin-top:15px;"></div>
+                    </div>
                 </div>
 
                 <div id="manage-admin" class="view-section">
-
                     <div class="admin-card">
                         <h3>1. Elected Body</h3>
                         <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr; gap:10px;">
@@ -571,6 +581,9 @@
             loadList('anganwadi', 'listAng', 'name', false, true);
             loadList('rti', 'listRti', 'name', false, true);
 
+            // RTI Documents (New)
+            loadList('rti_docs', 'listRtiDocs', 'name', false, true);
+
             loadList('services', 'listServices', 'title', false, true);
             loadList('gallery', 'adminGalleryList', 'url', true);
 
@@ -641,7 +654,7 @@
                 const btn = document.getElementById(btnId);
                 if (btn) {
                     btn.innerText = btn.innerText.replace('Update', 'Add').replace('Record', 'Member').replace('News', 'News');
-                    if (btnId === "btnSaveDoc") btn.innerText = "+ Add";
+                    if (btnId === "btnSaveDoc" || btnId === "btnSaveRtiDoc") btn.innerText = "+ Add";
                     else if (btnId.includes("Save")) btn.innerText = "Add " + btnId.replace("btnSave", "");
                     btn.classList.remove('updating');
                 }
@@ -716,6 +729,15 @@
                 document.getElementById('rtiPhone').value = data.phone || '';
                 toggleBtn('btnSaveRti');
                 // Updated scroll target for RTI
+                document.getElementById('manage-rti').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            // --- NEW: RTI DOCUMENTS EDIT ---
+            else if (colName === 'rti_docs') {
+                document.getElementById('rtiDocRank').value = data.rank || '';
+                document.getElementById('rtiDocTitle').value = data.name || '';
+                document.getElementById('rtiDocLink').value = data.link || '';
+                toggleBtn('btnSaveRtiDoc');
                 document.getElementById('manage-rti').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
@@ -836,6 +858,13 @@
             phone: document.getElementById('rtiPhone').value
         }, 'btnSaveRti', ['rtiRank', 'rtiName', 'rtiRole', 'rtiPhone']);
 
+        // --- NEW: SAVE RTI DOCUMENT ---
+        window.saveRtiDocFile = () => handleSave('rti_docs', {
+            rank: parseInt(document.getElementById('rtiDocRank').value) || 99,
+            name: document.getElementById('rtiDocTitle').value,
+            link: document.getElementById('rtiDocLink').value
+        }, 'btnSaveRtiDoc', ['rtiDocRank', 'rtiDocTitle', 'rtiDocLink']);
+
         window.savePublicDoc = () => handleSave('documents', {
             rank: parseInt(document.getElementById('docRank').value) || 99,
             name: document.getElementById('docTitle').value,
@@ -908,7 +937,7 @@
             if (window.innerWidth < 768) { document.getElementById('adminSidebar').classList.remove('active'); }
         }
 
-        // --- COMPLAINTS ----
+        // --- COMPLAINTS ---
         window.loadCloudComplaints = async function () {
             const div = document.getElementById('listComplaints');
             if (!div) return;
