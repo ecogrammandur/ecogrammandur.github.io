@@ -376,10 +376,10 @@
                 snap.forEach(doc => {
                     const item = doc.data();
                     html += `
-                            <div class="gallery-item">
-                                <img src="${item.url}" class="gallery-img" alt="Gallery Photo" onclick="window.open('${item.url}', '_blank')">
-                                <div class="caption">${item.caption || 'Gram Panchayat Event'}</div>
-                            </div>`;
+                                <div class="gallery-item">
+                                    <img src="${item.url}" class="gallery-img" alt="Gallery Photo" onclick="window.open('${item.url}', '_blank')">
+                                    <div class="caption">${item.caption || 'Gram Panchayat Event'}</div>
+                                </div>`;
                 });
 
                 container.innerHTML = html;
@@ -396,5 +396,6 @@
             loadGallery();
         };
     </script>
+    <script src="js/protect.js"></script>
 </body>
 </html>

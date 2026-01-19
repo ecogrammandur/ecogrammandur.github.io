@@ -406,14 +406,14 @@
                 querySnapshot.forEach((doc) => {
                     const s = doc.data();
                     html += `
-                            <div class="scheme-card">
-                                <span class="scheme-tag">${s.category || 'General'}</span>
-                                <h3 class="scheme-title">${s.title}</h3>
-                                <span class="scheme-benefit"><i class="fas fa-gift"></i> Benefit: ${s.benefit}</span>
-                                <p class="scheme-desc">${s.desc}</p>
-                                ${s.link ? `<a href="${s.link}" target="_blank" class="btn-apply">Apply Now <i class="fas fa-arrow-right"></i></a>` : ''}
-                            </div>
-                        `;
+                                <div class="scheme-card">
+                                    <span class="scheme-tag">${s.category || 'General'}</span>
+                                    <h3 class="scheme-title">${s.title}</h3>
+                                    <span class="scheme-benefit"><i class="fas fa-gift"></i> Benefit: ${s.benefit}</span>
+                                    <p class="scheme-desc">${s.desc}</p>
+                                    ${s.link ? `<a href="${s.link}" target="_blank" class="btn-apply">Apply Now <i class="fas fa-arrow-right"></i></a>` : ''}
+                                </div>
+                            `;
                 });
 
                 grid.innerHTML = html;
@@ -435,6 +435,7 @@
             setLanguage(savedLang);
         };
     </script>
+    <script src="js/protect.js"></script>
 </body>
 
 </html>

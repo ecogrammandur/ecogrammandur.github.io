@@ -747,9 +747,9 @@
                     snapDocs.forEach(d => {
                         const doc = d.data();
                         html += `<tr>
-                                        <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
-                                        <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
-                                    </tr>`;
+                                            <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
+                                            <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
+                                        </tr>`;
                     });
                     docBody.innerHTML = html;
                 }
@@ -767,5 +767,6 @@
             setLanguage(savedLang);
         };
     </script>
+    <script src="js/protect.js"></script>
 </body>
 </html>

@@ -471,30 +471,30 @@
                     const imgUrl = w.photo ? w.photo : 'https://via.placeholder.com/400x200?text=No+Image';
 
                     html += `
-                            <div class="work-card">
-                                <img src="${imgUrl}" class="work-img" alt="Work Image">
-                                <div class="work-body">
-                                    <span class="status-badge status-${w.status}">${w.status}</span>
-                                    <h3 class="work-title">${w.title}</h3>
+                                <div class="work-card">
+                                    <img src="${imgUrl}" class="work-img" alt="Work Image">
+                                    <div class="work-body">
+                                        <span class="status-badge status-${w.status}">${w.status}</span>
+                                        <h3 class="work-title">${w.title}</h3>
 
-                                    <div class="info-row">
-                                        <span class="info-label">${t.lblCost}:</span>
-                                        <span>${w.cost || '-'}</span>
+                                        <div class="info-row">
+                                            <span class="info-label">${t.lblCost}:</span>
+                                            <span>${w.cost || '-'}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">${t.lblExp}:</span>
+                                            <span>${w.exp || '-'}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">${t.lblStart}:</span>
+                                            <span>${w.start || '-'}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">${t.lblEnd}:</span>
+                                            <span>${w.end || '-'}</span>
+                                        </div>
                                     </div>
-                                    <div class="info-row">
-                                        <span class="info-label">${t.lblExp}:</span>
-                                        <span>${w.exp || '-'}</span>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">${t.lblStart}:</span>
-                                        <span>${w.start || '-'}</span>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">${t.lblEnd}:</span>
-                                        <span>${w.end || '-'}</span>
-                                    </div>
-                                </div>
-                            </div>`;
+                                </div>`;
                 });
                 container.innerHTML = html;
 
@@ -509,5 +509,6 @@
             setLanguage(savedLang);
         };
     </script>
+    <script src="js/protect.js"></script>
 </body>
 </html>

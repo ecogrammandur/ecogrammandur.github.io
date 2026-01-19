@@ -568,14 +568,14 @@
                 snap.forEach(doc => {
                     const l = doc.data();
                     html += `
-                                <div class="profile-card">
-                                    <img src="${l.photo || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" class="profile-img" alt="Leader">
-                                    <div class="profile-info">
-                                        <span class="role-badge">${getVal(l, 'role')}</span>
-                                        <h3 style="color: var(--gov-blue); margin-bottom: 5px;">${getVal(l, 'name')}</h3>
-                                        <p style="color: #666;">${l.phone || ''}</p>
-                                    </div>
-                                </div>`;
+                                    <div class="profile-card">
+                                        <img src="${l.photo || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" class="profile-img" alt="Leader">
+                                        <div class="profile-info">
+                                            <span class="role-badge">${getVal(l, 'role')}</span>
+                                            <h3 style="color: var(--gov-blue); margin-bottom: 5px;">${getVal(l, 'name')}</h3>
+                                            <p style="color: #666;">${l.phone || ''}</p>
+                                        </div>
+                                    </div>`;
                 });
                 leadersDiv.innerHTML = html || '<p>No elected body data.</p>';
             } catch (e) { console.error("Leaders Error:", e); }
@@ -652,5 +652,6 @@
             setLanguage(savedLang);
         };
     </script>
+    <script src="js/protect.js"></script>
 </body>
 </html>

@@ -399,12 +399,12 @@
                     const linkBtn = s.link ? `<a href="${s.link}" target="_blank" class="btn-service">Apply / Details</a>` : '';
 
                     html += `
-                            <div class="service-card">
-                                <div class="icon-box"><i class="fas ${icon}"></i></div>
-                                <h3 class="service-title">${s.title}</h3>
-                                <p class="service-desc">${s.desc}</p>
-                                ${linkBtn}
-                            </div>`;
+                                <div class="service-card">
+                                    <div class="icon-box"><i class="fas ${icon}"></i></div>
+                                    <h3 class="service-title">${s.title}</h3>
+                                    <p class="service-desc">${s.desc}</p>
+                                    ${linkBtn}
+                                </div>`;
                 });
 
                 container.innerHTML = html;
@@ -421,5 +421,6 @@
             loadServices();
         };
     </script>
+    <script src="js/protect.js"></script>
 </body>
 </html>

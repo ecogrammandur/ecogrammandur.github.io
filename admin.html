@@ -617,13 +617,13 @@
                 snap.forEach(d => {
                     const dataStr = encodeURIComponent(JSON.stringify(d.data()));
                     html += `<tr>
-                                ${showRank ? `<td>${d.data().rank || '-'}</td>` : ''}
-                                <td>${d.data()[displayField]}</td>
-                                <td>
-                                    <button onclick="editDoc('${colName}','${d.id}', '${dataStr}')" class="btn-warning">Edit</button>
-                                    <button onclick="delDoc('${colName}','${d.id}')" class="btn-danger">Del</button>
-                                </td>
-                            </tr>`;
+                                    ${showRank ? `<td>${d.data().rank || '-'}</td>` : ''}
+                                    <td>${d.data()[displayField]}</td>
+                                    <td>
+                                        <button onclick="editDoc('${colName}','${d.id}', '${dataStr}')" class="btn-warning">Edit</button>
+                                        <button onclick="delDoc('${colName}','${d.id}')" class="btn-danger">Del</button>
+                                    </td>
+                                </tr>`;
                 });
                 html += `</table>`;
             }
@@ -957,5 +957,6 @@
             if (confirm("Mark this complaint as Resolved/Done?")) { await deleteDoc(doc(db, "complaints", id)); loadCloudComplaints(); }
         }
     </script>
+    <script src="js/protect.js"></script>
 </body>
 </html>
