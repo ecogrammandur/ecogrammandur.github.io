@@ -104,6 +104,10 @@
             cursor: pointer;
         }
 
+            .btn-success.updating {
+                background-color: #f59e0b;
+            }
+
         /* --- DASHBOARD LAYOUT --- */
         #dashboard-container {
             display: none; /* Hidden until login */
@@ -327,11 +331,12 @@
                     </div>
 
                     <div class="admin-card" style="border-left: 5px solid #10b981;">
-                        <h3>Public Documents</h3>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr 0.5fr; gap:10px;">
-                            <input type="text" id="docTitle" class="form-control" placeholder="Doc Name">
+                        <h3>Public Documents (Homepage)</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr 1fr 0.5fr; gap:10px;">
+                            <input type="number" id="docRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="docTitle" class="form-control" placeholder="Document Name">
                             <input type="text" id="docLink" class="form-control" placeholder="PDF Link">
-                            <button onclick="savePublicDoc()" class="btn-success" style="margin-top:0;">+ Add</button>
+                            <button id="btnSaveDoc" onclick="savePublicDoc()" class="btn-success" style="margin-top:0;">+ Add</button>
                         </div>
                         <div id="listPublicDocs" style="margin-top:15px;"></div>
                     </div>
@@ -429,7 +434,7 @@
                         </div>
                         <input type="text" id="svcLink" class="form-control" placeholder="Link/URL">
                         <textarea id="svcDesc" class="form-control" placeholder="Description"></textarea>
-                        <button onclick="saveService()" class="btn-primary" style="width:auto;">Add Service</button>
+                        <button id="btnSaveService" onclick="saveService()" class="btn-primary" style="width:auto;">Add Service</button>
                         <div id="listServices" style="margin-top:15px;"></div>
                     </div>
                 </div>
@@ -442,7 +447,7 @@
                         <input type="text" id="schBenefit" class="form-control" placeholder="Benefit">
                         <input type="text" id="schLink" class="form-control" placeholder="Link">
                         <textarea id="schDesc" class="form-control" placeholder="Desc"></textarea>
-                        <button onclick="saveScheme()" class="btn-primary" style="width:auto;">Add Scheme</button>
+                        <button id="btnSaveScheme" onclick="saveScheme()" class="btn-primary" style="width:auto;">Add Scheme</button>
                         <div id="listSchemes" style="margin-top:10px;"></div>
                     </div>
                 </div>
@@ -464,7 +469,7 @@
                             <input type="text" id="workEnd" class="form-control" placeholder="End">
                             <input type="text" id="workPhoto" class="form-control" placeholder="Photo URL">
                         </div>
-                        <button onclick="saveWork()" class="btn-primary" style="width:auto;">Add Work</button>
+                        <button id="btnSaveWork" onclick="saveWork()" class="btn-primary" style="width:auto;">Add Work</button>
                         <div id="listWorks" style="margin-top:10px;"></div>
                     </div>
                 </div>
@@ -482,7 +487,7 @@
                             <input type="text" id="gsLink" class="form-control" placeholder="PDF Link">
                         </div>
                         <textarea id="gsAgenda" class="form-control" placeholder="Agenda"></textarea>
-                        <button onclick="saveGS()" class="btn-primary" style="width:auto;">Add Meeting</button>
+                        <button id="btnSaveGS" onclick="saveGS()" class="btn-primary" style="width:auto;">Add Meeting</button>
                         <div id="listGS" style="margin-top:10px;"></div>
                     </div>
                 </div>
@@ -492,7 +497,7 @@
                         <h3>Gallery</h3>
                         <input type="text" id="galUrl" class="form-control" placeholder="Image URL">
                         <input type="text" id="galCaption" class="form-control" placeholder="Caption">
-                        <button onclick="savePhoto()" class="btn-primary" style="width:auto;">Add Photo</button>
+                        <button id="btnSavePhoto" onclick="savePhoto()" class="btn-primary" style="width:auto;">Add Photo</button>
                         <div id="adminGalleryList" style="margin-top:10px; display:grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap:10px;"></div>
                     </div>
                 </div>
@@ -553,7 +558,7 @@
         function loadAll() {
             loadList('banners', 'bannerList', 'url', true);
             loadList('schemes', 'listSchemes', 'title');
-            loadList('works', 'listWorks', 'title');
+            loadList('works', 'listWorks', 'title', false, true); // Works often have Rank
             loadList('gramsabha', 'listGS', 'title');
 
             // Admin Sections (Ordered by Rank)
@@ -565,9 +570,12 @@
             loadList('anganwadi', 'listAng', 'name', false, true);
             loadList('rti', 'listRti', 'name', false, true);
 
-            loadList('services', 'listServices', 'title');
+            loadList('services', 'listServices', 'title', false, true); // Services can have rank
             loadList('gallery', 'adminGalleryList', 'url', true);
-            loadList('documents', 'listPublicDocs', 'name');
+
+            // UPDATED: Documents now load by Rank
+            loadList('documents', 'listPublicDocs', 'name', false, true);
+
             loadNews();
             loadCloudComplaints();
         }
@@ -595,13 +603,13 @@
                 snap.forEach(d => {
                     const dataStr = encodeURIComponent(JSON.stringify(d.data()));
                     html += `<tr>
-                            ${showRank ? `<td>${d.data().rank || '-'}</td>` : ''}
-                            <td>${d.data()[displayField]}</td>
-                            <td>
-                                <button onclick="editDoc('${colName}','${d.id}', '${dataStr}')" class="btn-warning">Edit</button>
-                                <button onclick="delDoc('${colName}','${d.id}')" class="btn-danger">Del</button>
-                            </td>
-                        </tr>`;
+                                ${showRank ? `<td>${d.data().rank || '-'}</td>` : ''}
+                                <td>${d.data()[displayField]}</td>
+                                <td>
+                                    <button onclick="editDoc('${colName}','${d.id}', '${dataStr}')" class="btn-warning">Edit</button>
+                                    <button onclick="delDoc('${colName}','${d.id}')" class="btn-danger">Del</button>
+                                </td>
+                            </tr>`;
                 });
                 html += `</table>`;
             }
@@ -630,7 +638,12 @@
                 // Reset Edit Mode
                 currentEdit = { col: null, id: null };
                 const btn = document.getElementById(btnId);
-                if (btn) { btn.innerText = btn.innerText.replace('Update', 'Add').replace('Record', 'Member'); btn.classList.remove('updating'); }
+                if (btn) {
+                    btn.innerText = btn.innerText.replace('Update', 'Add').replace('Record', 'Member').replace('News', 'News'); // Simple reset logic
+                    if (btnId === "btnSaveDoc") btn.innerText = "+ Add";
+                    else if (btnId.includes("Save")) btn.innerText = "Add " + btnId.replace("btnSave", "");
+                    btn.classList.remove('updating');
+                }
 
                 loadAll();
 
@@ -639,7 +652,7 @@
             }
         }
 
-        // --- EDIT TRIGGER ---
+        // --- COMPLETE EDIT TRIGGER ---
         window.editDoc = function (colName, id, dataEncoded) {
             const data = JSON.parse(decodeURIComponent(dataEncoded));
             currentEdit = { col: colName, id: id };
@@ -655,7 +668,7 @@
             else if (colName === 'members') {
                 document.getElementById('memRank').value = data.rank || '';
                 document.getElementById('memName').value = data.name || '';
-                document.getElementById('memRole').value = data.role || ''; // Added
+                document.getElementById('memRole').value = data.role || '';
                 document.getElementById('memWard').value = data.ward || '';
                 document.getElementById('memPhone').value = data.phone || '';
                 toggleBtn('btnSaveMember');
@@ -696,6 +709,59 @@
                 document.getElementById('rtiPhone').value = data.phone || '';
                 toggleBtn('btnSaveRti');
             }
+            // --- UPDATED EDIT LOGIC ---
+            else if (colName === 'documents') {
+                document.getElementById('docRank').value = data.rank || '';
+                document.getElementById('docTitle').value = data.name || '';
+                document.getElementById('docLink').value = data.link || '';
+                toggleBtn('btnSaveDoc');
+                document.getElementById('manage-docs').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            else if (colName === 'services') {
+                document.getElementById('svcRank').value = data.rank || '';
+                document.getElementById('svcTitle').value = data.title || '';
+                document.getElementById('svcIcon').value = data.icon || '';
+                document.getElementById('svcLink').value = data.link || '';
+                document.getElementById('svcDesc').value = data.desc || '';
+                toggleBtn('btnSaveService');
+                document.getElementById('manage-services').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            else if (colName === 'schemes') {
+                document.getElementById('schTitle').value = data.title || '';
+                document.getElementById('schCat').value = data.category || '';
+                document.getElementById('schBenefit').value = data.benefit || '';
+                document.getElementById('schLink').value = data.link || '';
+                document.getElementById('schDesc').value = data.desc || '';
+                toggleBtn('btnSaveScheme');
+                document.getElementById('manage-schemes').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            else if (colName === 'works') {
+                document.getElementById('workRank').value = data.rank || '';
+                document.getElementById('workTitle').value = data.title || '';
+                document.getElementById('workStatus').value = data.status || 'Proposed';
+                document.getElementById('workEstCost').value = data.cost || '';
+                document.getElementById('workExp').value = data.exp || '';
+                document.getElementById('workStart').value = data.start || '';
+                document.getElementById('workEnd').value = data.end || '';
+                document.getElementById('workPhoto').value = data.photo || '';
+                toggleBtn('btnSaveWork');
+                document.getElementById('manage-works').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            else if (colName === 'gramsabha') {
+                document.getElementById('gsTitle').value = data.title || '';
+                document.getElementById('gsDate').value = data.date || '';
+                document.getElementById('gsTime').value = data.time || '';
+                document.getElementById('gsVenue').value = data.venue || '';
+                document.getElementById('gsLink').value = data.link || '';
+                document.getElementById('gsAgenda').value = data.agenda || '';
+                toggleBtn('btnSaveGS');
+                document.getElementById('manage-gramsabha').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
 
             document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
         }
@@ -721,7 +787,7 @@
         window.saveMember = () => handleSave('members', {
             rank: parseInt(document.getElementById('memRank').value),
             name: document.getElementById('memName').value,
-            role: document.getElementById('memRole').value, // Added
+            role: document.getElementById('memRole').value,
             ward: document.getElementById('memWard').value,
             phone: document.getElementById('memPhone').value
         }, 'btnSaveMember', ['memRank', 'memName', 'memRole', 'memWard', 'memPhone']);
@@ -762,16 +828,55 @@
             phone: document.getElementById('rtiPhone').value
         }, 'btnSaveRti', ['rtiRank', 'rtiName', 'rtiRole', 'rtiPhone']);
 
-        // --- OTHER SAVES ---
-        window.savePublicDoc = async () => {
-            const name = document.getElementById('docTitle').value;
-            const link = document.getElementById('docLink').value;
-            if (!name || !link) return alert("Enter Name and Link");
-            await addDoc(collection(db, "documents"), { name: name, link: link, createdAt: Date.now() });
-            document.getElementById('docTitle').value = ''; document.getElementById('docLink').value = '';
-            alert("Doc Added!"); loadAll();
-        }
+        // --- UPDATED SAVE FUNCTIONS (Uses handleSave) ---
+        window.savePublicDoc = () => handleSave('documents', {
+            rank: parseInt(document.getElementById('docRank').value) || 99,
+            name: document.getElementById('docTitle').value,
+            link: document.getElementById('docLink').value
+        }, 'btnSaveDoc', ['docRank', 'docTitle', 'docLink']);
 
+        window.saveScheme = () => handleSave('schemes', {
+            title: document.getElementById('schTitle').value,
+            category: document.getElementById('schCat').value,
+            benefit: document.getElementById('schBenefit').value,
+            link: document.getElementById('schLink').value,
+            desc: document.getElementById('schDesc').value
+        }, 'btnSaveScheme', ['schTitle', 'schCat', 'schBenefit', 'schLink', 'schDesc']);
+
+        window.saveWork = () => handleSave('works', {
+            rank: document.getElementById('workRank').value,
+            title: document.getElementById('workTitle').value,
+            status: document.getElementById('workStatus').value,
+            cost: document.getElementById('workEstCost').value,
+            exp: document.getElementById('workExp').value,
+            start: document.getElementById('workStart').value,
+            end: document.getElementById('workEnd').value,
+            photo: document.getElementById('workPhoto').value
+        }, 'btnSaveWork', ['workRank', 'workTitle', 'workEstCost', 'workExp', 'workStart', 'workEnd', 'workPhoto']);
+
+        window.saveGS = () => handleSave('gramsabha', {
+            title: document.getElementById('gsTitle').value,
+            date: document.getElementById('gsDate').value,
+            time: document.getElementById('gsTime').value,
+            venue: document.getElementById('gsVenue').value,
+            link: document.getElementById('gsLink').value,
+            agenda: document.getElementById('gsAgenda').value
+        }, 'btnSaveGS', ['gsTitle', 'gsDate', 'gsTime', 'gsVenue', 'gsLink', 'gsAgenda']);
+
+        window.saveService = () => handleSave('services', {
+            rank: document.getElementById('svcRank').value,
+            title: document.getElementById('svcTitle').value,
+            icon: document.getElementById('svcIcon').value,
+            link: document.getElementById('svcLink').value,
+            desc: document.getElementById('svcDesc').value
+        }, 'btnSaveService', ['svcRank', 'svcTitle', 'svcIcon', 'svcLink', 'svcDesc']);
+
+        window.savePhoto = () => handleSave('gallery', {
+            url: document.getElementById('galUrl').value,
+            caption: document.getElementById('galCaption').value
+        }, 'btnSavePhoto', ['galUrl', 'galCaption']);
+
+        // --- OTHER SAVES (News/Banner) ---
         if (document.getElementById('btnSaveNews')) document.getElementById('btnSaveNews').addEventListener('click', async () => {
             await setDoc(doc(db, "content", "news"), { text: document.getElementById('newsText').value });
             alert("News Updated!");
@@ -785,31 +890,6 @@
         window.saveBannerSlide = async () => {
             await addDoc(collection(db, "banners"), { url: document.getElementById('bannerInput').value, createdAt: Date.now() });
             document.getElementById('bannerInput').value = ''; loadAll();
-        }
-
-        window.saveScheme = async () => {
-            await addDoc(collection(db, "schemes"), { title: document.getElementById('schTitle').value, category: document.getElementById('schCat').value, benefit: document.getElementById('schBenefit').value, link: document.getElementById('schLink').value, desc: document.getElementById('schDesc').value, createdAt: Date.now() });
-            document.getElementById('schTitle').value = ''; loadAll();
-        }
-
-        window.saveWork = async () => {
-            await addDoc(collection(db, "works"), { title: document.getElementById('workTitle').value, status: document.getElementById('workStatus').value, cost: document.getElementById('workEstCost').value, exp: document.getElementById('workExp').value, start: document.getElementById('workStart').value, end: document.getElementById('workEnd').value, photo: document.getElementById('workPhoto').value, createdAt: Date.now(), rank: document.getElementById('workRank').value });
-            document.getElementById('workTitle').value = ''; loadAll();
-        }
-
-        window.saveGS = async () => {
-            await addDoc(collection(db, "gramsabha"), { title: document.getElementById('gsTitle').value, date: document.getElementById('gsDate').value, time: document.getElementById('gsTime').value, venue: document.getElementById('gsVenue').value, link: document.getElementById('gsLink').value, agenda: document.getElementById('gsAgenda').value, createdAt: Date.now() });
-            document.getElementById('gsTitle').value = ''; loadAll();
-        }
-
-        window.savePhoto = async () => {
-            await addDoc(collection(db, "gallery"), { url: document.getElementById('galUrl').value, caption: document.getElementById('galCaption').value, createdAt: Date.now() });
-            document.getElementById('galUrl').value = ''; loadAll();
-        }
-
-        window.saveService = async () => {
-            await addDoc(collection(db, "services"), { rank: document.getElementById('svcRank').value, title: document.getElementById('svcTitle').value, icon: document.getElementById('svcIcon').value, link: document.getElementById('svcLink').value, desc: document.getElementById('svcDesc').value, createdAt: Date.now() });
-            document.getElementById('svcTitle').value = ''; alert("Service Added!"); loadAll();
         }
 
         // TABS
