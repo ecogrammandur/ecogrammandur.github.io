@@ -612,7 +612,7 @@
                 cardGram: "Gram Sabha", descGram: "Meeting schedules & resolutions",
                 cardRti: "RTI / Documents", descRti: "Transparency & public records",
 
-                secDocs: "Important Documents & Downloads",
+                secDocs: "Important Documents",
                 thDocName: "Document Name", thAction: "Action",
 
                 secLinks: "Important Government Links",
@@ -725,7 +725,7 @@
                 }
             } catch (e) { console.error("Banner error", e); }
 
-            // 2. NEWS (Fixed: Only shows once)
+            // 2. NEWS
             try {
                 const newsSnap = await getDoc(doc(db, "content", "news"));
                 if (newsSnap.exists()) {
@@ -733,9 +733,10 @@
                 }
             } catch (e) { console.error("News error", e); }
 
-            // 3. PUBLIC DOCUMENTS
+            // 3. PUBLIC DOCUMENTS (UPDATED: Sort by RANK instead of DATE)
             try {
-                const qDocs = query(collection(db, "documents"), orderBy("createdAt", "desc"));
+                // CHANGED: orderBy("rank", "asc") ensures documents appear in the order you set in Admin
+                const qDocs = query(collection(db, "documents"), orderBy("rank", "asc"));
                 const snapDocs = await getDocs(qDocs);
                 const docBody = document.getElementById('public-docs-body');
 
@@ -767,5 +768,4 @@
         };
     </script>
 </body>
-
 </html>
