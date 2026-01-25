@@ -768,5 +768,40 @@
             setLanguage(savedLang);
         };
     </script>
+    // ... (This is the end of your existing Firebase/Translation code)
+    window.onload = function () {
+    const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
+    setLanguage(savedLang);
+    };
+    </script>
+    <script>
+        // 1. Disable Right Click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        // 2. Disable Inspection Keys (F12, Ctrl+Shift+I, Ctrl+U)
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+
+</body>
+</html>
 </body>
 </html>
