@@ -25,7 +25,6 @@
             font-family: 'Segoe UI', 'Mukta', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
-            /* display: none; REMOVED - Public page must be visible */
         }
 
         /* --- HEADER & BRANDING --- */
@@ -768,12 +767,7 @@
             setLanguage(savedLang);
         };
     </script>
-    // ... (This is the end of your existing Firebase/Translation code)
-    window.onload = function () {
-    const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
-    setLanguage(savedLang);
-    };
-    </script>
+
     <script>
         // 1. Disable Right Click
         document.addEventListener('contextmenu', function (e) {
@@ -801,7 +795,5 @@
         });
     </script>
 
-</body>
-</html>
 </body>
 </html>
