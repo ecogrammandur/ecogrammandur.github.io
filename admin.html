@@ -514,6 +514,18 @@
                 </div>
 
                 <div id="manage-complaints" class="view-section">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <div class="admin-card" style="background: #fff1f2; border-left: 5px solid #e11d48; text-align: center; padding: 15px; margin-bottom: 0;">
+                            <h1 id="countPending" style="color: #e11d48; font-size: 2.5rem; margin: 0;">0</h1>
+                            <span style="color: #881337; font-weight: bold;">PENDING</span>
+                        </div>
+                        <div class="admin-card" style="background: #ecfdf5; border-left: 5px solid #10b981; text-align: center; padding: 15px; margin-bottom: 0;">
+                            <h1 id="countResolved" style="color: #059669; font-size: 2.5rem; margin: 0;">0</h1>
+                            <span style="color: #065f46; font-weight: bold;">RESOLVED</span>
+                        </div>
+                    </div>
+
                     <div class="admin-card" style="border-left: 5px solid #ef4444;">
                         <h3>Citizen Complaints</h3>
                         <div id="listComplaints" style="margin-top:15px;">
@@ -728,7 +740,6 @@
                 document.getElementById('rtiRole').value = data.role || '';
                 document.getElementById('rtiPhone').value = data.phone || '';
                 toggleBtn('btnSaveRti');
-                // Updated scroll target for RTI
                 document.getElementById('manage-rti').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
@@ -746,7 +757,6 @@
                 document.getElementById('docTitle').value = data.name || '';
                 document.getElementById('docLink').value = data.link || '';
                 toggleBtn('btnSaveDoc');
-                // Updated scroll target for Home Docs
                 document.getElementById('manage-home').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
@@ -858,7 +868,6 @@
             phone: document.getElementById('rtiPhone').value
         }, 'btnSaveRti', ['rtiRank', 'rtiName', 'rtiRole', 'rtiPhone']);
 
-        // --- NEW: SAVE RTI DOCUMENT ---
         window.saveRtiDocFile = () => handleSave('rti_docs', {
             rank: parseInt(document.getElementById('rtiDocRank').value) || 99,
             name: document.getElementById('rtiDocTitle').value,
@@ -937,24 +946,68 @@
             if (window.innerWidth < 768) { document.getElementById('adminSidebar').classList.remove('active'); }
         }
 
-        // --- COMPLAINTS ---
+        // --- UPDATED COMPLAINTS LOGIC ---
         window.loadCloudComplaints = async function () {
             const div = document.getElementById('listComplaints');
+            const countPendingEl = document.getElementById('countPending');
+            const countResolvedEl = document.getElementById('countResolved');
+
             if (!div) return;
+
             const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
             const snap = await getDocs(q);
-            if (snap.empty) { div.innerHTML = "<p>No complaints received yet.</p>"; return; }
+
+            // Init counters
+            let pendingCount = 0;
+            let resolvedCount = 0;
+
+            if (snap.empty) {
+                div.innerHTML = "<p>No complaints received yet.</p>";
+                if(countPendingEl) countPendingEl.innerText = "0";
+                if(countResolvedEl) countResolvedEl.innerText = "0";
+                return;
+            }
+
             let html = '<table class="data-table"><tr><th>Date</th><th>Name/Phone</th><th>Issue</th><th>Action</th></tr>';
             snap.forEach(d => {
                 const c = d.data();
                 const date = new Date(c.createdAt).toLocaleDateString();
-                html += `<tr><td>${date}</td><td><strong>${c.name}</strong><br>${c.phone}</td><td><strong style="color:#d32f2f">[${c.type}]</strong><br>${c.desc}</td><td><button onclick="deleteComplaint('${d.id}')" class="btn-success">Resolve</button></td></tr>`;
+                const isResolved = c.status === 'Resolved';
+
+                if (isResolved) {
+                    resolvedCount++;
+                    // Green background for resolved, Button disabled
+                    html += `<tr style="background-color: #f0fdf4; opacity: 0.7;">
+                                <td>${date}</td>
+                                <td><strong>${c.name}</strong><br>${c.phone}</td>
+                                <td><strong style="color:#059669">[RESOLVED]</strong><br>${c.desc}</td>
+                                <td><button class="btn-warning" disabled>Done</button></td>
+                             </tr>`;
+                } else {
+                    pendingCount++;
+                    // Normal row, Button allows resolving
+                    html += `<tr>
+                                <td>${date}</td>
+                                <td><strong>${c.name}</strong><br>${c.phone}</td>
+                                <td><strong style="color:#d32f2f">[${c.type}]</strong><br>${c.desc}</td>
+                                <td><button onclick="markResolved('${d.id}')" class="btn-success">Resolve</button></td>
+                             </tr>`;
+                }
             });
+
+            // Update Dashboard Counters
+            if(countPendingEl) countPendingEl.innerText = pendingCount;
+            if(countResolvedEl) countResolvedEl.innerText = resolvedCount;
+
             div.innerHTML = html + '</table>';
         }
 
-        window.deleteComplaint = async function (id) {
-            if (confirm("Mark this complaint as Resolved/Done?")) { await deleteDoc(doc(db, "complaints", id)); loadCloudComplaints(); }
+        // NEW FUNCTION: Update status instead of delete
+        window.markResolved = async function (id) {
+            if (confirm("Mark this complaint as Resolved?")) {
+                await setDoc(doc(db, "complaints", id), { status: "Resolved" }, { merge: true });
+                loadCloudComplaints();
+            }
         }
     </script>
     <script src="js/protect.js"></script>
