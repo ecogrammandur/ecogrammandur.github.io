@@ -520,18 +520,42 @@
                             <h1 id="countPending" style="color: #e11d48; font-size: 2.5rem; margin: 0;">0</h1>
                             <span style="color: #881337; font-weight: bold;">PENDING</span>
                         </div>
-                        <div class="admin-card" style="background: #ecfdf5; border-left: 5px solid #10b981; text-align: center; padding: 15px; margin-bottom: 0;">
+
+                        <div class="admin-card" style="background: #ecfdf5; border-left: 5px solid #10b981; text-align: center; padding: 15px; margin-bottom: 0; position: relative;">
                             <h1 id="countResolved" style="color: #059669; font-size: 2.5rem; margin: 0;">0</h1>
                             <span style="color: #065f46; font-weight: bold;">RESOLVED</span>
+                            <button onclick="toggleResolvedHistory()" style="display:block; margin: 10px auto 0; padding: 5px 15px; border:1px solid #059669; background:white; color:#059669; border-radius:20px; cursor:pointer; font-size:0.8rem;">
+                                <i class="fas fa-history"></i> Open History
+                            </button>
                         </div>
                     </div>
 
                     <div class="admin-card" style="border-left: 5px solid #ef4444;">
-                        <h3>Citizen Complaints</h3>
+                        <h3>⚠️ Active Complaints</h3>
                         <div id="listComplaints" style="margin-top:15px;">
                             <p>Loading...</p>
                         </div>
                     </div>
+
+                    <div id="resolvedHistorySection" class="admin-card" style="display:none; border-left: 5px solid #10b981; margin-top: 20px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3>✅ Resolved History</h3>
+                            <button onclick="toggleResolvedHistory()" class="btn-danger" style="padding:5px 10px; font-size:0.8rem;">Close</button>
+                        </div>
+
+                        <div style="display:flex; gap:10px; margin-bottom:15px;">
+                            <input type="text" id="historySearchInput" class="form-control" placeholder="Search by Name..." style="margin-bottom:0;">
+                            <button onclick="runHistorySearch()" class="btn-primary" style="margin-top:0; width:auto;"><i class="fas fa-search"></i></button>
+                            <button onclick="resetHistory()" class="btn-warning" style="margin-top:0; width:auto;"><i class="fas fa-sync"></i></button>
+                        </div>
+
+                        <div id="scrollContainer" onscroll="handleHistoryScroll()" style="max-height: 400px; overflow-y: auto; border: 1px solid #eee; padding: 5px;">
+                            <div id="listResolvedHistory">
+                            </div>
+                            <p id="historyLoadingMsg" style="text-align:center; color:#666; display:none; padding:10px;">Loading more...</p>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -541,8 +565,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, deleteDoc, query, orderBy, where, limit, startAfter, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
             authDomain: "ecogrampanchayatmandur.firebaseapp.com",
@@ -1009,7 +1032,142 @@
                 loadCloudComplaints();
             }
         }
-    </script>
-    <script src="js/ui-shield.js"></script>
+// --- ADVANCED HISTORY VARIABLES ---
+    let lastHistoryDoc = null;      // Keeps track of the last loaded item
+    let isHistoryLoading = false;   // Prevents double-loading
+    let historyAllLoaded = false;   // Stops loading when DB is empty
+    let isSearchMode = false;       // Are we searching or scrolling?
+
+    // 1. Open/Close the Section
+    window.toggleResolvedHistory = function() {
+        const section = document.getElementById('resolvedHistorySection');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            resetHistory(); // Load fresh data
+            section.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            section.style.display = 'none';
+        }
+    }
+
+    // 2. Reset & Load Initial Batch
+    window.resetHistory = async function() {
+        document.getElementById('historySearchInput').value = "";
+        document.getElementById('listResolvedHistory').innerHTML = "";
+        lastHistoryDoc = null;
+        historyAllLoaded = false;
+        isSearchMode = false;
+        await loadNextBatch();
+    }
+
+    // 3. The "Infinite Scroll" Logic
+    window.handleHistoryScroll = function() {
+        const el = document.getElementById('scrollContainer');
+        // Check if user scrolled to bottom (with 50px buffer)
+        if (el.scrollTop + el.clientHeight >= el.scrollHeight - 50) {
+            loadNextBatch();
+        }
+    }
+
+    // 4. Load Batch (Next 10 Items)
+    async function loadNextBatch() {
+        if (isHistoryLoading || historyAllLoaded || isSearchMode) return;
+        
+        isHistoryLoading = true;
+        document.getElementById('historyLoadingMsg').style.display = 'block';
+
+        try {
+            let q;
+            const colRef = collection(db, "complaints");
+
+            if (lastHistoryDoc) {
+                // Load NEXT 10 after the last one
+                q = query(colRef, where("status", "==", "Resolved"), orderBy("createdAt", "desc"), startAfter(lastHistoryDoc), limit(10));
+            } else {
+                // Load FIRST 10
+                q = query(colRef, where("status", "==", "Resolved"), orderBy("createdAt", "desc"), limit(10));
+            }
+
+            const snap = await getDocs(q);
+
+            if (snap.empty) {
+                historyAllLoaded = true;
+                document.getElementById('historyLoadingMsg').innerText = "No more records.";
+            } else {
+                // Update Cursor
+                lastHistoryDoc = snap.docs[snap.docs.length - 1];
+                appendHistoryRows(snap);
+            }
+
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isHistoryLoading = false;
+            if(!historyAllLoaded) document.getElementById('historyLoadingMsg').style.display = 'none';
+        }
+    }
+
+    // 5. Search Function (Direct Database Search)
+    window.runHistorySearch = async function() {
+        const term = document.getElementById('historySearchInput').value.trim();
+        if (!term) { resetHistory(); return; }
+
+        isSearchMode = true; // Disable scrolling while searching
+        const div = document.getElementById('listResolvedHistory');
+        div.innerHTML = "<p style='padding:10px;'>Searching database...</p>";
+        
+        try {
+            // Search by Name Prefix (Case sensitive usually)
+            // Note: This requires an Index on 'status' + 'name'. Check Console if it fails.
+            const q = query(
+                collection(db, "complaints"), 
+                where("status", "==", "Resolved"),
+                orderBy("name"), 
+                startAt(term), 
+                endAt(term + "\uf8ff")
+            );
+
+            const snap = await getDocs(q);
+            div.innerHTML = ""; // Clear "Searching..."
+
+            if (snap.empty) {
+                div.innerHTML = "<p style='padding:10px; color:red;'>No results found.</p>";
+            } else {
+                appendHistoryRows(snap);
+            }
+
+        } catch (e) {
+            console.error("Search Error:", e);
+            div.innerHTML = "<p style='color:red; padding:10px;'>Search failed. (Check Console for Index Link)</p>";
+        }
+    }
+
+    // 6. Helper: Draw Rows
+    function appendHistoryRows(snap) {
+        const div = document.getElementById('listResolvedHistory');
+        let html = div.innerHTML;
+        
+        // Add table header only if it's empty
+        if (div.innerHTML === "") {
+            html = '<table class="data-table" style="font-size:0.9rem;"><tr><th>Date</th><th>Citizen</th><th>Issue</th></tr>';
+        } else {
+            // If table exists, remove the closing </table> tag so we can add rows inside
+            html = html.replace("</table>", "");
+        }
+
+        snap.forEach(d => {
+            const c = d.data();
+            const date = new Date(c.createdAt).toLocaleDateString();
+            html += `<tr style="background-color: #f0fdf4;">
+                        <td>${date}</td>
+                        <td><strong>${c.name}</strong><br>${c.phone}</td>
+                        <td><span style="color:#059669;">[${c.type}]</span> ${c.desc}</td>
+                     </tr>`;
+        });
+
+        div.innerHTML = html + "</table>";
+    }
+</script>
+<script src="js/ui-shield.js"></script>
 </body>
 </html>
