@@ -970,6 +970,7 @@
         }
 
         // --- UPDATED COMPLAINTS LOGIC ---
+// --- UPDATED: Show ONLY Pending items in the list ---
         window.loadCloudComplaints = async function () {
             const div = document.getElementById('listComplaints');
             const countPendingEl = document.getElementById('countPending');
@@ -977,10 +978,10 @@
 
             if (!div) return;
 
+            // 1. Get ALL complaints (to calculate counts correctly)
             const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
             const snap = await getDocs(q);
 
-            // Init counters
             let pendingCount = 0;
             let resolvedCount = 0;
 
@@ -992,23 +993,20 @@
             }
 
             let html = '<table class="data-table"><tr><th>Date</th><th>Name/Phone</th><th>Issue</th><th>Action</th></tr>';
+            
             snap.forEach(d => {
                 const c = d.data();
                 const date = new Date(c.createdAt).toLocaleDateString();
                 const isResolved = c.status === 'Resolved';
 
                 if (isResolved) {
+                    // CASE 1: RESOLVED
+                    // We only increment the counter. We DO NOT add it to the HTML table.
                     resolvedCount++;
-                    // Green background for resolved, Button disabled
-                    html += `<tr style="background-color: #f0fdf4; opacity: 0.7;">
-                                <td>${date}</td>
-                                <td><strong>${c.name}</strong><br>${c.phone}</td>
-                                <td><strong style="color:#059669">[RESOLVED]</strong><br>${c.desc}</td>
-                                <td><button class="btn-warning" disabled>Done</button></td>
-                             </tr>`;
                 } else {
+                    // CASE 2: PENDING
+                    // Increment counter AND add to table
                     pendingCount++;
-                    // Normal row, Button allows resolving
                     html += `<tr>
                                 <td>${date}</td>
                                 <td><strong>${c.name}</strong><br>${c.phone}</td>
@@ -1022,7 +1020,12 @@
             if(countPendingEl) countPendingEl.innerText = pendingCount;
             if(countResolvedEl) countResolvedEl.innerText = resolvedCount;
 
-            div.innerHTML = html + '</table>';
+            // Should we show "No Pending Complaints"?
+            if (pendingCount === 0) {
+                div.innerHTML = "<p style='padding:15px; color:#059669;'>✅ Great work! No pending complaints.</p>";
+            } else {
+                div.innerHTML = html + '</table>';
+            }
         }
 
         // NEW FUNCTION: Update status instead of delete
