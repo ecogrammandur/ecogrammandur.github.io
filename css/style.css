@@ -26,7 +26,7 @@ body {
     line-height: 1.6;
     /* Pushes content down so Fixed Header doesn't cover it */
     padding-top: var(--header-height);
-    display: none; /* Hidden by default. protect.js will show it ONLY if logged in. */
+    /*display: none;*/ /* Hidden by default. protect.js will show it ONLY if logged in. */
 }
 
 h1, h2, h3 {
