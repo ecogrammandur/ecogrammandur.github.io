@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\css",
+    "\\js"
   ],
-  "SelectedNode": "\\C:\\Users\\lrath\\source\\repos\\ecogrammandur.github.io",
+  "SelectedNode": "\\css\\style.css",
   "PreviewInSolutionExplorer": false
 }
