@@ -384,7 +384,8 @@
 
             try {
                 // Sorting by Created Time to ensure data appears even if rank is missing
-                const q = query(collection(db, "services"), orderBy("createdAt", "desc"));
+           		// Simpler query that shows everything
+				const q = query(collection(db, "services"));
                 const snap = await getDocs(q);
 
                 if (snap.empty) {
@@ -398,13 +399,13 @@
                     const icon = s.icon ? s.icon : 'fa-certificate';
                     const linkBtn = s.link ? `<a href="${s.link}" target="_blank" class="btn-service">Apply / Details</a>` : '';
 
-                    html += `
-                                <div class="service-card">
-                                    <div class="icon-box"><i class="fas ${icon}"></i></div>
-                                    <h3 class="service-title">${s.title}</h3>
-                                    <p class="service-desc">${s.desc}</p>
-                                    ${linkBtn}
-                                </div>`;
+			html += `
+                    <div class="service-card">
+                        <div class="icon-box"><i class="fas ${icon}"></i></div>
+                        <h3 class="service-title">${s.title}</h3>
+                        <div class="service-desc" style="text-align: left;">${s.desc}</div>
+                        ${linkBtn}
+                    </div>`;
                 });
 
                 container.innerHTML = html;

@@ -670,16 +670,17 @@
         }
 
         // --- CORE SAVE/UPDATE LOGIC ---
-        async function handleSave(colName, data, btnId, inputIdsToClear) {
-            try {
-                if (currentEdit.col === colName && currentEdit.id) {
-                    await setDoc(doc(db, colName, currentEdit.id), data);
-                    alert("Updated Successfully!");
-                } else {
-                    data.createdAt = Date.now();
-                    await addDoc(collection(db, colName), data);
-                    alert("Added Successfully!");
-                }
+		async function handleSave(colName, data, btnId, inputIdsToClear) {
+			try {
+				if (currentEdit.col === colName && currentEdit.id) {
+					// FIX: Added { merge: true } so we don't lose the 'createdAt' timestamp
+					await setDoc(doc(db, colName, currentEdit.id), data, { merge: true });
+					alert("Updated Successfully!");
+				} else {
+					data.createdAt = Date.now();
+					await addDoc(collection(db, colName), data);
+					alert("Added Successfully!");
+				}
 
                 // Clear Form
                 inputIdsToClear.forEach(id => { if (document.getElementById(id)) document.getElementById(id).value = ''; });
@@ -931,13 +932,13 @@
             agenda: document.getElementById('gsAgenda').value
         }, 'btnSaveGS', ['gsTitle', 'gsDate', 'gsTime', 'gsVenue', 'gsLink', 'gsAgenda']);
 
-        window.saveService = () => handleSave('services', {
-            rank: document.getElementById('svcRank').value,
-            title: document.getElementById('svcTitle').value,
-            icon: document.getElementById('svcIcon').value,
-            link: document.getElementById('svcLink').value,
-            desc: document.getElementById('svcDesc').value
-        }, 'btnSaveService', ['svcRank', 'svcTitle', 'svcIcon', 'svcLink', 'svcDesc']);
+		window.saveService = () => handleSave('services', {
+			rank: parseInt(document.getElementById('svcRank').value) || 99, // FIX: Force Number
+			title: document.getElementById('svcTitle').value,
+			icon: document.getElementById('svcIcon').value,
+			link: document.getElementById('svcLink').value,
+			desc: document.getElementById('svcDesc').value
+		}, 'btnSaveService', ['svcRank', 'svcTitle', 'svcIcon', 'svcLink', 'svcDesc']);
 
         window.savePhoto = () => handleSave('gallery', {
             url: document.getElementById('galUrl').value,
