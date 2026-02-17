@@ -517,6 +517,7 @@
                 <li><a onclick="switchTab('manage-schemes', this)">Schemes</a></li>
                 <li><a onclick="switchTab('manage-works', this)">Works</a></li>
                 <li><a onclick="switchTab('manage-gramsabha', this)">Gram Sabha</a></li>
+                <li><a onclick="switchTab('manage-mspa', this)">MSPA</a></li>
                 <li><a onclick="switchTab('manage-gallery', this)">Gallery</a></li>
                 <li><a onclick="switchTab('manage-complaints', this)">Complaints</a></li>
                 <li><a id="btnLogout" style="color:#f87171;">Logout</a></li>
@@ -728,6 +729,27 @@
                     </div>
                 </div>
 
+                <div id="manage-mspa" class="view-section">
+                    <div class="admin-card">
+                        <h3>MSPA Campaign Content</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 1fr; gap:10px;">
+                            <input type="number" id="mspaRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="mspaTitle" class="form-control" placeholder="Title">
+                        </div>
+                        <textarea id="mspaDescription" class="form-control" placeholder="Description" rows="3"></textarea>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                            <input type="text" id="mspaPhoto" class="form-control" placeholder="Photo URL">
+                            <select id="mspaCategory" class="form-control">
+                                <option value="Photos">Photos</option>
+                                <option value="Updates">Updates</option>
+                                <option value="Announcements">Announcements</option>
+                            </select>
+                        </div>
+                        <button id="btnSaveMSPA" onclick="saveMSPA()" class="btn-primary" style="width:auto;">Add Content</button>
+                        <div id="listMSPA" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
                 <div id="manage-gallery" class="view-section">
                     <div class="admin-card">
                         <h3>Gallery</h3>
@@ -868,6 +890,7 @@
             loadList('schemes', 'listSchemes', 'title');
             loadList('works', 'listWorks', 'title', false, true);
             loadList('gramsabha', 'listGS', 'title');
+            loadList('mspa', 'listMSPA', 'title', false, true);
 
             // Admin Sections (Ordered by Rank)
             loadList('leaders', 'listLeaders', 'name', false, true);
@@ -1117,6 +1140,16 @@
                 document.getElementById('manage-gramsabha').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
+            else if (colName === 'mspa') {
+                document.getElementById('mspaRank').value = data.rank || '';
+                document.getElementById('mspaTitle').value = data.title || '';
+                document.getElementById('mspaDescription').value = data.description || '';
+                document.getElementById('mspaPhoto').value = data.photo || '';
+                document.getElementById('mspaCategory').value = data.category || 'Photos';
+                toggleBtn('btnSaveMSPA');
+                document.getElementById('manage-mspa').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
         }
 
         function toggleBtn(btnId) {
@@ -1337,6 +1370,33 @@
                 link: document.getElementById('gsLink').value,
                 agenda: document.getElementById('gsAgenda').value
             }, 'btnSaveGS', ['gsTitle', 'gsDate', 'gsTime', 'gsVenue', 'gsLink', 'gsAgenda']);
+        }
+
+        window.saveMSPA = () => {
+            const rank = document.getElementById('mspaRank').value;
+            const title = document.getElementById('mspaTitle').value;
+            const description = document.getElementById('mspaDescription').value;
+            const photo = document.getElementById('mspaPhoto').value;
+            const category = document.getElementById('mspaCategory').value;
+
+            if (!rank || !title || !description || !photo || !category) {
+                alert('⚠️ Please fill in all required fields');
+                return;
+            }
+
+            if (isNaN(parseInt(rank))) {
+                alert('⚠️ Rank must be a number');
+                return;
+            }
+
+            handleSave('mspa', {
+                rank: parseInt(rank),
+                title: title,
+                description: description,
+                photo: photo,
+                category: category,
+                date: new Date().toISOString().split('T')[0]
+            }, 'btnSaveMSPA', ['mspaRank', 'mspaTitle', 'mspaDescription', 'mspaPhoto', 'mspaCategory']);
         }
 
 window.saveService = () => {
