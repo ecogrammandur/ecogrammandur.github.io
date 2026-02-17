@@ -1379,8 +1379,9 @@
             const photo = document.getElementById('mspaPhoto').value;
             const category = document.getElementById('mspaCategory').value;
 
-            if (!rank || !title || !description || !photo || !category) {
-                alert('⚠️ Please fill in all required fields');
+            // Title and description are optional now. Require rank, photo and category only.
+            if (!rank || !photo || !category) {
+                alert('⚠️ Please fill in required fields: Rank, Photo and Category');
                 return;
             }
 
