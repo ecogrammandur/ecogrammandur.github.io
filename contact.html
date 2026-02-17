@@ -13,6 +13,17 @@
             --gov-orange: #ff9933;
             --text-light: #ffffff;
             --header-height-desktop: 175px;
+            --transition-smooth: all 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         body {
@@ -21,6 +32,7 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
+            scroll-behavior: smooth;
         }
 
         /* HEADER Styles */
@@ -41,6 +53,20 @@
             font-size: 0.9rem;
         }
 
+        .top-strip a {
+            text-decoration: none;
+            color: var(--gov-blue);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .top-strip a:hover {
+            color: var(--gov-orange);
+            background-color: rgba(255, 153, 51, 0.1);
+        }
+
         .main-brand {
             max-width: 1200px;
             margin: 0 auto;
@@ -49,12 +75,22 @@
             align-items: center;
             justify-content: space-between;
             background: white;
+            gap: 20px;
+        }
+
+        .main-brand img {
+            transition: var(--transition-smooth);
+        }
+
+        .main-brand img:hover {
+            transform: scale(1.05);
         }
 
         .brand-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         #txt-title {
@@ -64,6 +100,7 @@
             font-weight: 800;
             text-transform: uppercase;
             line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
         #txt-subtitle {
@@ -71,6 +108,7 @@
             font-size: 0.95rem;
             color: var(--gov-blue) !important;
             font-weight: 600;
+            opacity: 0.85;
         }
 
         /* NAV */
@@ -96,10 +134,30 @@
                 font-weight: 500;
                 transition: 0.3s;
                 white-space: nowrap;
+                position: relative;
+                overflow: hidden;
             }
 
-                .main-nav li a:hover, .main-nav li a.active {
+                .main-nav li a:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
                     background-color: var(--gov-orange);
+                    transition: left 0.3s;
+                    z-index: -1;
+                }
+
+                .main-nav li a:hover:before,
+                .main-nav li a.active:before {
+                    left: 0;
+                }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: transparent;
+                    color: white;
                 }
 
         .btn-login {
@@ -107,6 +165,10 @@
         }
 
         /* CONTACT PAGE SPECIFIC */
+        main {
+            animation: fadeIn 0.6s ease-out;
+        }
+
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -120,6 +182,13 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             height: 100%;
+            animation: slideUp 0.6s ease-out;
+            transition: var(--transition-smooth);
+        }
+
+        .info-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
         }
 
         .info-item {
@@ -127,23 +196,54 @@
             gap: 15px;
             margin-bottom: 25px;
             align-items: flex-start;
+            padding: 15px;
+            border-radius: 6px;
+            transition: var(--transition-smooth);
+            background-color: #fafafa;
+            border-left: 4px solid transparent;
+        }
+
+        .info-item:hover {
+            background-color: #f0f7ff;
+            border-left-color: var(--gov-orange);
+            transform: translateX(5px);
         }
 
             .info-item i {
                 font-size: 1.5rem;
                 color: var(--gov-orange);
                 margin-top: 5px;
+                flex-shrink: 0;
             }
 
+        .info-content {
+            flex: 1;
+        }
+
         .info-content h4 {
-            margin: 0 0 5px 0;
+            margin: 0 0 8px 0;
             color: var(--gov-blue);
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .info-content p {
             margin: 0;
             color: #555;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .info-content a {
+            color: var(--gov-orange);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .info-content a:hover {
+            text-decoration: underline;
+            color: var(--gov-blue);
         }
 
         .map-container {
@@ -152,6 +252,13 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            animation: slideUp 0.6s ease-out 0.1s both;
+            transition: var(--transition-smooth);
+        }
+
+        .map-container:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
         }
 
         .map-frame {
@@ -161,8 +268,32 @@
         }
 
         /* MOBILE MENU & RESPONSIVE FIXES */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+        .mobile-toggle-btn, .sidebar-close-btn, .menu {
             display: none;
+        }
+
+        .mobile-toggle-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar-close-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .sidebar-close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* Accessibility */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--gov-orange);
+            outline-offset: 2px;
+            border-radius: 2px;
         }
 
         @media (max-width: 992px) {
@@ -193,10 +324,15 @@
 
             .contact-grid {
                 grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .map-container {
+                min-height: 350px;
             }
 
             /* Overlay Background */
-            .menu-overlay {
+            .menu {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -244,11 +380,65 @@
                 cursor: pointer;
             }
         }
+
+        @media (max-width: 768px) {
+            main {
+                margin: 20px auto !important;
+                padding: 0 15px !important;
+            }
+
+            .info-card,
+            .map-container {
+                border-radius: 6px;
+            }
+
+            .info-item {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .info-item i {
+                font-size: 1.3rem;
+            }
+
+            .info-content h4 {
+                font-size: 1rem;
+                margin-bottom: 6px;
+            }
+
+            .info-content p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #txt-title {
+                font-size: 1rem;
+                letter-spacing: 0;
+            }
+
+            main {
+                margin: 15px auto !important;
+                padding: 0 12px !important;
+            }
+
+            .contact-grid {
+                gap: 20px;
+            }
+
+            .info-card {
+                padding: 20px;
+            }
+
+            .map-container {
+                min-height: 250px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="menu" id="menuOverlay" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -262,17 +452,17 @@
         </div>
         <div class="main-brand">
             <div class="brand-info">
-                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <button class="mobile-toggle-btn" onclick="openMenu()" aria-label="Open navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
                     <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
         </div>
-        <nav class="main-nav" id="sidebarMenu">
-            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+        <nav class="main-nav" id="sidebarMenu" role="navigation" aria-label="Main navigation menu">
+            <button class="sidebar-close-btn" onclick="closeMenu()" aria-label="Close navigation menu"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index.html" id="nav-home">Home</a></li>
                 <li><a href="about.html" id="nav-about">About Us</a></li>
@@ -291,7 +481,7 @@
     </header>
 
     <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px; color:var(--gov-blue);">
+        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px; color:var(--gov-blue); font-weight: 700;">
             Contact Us
         </h2>
 
@@ -308,14 +498,14 @@
                     <i class="fas fa-phone-alt"></i>
                     <div class="info-content">
                         <h4>Phone / फोन</h4>
-                        <p>+91-9922003344 (सरपंच)<br>+91-9420586939 (ग्रामपंचायत अधिकारी)</p>
+                        <p><a href="tel:+919922003344">+91-9922003344</a> (सरपंच)<br><a href="tel:+919420586939">+91-9420586939</a> (ग्रामपंचायत अधिकारी)</p>
                     </div>
                 </div>
                 <div class="info-item">
                     <i class="fas fa-envelope"></i>
                     <div class="info-content">
                         <h4>Email / ईमेल</h4>
-                        <p>contact@grampanchayatMandur.in<br>support@ecogram.in</p>
+                        <p><a href="mailto:contact@grampanchayatMandur.in">contact@grampanchayatMandur.in</a><br><a href="mailto:support@ecogram.in">support@ecogram.in</a></p>
                     </div>
                 </div>
                 <div class="info-item">
@@ -328,16 +518,18 @@
             </div>
 
             <div class="map-container">
-                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.696123456789!2d73.856743!3d16.805904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1000000000000%3A0x0!2sMandur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.696123456789!2d73.856743!3d16.805904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1000000000000%3A0x0!2sMandur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" title="Location map of Gram Panchayat Mandur"></iframe>
             </div>
         </div>
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-        <div class="lg-tech-credit">
-            Designed & Developed by: L&G Tech Solution
-            <span class="lg-contact">📞 Contact: 7378418453</span>
+    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
+                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
+                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+            </div>
         </div>
     </footer>
 
@@ -369,8 +561,16 @@
             localStorage.setItem('gp_lang_pref', lang);
         }
 
-        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+        window.openMenu = function () {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'true');
+        }
+        window.closeMenu = function () {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'false');
+        }
 
         window.onload = function () {
             const savedLang = localStorage.getItem('gp_lang_pref') || 'en';

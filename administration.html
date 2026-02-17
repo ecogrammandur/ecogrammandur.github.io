@@ -16,6 +16,7 @@
             --gov-purple: #6f42c1; /* RTI */
             --text-light: #ffffff;
             --header-height-desktop: 175px;
+            --transition-smooth: all 0.3s ease;
         }
 
         body {
@@ -24,6 +25,37 @@
             font-family: 'Segoe UI', 'Mukta', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
+            scroll-behavior: smooth;
+        }
+
+        /* --- LOADING SPINNER ANIMATION --- */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-spinner::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--gov-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
         }
 
         /* --- HEADER & BRANDING --- */
@@ -44,6 +76,34 @@
             font-size: 0.9rem;
         }
 
+        .top-strip a {
+            text-decoration: none;
+            color: var(--gov-blue);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .top-strip a:hover {
+            color: var(--gov-orange);
+            border-bottom-color: var(--gov-orange);
+        }
+
+        .top-strip span:last-child {
+            display: flex;
+            gap: 12px;
+        }
+
+        .top-strip span:last-child a {
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .top-strip span:last-child a:hover {
+            background-color: rgba(255, 153, 51, 0.1);
+        }
+
         .main-brand {
             max-width: 1200px;
             margin: 0 auto;
@@ -52,12 +112,22 @@
             align-items: center;
             justify-content: space-between;
             background: white;
+            gap: 20px;
+        }
+
+        .main-brand img {
+            transition: var(--transition-smooth);
+        }
+
+        .main-brand img:hover {
+            transform: scale(1.05);
         }
 
         .brand-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         #txt-title {
@@ -67,6 +137,7 @@
             font-weight: 800;
             text-transform: uppercase;
             line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
         #txt-subtitle {
@@ -74,6 +145,7 @@
             font-size: 0.95rem;
             color: var(--gov-blue) !important;
             font-weight: 600;
+            opacity: 0.85;
         }
 
         /* --- NAVIGATION --- */
@@ -99,10 +171,30 @@
                 font-weight: 500;
                 transition: 0.3s;
                 white-space: nowrap;
+                position: relative;
+                overflow: hidden;
             }
 
-                .main-nav li a:hover, .main-nav li a.active {
+                .main-nav li a:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
                     background-color: var(--gov-orange);
+                    transition: left 0.3s;
+                    z-index: -1;
+                }
+
+                .main-nav li a:hover:before,
+                .main-nav li a.active:before {
+                    left: 0;
+                }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: transparent;
+                    color: white;
                 }
 
         .btn-login {
@@ -110,7 +202,7 @@
         }
 
         /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+        .mobile-toggle-btn, .sidebar-close-btn, .menu {
             display: none;
         }
 
@@ -130,6 +222,11 @@
                 font-size: 1.8rem;
                 color: var(--gov-blue);
                 cursor: pointer;
+                transition: var(--transition-smooth);
+            }
+
+            .mobile-toggle-btn:hover {
+                transform: scale(1.1);
             }
 
             .main-brand img {
@@ -140,7 +237,7 @@
                 font-size: 1.2rem;
             }
 
-            .menu-overlay {
+            .menu {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -184,6 +281,12 @@
                 background: none;
                 border: none;
                 font-size: 1.5rem;
+                cursor: pointer;
+                transition: var(--transition-smooth);
+            }
+
+            .sidebar-close-btn:hover {
+                transform: scale(1.2);
             }
         }
 
@@ -204,11 +307,13 @@
             text-align: center;
             border-top: 5px solid var(--gov-orange);
             width: 300px;
-            transition: transform 0.3s;
+            transition: var(--transition-smooth);
+            animation: fadeIn 0.6s ease-out;
         }
 
             .profile-card:hover {
-                transform: translateY(-5px);
+                transform: translateY(-8px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             }
 
         .profile-img {
@@ -218,6 +323,11 @@
             object-fit: cover;
             margin-top: 25px;
             border: 4px solid #f4f6f9;
+            transition: var(--transition-smooth);
+        }
+
+        .profile-card:hover .profile-img {
+            transform: scale(1.05);
         }
 
         .profile-info {
@@ -233,21 +343,51 @@
             display: inline-block;
             margin-bottom: 10px;
             font-weight: bold;
+            transition: var(--transition-smooth);
         }
 
-        /* --- Tables --- */
+        .profile-card:hover .role-badge {
+            background: var(--gov-orange);
+        }
+
+        .profile-info h3 {
+            margin: 12px 0 8px 0 !important;
+        }
+
+        .contact-icon {
+            display: inline-block;
+            margin-right: 6px;
+            color: var(--gov-orange);
+        }
+
+        @media (max-width: 768px) {
+            .leaders-grid {
+                gap: 20px;
+            }
+
+            .profile-card {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
         .data-table-container {
             overflow-x: auto;
             background: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             border-radius: 8px;
             margin-bottom: 50px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .data-table-container::after {
+            content: attr(data-hint);
         }
 
         .gov-table {
             width: 100%;
             border-collapse: collapse;
             min-width: 600px;
+            animation: fadeIn 0.8s ease-out;
         }
 
             .gov-table th {
@@ -255,11 +395,22 @@
                 color: white;
                 padding: 15px;
                 text-align: left;
+                font-weight: 600;
+                transition: var(--transition-smooth);
+            }
+
+            .gov-table tbody tr {
+                transition: var(--transition-smooth);
+                border-bottom: 1px solid #eee;
+            }
+
+            .gov-table tbody tr:hover {
+                background-color: #f9f9f9;
+                box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
             }
 
             .gov-table td {
                 padding: 15px;
-                border-bottom: 1px solid #eee;
                 color: #333;
             }
 
@@ -268,6 +419,14 @@
             border-left: 5px solid var(--gov-orange);
             padding-left: 15px;
             margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.2rem;
         }
 
         /* Special Header Colors */
@@ -286,11 +445,137 @@
         .rti-border {
             border-left-color: var(--gov-purple) !important;
         }
+
+        .anganwadi-header {
+            background: #e11d48 !important;
+        }
+
+        .anganwadi-border {
+            border-left-color: #e11d48 !important;
+        }
+
+        /* Empty State Styling */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        /* Main Content Area */
+        main {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Focus States for Accessibility */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--gov-orange);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
+        /* Link Styling */
+        .lg-tech-credit a {
+            transition: var(--transition-smooth);
+        }
+
+        .lg-tech-credit a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Skip to Main Content Link */
+        .skip-to-main {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--gov-blue);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            z-index: 999;
+            border-radius: 0 0 4px 0;
+        }
+
+        .skip-to-main:focus {
+            top: 0;
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 768px) {
+            .data-table-container {
+                border-radius: 4px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                margin-bottom: 40px;
+            }
+
+            .gov-table {
+                min-width: 500px;
+                font-size: 0.9rem;
+            }
+
+            .gov-table th,
+            .gov-table td {
+                padding: 12px 10px;
+                font-size: 0.85rem;
+            }
+
+            .gov-table th {
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+
+            .section-heading {
+                font-size: 1.1rem;
+                margin-top: 30px;
+            }
+
+            main {
+                margin: 20px auto !important;
+                padding: 0 15px !important;
+            }
+
+            .contact-icon {
+                margin-right: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gov-table {
+                min-width: 100%;
+                font-size: 0.8rem;
+            }
+
+            .gov-table th,
+            .gov-table td {
+                padding: 10px 8px;
+                font-size: 0.8rem;
+            }
+
+            .section-icon {
+                font-size: 1rem;
+            }
+
+            .profile-card {
+                width: 100%;
+            }
+
+            main {
+                margin: 20px auto !important;
+                padding: 0 12px !important;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="menu" id="menuOverlay" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -304,17 +589,17 @@
         </div>
         <div class="main-brand">
             <div class="brand-info">
-                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <button class="mobile-toggle-btn" onclick="openMenu()" aria-label="Open navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
                     <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
         </div>
-        <nav class="main-nav" id="sidebarMenu">
-            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+        <nav class="main-nav" id="sidebarMenu" role="navigation" aria-label="Main navigation menu">
+            <button class="sidebar-close-btn" onclick="closeMenu()" aria-label="Close navigation menu"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
                 <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
@@ -338,14 +623,14 @@
 
     <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
 
-        <h2 id="page-title" style="text-align: center; margin-bottom: 40px; color: var(--gov-blue);">Administration</h2>
+        <h3 id="page-title" style="text-align: center; margin-bottom: 40px; color: var(--gov-blue); font-weight: 700;">Administration</h3>
 
-        <h3 id="sec-elected" class="section-heading">Elected Body</h3>
+        <h3 id="sec-elected" class="section-heading"><span class="section-icon">👥</span>Elected Body</h3>
         <div id="dynamic-leaders" class="leaders-grid">
-            <p>Loading leaders from cloud...</p>
+            <p class="loading-spinner">Loading leaders from cloud</p>
         </div>
 
-        <h3 id="sec-members" class="section-heading">Committee Members</h3>
+        <h3 id="sec-members" class="section-heading"><span class="section-icon">📋</span>Committee Members</h3>
         <div class="data-table-container">
             <table class="gov-table">
                 <thead>
@@ -362,7 +647,7 @@
             </table>
         </div>
 
-        <h3 id="sec-staff" class="section-heading">Gram Panchayat Staff</h3>
+        <h3 id="sec-staff" class="section-heading"><span class="section-icon">👔</span>Gram Panchayat Staff</h3>
         <div class="data-table-container">
             <table class="gov-table">
                 <thead style="background: var(--gov-orange);">
@@ -378,7 +663,7 @@
             </table>
         </div>
 
-        <h3 id="sec-phc" class="section-heading health-border">Primary Health Center (PHC)</h3>
+        <h3 id="sec-phc" class="section-heading health-border"><span class="section-icon">🏥</span>Primary Health Center (PHC)</h3>
         <div class="data-table-container">
             <table class="gov-table">
                 <thead class="health-header">
@@ -394,7 +679,7 @@
             </table>
         </div>
 
-        <h3 id="sec-subcenter" class="section-heading health-border">Health Sub Center</h3>
+        <h3 id="sec-subcenter" class="section-heading health-border"><span class="section-icon">⚕️</span>Health Sub Center</h3>
         <div class="data-table-container">
             <table class="gov-table">
                 <thead class="health-header">
@@ -410,10 +695,10 @@
             </table>
         </div>
 
-        <h3 id="sec-anganwadi" class="section-heading" style="border-left-color: #e11d48;">Anganwadi Sevika & Helpers</h3>
+        <h3 id="sec-anganwadi" class="section-heading anganwadi-border"><span class="section-icon">👶</span>Anganwadi Sevika & Helpers</h3>
         <div class="data-table-container">
             <table class="gov-table">
-                <thead style="background: #e11d48;">
+                <thead class="anganwadi-header">
                     <tr>
                         <th id="th-ang-name">Name</th>
                         <th id="th-ang-role">Role</th>
@@ -429,11 +714,13 @@
 
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-        <div class="lg-tech-credit">
-            Designed &amp; Developed by: L&amp;G Tech Solution
-            <span class="lg-contact">📞 Contact: 7378418453</span>
+    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
+                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
+                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+            </div>
         </div>
     </footer>
 
@@ -455,8 +742,16 @@
         const db = getFirestore(app);
 
         // Make functions global
-        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+        window.openMenu = function () {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'true');
+        }
+        window.closeMenu = function () {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'false');
+        }
 
         // --- TRANSLATION LOGIC ---
         const translations = {
@@ -565,20 +860,28 @@
                 const q = query(collection(db, "leaders"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                snap.forEach(doc => {
-                    const l = doc.data();
-                    html += `
-                                    <div class="profile-card">
-                                        <img src="${l.photo || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" class="profile-img" alt="Leader">
-                                        <div class="profile-info">
-                                            <span class="role-badge">${getVal(l, 'role')}</span>
-                                            <h3 style="color: var(--gov-blue); margin-bottom: 5px;">${getVal(l, 'name')}</h3>
-                                            <p style="color: #666;">${l.phone || ''}</p>
-                                        </div>
-                                    </div>`;
-                });
-                leadersDiv.innerHTML = html || '<p>No elected body data.</p>';
-            } catch (e) { console.error("Leaders Error:", e); }
+                if (snap.size === 0) {
+                    html = '<p class="empty-state"><i class="fas fa-inbox"></i><br>No elected body members found.</p>';
+                } else {
+                    snap.forEach(doc => {
+                        const l = doc.data();
+                        const phone = l.phone ? `<p style="margin: 8px 0; color: #666;"><i class="fas fa-phone contact-icon"></i>${l.phone}</p>` : '';
+                        html += `
+                                        <div class="profile-card">
+                                            <img src="${l.photo || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" class="profile-img" alt="${getVal(l, 'name')}">
+                                            <div class="profile-info">
+                                                <span class="role-badge">${getVal(l, 'role')}</span>
+                                                <h3 style="color: var(--gov-blue); margin-bottom: 5px;">${getVal(l, 'name')}</h3>
+                                                ${phone}
+                                            </div>
+                                        </div>`;
+                    });
+                }
+                leadersDiv.innerHTML = html;
+            } catch (e) {
+                console.error("Leaders Error:", e);
+                leadersDiv.innerHTML = '<p class="empty-state"><i class="fas fa-exclamation-circle"></i><br>Unable to load leaders. Please try again later.</p>';
+            }
 
             // 2. MEMBERS
             const memDiv = document.getElementById('dynamic-members');
@@ -586,12 +889,19 @@
                 const q = query(collection(db, "members"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                snap.forEach(doc => {
-                    const m = doc.data();
-                    html += `<tr><td>${getVal(m, 'name')}</td><td>${getVal(m, 'role')}</td><td>${m.ward || '-'}</td><td>${m.phone || '-'}</td></tr>`;
-                });
-                memDiv.innerHTML = html || '<tr><td colspan="4" style="text-align:center;">No members found.</td></tr>';
-            } catch (e) { console.error("Members Error:", e); }
+                if (snap.size === 0) {
+                    html = '<tr><td colspan="4" style="text-align:center;" class="empty-state"><i class="fas fa-inbox"></i> No committee members found.</td></tr>';
+                } else {
+                    snap.forEach(doc => {
+                        const m = doc.data();
+                        html += `<tr><td>${getVal(m, 'name')}</td><td>${getVal(m, 'role')}</td><td>${m.ward || '-'}</td><td>${m.phone ? '<i class="fas fa-phone contact-icon"></i>' + m.phone : '-'}</td></tr>`;
+                    });
+                }
+                memDiv.innerHTML = html;
+            } catch (e) {
+                console.error("Members Error:", e);
+                memDiv.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 25px;"><i class="fas fa-exclamation-circle"></i> Unable to load committee members.</td></tr>';
+            }
 
             // 3. STAFF
             const staffDiv = document.getElementById('dynamic-staff');
@@ -599,12 +909,19 @@
                 const q = query(collection(db, "staff"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                snap.forEach(doc => {
-                    const s = doc.data();
-                    html += `<tr><td>${getVal(s, 'name')}</td><td>${getVal(s, 'role')}</td><td>${s.phone || '-'}</td></tr>`;
-                });
-                staffDiv.innerHTML = html || '<tr><td colspan="3" style="text-align:center;">No staff found.</td></tr>';
-            } catch (e) { console.error("Staff Error:", e); }
+                if (snap.size === 0) {
+                    html = '<tr><td colspan="3" style="text-align:center;" class="empty-state"><i class="fas fa-inbox"></i> No staff members found.</td></tr>';
+                } else {
+                    snap.forEach(doc => {
+                        const s = doc.data();
+                        html += `<tr><td>${getVal(s, 'name')}</td><td>${getVal(s, 'role')}</td><td>${s.phone ? '<i class="fas fa-phone contact-icon"></i>' + s.phone : '-'}</td></tr>`;
+                    });
+                }
+                staffDiv.innerHTML = html;
+            } catch (e) {
+                console.error("Staff Error:", e);
+                staffDiv.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 25px;"><i class="fas fa-exclamation-circle"></i> Unable to load staff information.</td></tr>';
+            }
 
             // 4. PHC (Fetched Physically from Cloud)
             const phcDiv = document.getElementById('dynamic-phc');
@@ -612,12 +929,19 @@
                 const q = query(collection(db, "phc"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                snap.forEach(doc => {
-                    const p = doc.data();
-                    html += `<tr><td>${getVal(p, 'name')}</td><td>${getVal(p, 'role')}</td><td>${p.phone || '-'}</td></tr>`;
-                });
-                phcDiv.innerHTML = html || '<tr><td colspan="3" style="text-align:center;">No PHC staff found.</td></tr>';
-            } catch (e) { console.error("PHC Error:", e); }
+                if (snap.size === 0) {
+                    html = '<tr><td colspan="3" style="text-align:center;" class="empty-state"><i class="fas fa-inbox"></i> No PHC staff found.</td></tr>';
+                } else {
+                    snap.forEach(doc => {
+                        const p = doc.data();
+                        html += `<tr><td>${getVal(p, 'name')}</td><td>${getVal(p, 'role')}</td><td>${p.phone ? '<i class="fas fa-phone contact-icon"></i>' + p.phone : '-'}</td></tr>`;
+                    });
+                }
+                phcDiv.innerHTML = html;
+            } catch (e) {
+                console.error("PHC Error:", e);
+                phcDiv.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 25px;"><i class="fas fa-exclamation-circle"></i> Unable to load PHC staff.</td></tr>';
+            }
 
             // 5. SUB CENTER (Fetched Physically from Cloud)
             const scDiv = document.getElementById('dynamic-subcenter');
@@ -625,12 +949,19 @@
                 const q = query(collection(db, "subcenter"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                snap.forEach(doc => {
-                    const s = doc.data();
-                    html += `<tr><td>${getVal(s, 'name')}</td><td>${getVal(s, 'role')}</td><td>${s.phone || '-'}</td></tr>`;
-                });
-                scDiv.innerHTML = html || '<tr><td colspan="3" style="text-align:center;">No Sub Center staff found.</td></tr>';
-            } catch (e) { console.error("Sub Center Error:", e); }
+                if (snap.size === 0) {
+                    html = '<tr><td colspan="3" style="text-align:center;" class="empty-state"><i class="fas fa-inbox"></i> No Sub Center staff found.</td></tr>';
+                } else {
+                    snap.forEach(doc => {
+                        const s = doc.data();
+                        html += `<tr><td>${getVal(s, 'name')}</td><td>${getVal(s, 'role')}</td><td>${s.phone ? '<i class="fas fa-phone contact-icon"></i>' + s.phone : '-'}</td></tr>`;
+                    });
+                }
+                scDiv.innerHTML = html;
+            } catch (e) {
+                console.error("Sub Center Error:", e);
+                scDiv.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 25px;"><i class="fas fa-exclamation-circle"></i> Unable to load Sub Center staff.</td></tr>';
+            }
 
             // 6. ANGANWADI
             const angDiv = document.getElementById('dynamic-anganwadi');
@@ -638,12 +969,19 @@
                 const q = query(collection(db, "anganwadi"), orderBy("rank", "asc"));
                 const snap = await getDocs(q);
                 let html = '';
-                snap.forEach(doc => {
-                    const a = doc.data();
-                    html += `<tr><td>${getVal(a, 'name')}</td><td>${getVal(a, 'role')}</td><td>${getVal(a, 'center')}</td><td>${a.phone || '-'}</td></tr>`;
-                });
-                angDiv.innerHTML = html || '<tr><td colspan="4" style="text-align:center;">No Anganwadi staff found.</td></tr>';
-            } catch (e) { console.error("Anganwadi Error:", e); }
+                if (snap.size === 0) {
+                    html = '<tr><td colspan="4" style="text-align:center;" class="empty-state"><i class="fas fa-inbox"></i> No Anganwadi staff found.</td></tr>';
+                } else {
+                    snap.forEach(doc => {
+                        const a = doc.data();
+                        html += `<tr><td>${getVal(a, 'name')}</td><td>${getVal(a, 'role')}</td><td>${getVal(a, 'center')}</td><td>${a.phone ? '<i class="fas fa-phone contact-icon"></i>' + a.phone : '-'}</td></tr>`;
+                    });
+                }
+                angDiv.innerHTML = html;
+            } catch (e) {
+                console.error("Anganwadi Error:", e);
+                angDiv.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 25px;"><i class="fas fa-exclamation-circle"></i> Unable to load Anganwadi information.</td></tr>';
+            }
 
         }
 

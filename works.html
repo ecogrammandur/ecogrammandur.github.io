@@ -13,14 +13,32 @@
             --gov-orange: #ff9933;
             --text-light: #ffffff;
             --header-height-desktop: 175px;
+            --gov-green: #28a745;
+            --transition-smooth: all 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', 'Mukta', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
+            scroll-behavior: smooth;
         }
 
         /* --- HEADER & BRANDING --- */
@@ -41,6 +59,20 @@
             font-size: 0.9rem;
         }
 
+        .top-strip a {
+            text-decoration: none;
+            color: var(--gov-blue);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .top-strip a:hover {
+            color: var(--gov-orange);
+            background-color: rgba(255, 153, 51, 0.1);
+        }
+
         .main-brand {
             max-width: 1200px;
             margin: 0 auto;
@@ -49,12 +81,22 @@
             align-items: center;
             justify-content: space-between;
             background: white;
+            gap: 20px;
+        }
+
+        .main-brand img {
+            transition: var(--transition-smooth);
+        }
+
+        .main-brand img:hover {
+            transform: scale(1.05);
         }
 
         .brand-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         #txt-title {
@@ -64,6 +106,7 @@
             font-weight: 800;
             text-transform: uppercase;
             line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
         #txt-subtitle {
@@ -71,6 +114,7 @@
             font-size: 0.95rem;
             color: var(--gov-blue) !important;
             font-weight: 600;
+            opacity: 0.85;
         }
 
         /* --- NAVIGATION --- */
@@ -96,19 +140,69 @@
                 font-weight: 500;
                 transition: 0.3s;
                 white-space: nowrap;
+                position: relative;
+                overflow: hidden;
             }
 
-                .main-nav li a:hover, .main-nav li a.active {
+                .main-nav li a:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
                     background-color: var(--gov-orange);
+                    transition: left 0.3s;
+                    z-index: -1;
+                }
+
+                .main-nav li a:hover:before,
+                .main-nav li a.active:before {
+                    left: 0;
+                }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: transparent;
+                    color: white;
                 }
 
         .btn-login {
             background: #dc3545 !important;
+            transition: var(--transition-smooth) !important;
+        }
+
+        .btn-login:hover {
+            background: #b02a37 !important;
+            transform: translateY(-2px);
         }
 
         /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+        .mobile-toggle-btn, .sidebar-close-btn, .menu {
             display: none;
+        }
+
+        .mobile-toggle-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar-close-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .sidebar-close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* Accessibility */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--gov-orange);
+            outline-offset: 2px;
+            border-radius: 2px;
         }
 
         @media (max-width: 992px) {
@@ -137,7 +231,8 @@
                 font-size: 1.2rem;
             }
 
-            .menu-overlay {
+            /* Overlay Background */
+            .menu {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -147,6 +242,7 @@
                 z-index: 1001;
             }
 
+            /* Sliding Sidebar */
             .main-nav {
                 position: fixed;
                 top: 0;
@@ -181,6 +277,29 @@
                 background: none;
                 border: none;
                 font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                margin: 20px auto !important;
+                padding: 0 15px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                margin: 15px auto !important;
+                padding: 0 12px !important;
+            }
+
+            .work-card {
+                border-radius: 6px;
+            }
+
+            .work-title {
+                font-size: 1.1rem;
             }
         }
 
@@ -190,20 +309,28 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .work-card {
             background: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: var(--transition-smooth);
             border: 1px solid #eee;
+            animation: slideUp 0.6s ease-out;
         }
 
+        .works-grid .work-card:nth-child(2) { animation-delay: 0.05s; }
+        .works-grid .work-card:nth-child(3) { animation-delay: 0.1s; }
+        .works-grid .work-card:nth-child(4) { animation-delay: 0.15s; }
+        .works-grid .work-card:nth-child(5) { animation-delay: 0.2s; }
+        .works-grid .work-card:nth-child(6) { animation-delay: 0.25s; }
+
             .work-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+                transform: translateY(-8px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
             }
 
         .work-img {
@@ -212,6 +339,11 @@
             object-fit: cover;
             border-bottom: 1px solid #eee;
             background-color: #f4f6f9;
+            transition: var(--transition-smooth);
+        }
+
+        .work-card:hover .work-img {
+            transform: scale(1.05);
         }
 
         .work-body {
@@ -219,27 +351,28 @@
         }
 
         .status-badge {
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-weight: bold;
             font-size: 0.8rem;
             text-transform: uppercase;
             display: inline-block;
             margin-bottom: 10px;
+            transition: var(--transition-smooth);
         }
 
         .status-Completed {
-            background: #d4edda;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             color: #155724;
         }
 
         .status-Ongoing {
-            background: #fff3cd;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
             color: #856404;
         }
 
         .status-Proposed {
-            background: #e2e3e5;
+            background: linear-gradient(135deg, #e2e3e5 0%, #d6d8db 100%);
             color: #383d41;
         }
 
@@ -279,12 +412,19 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-main:hover {
+            background-color: #005599;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menu" onclick="closeMenu()"></div>
+    <div class="menu" id="menuOverlay" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -298,17 +438,17 @@
         </div>
         <div class="main-brand">
             <div class="brand-info">
-                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <button class="mobile-toggle-btn" onclick="openMenu()" aria-label="Open navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
                     <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
         </div>
-        <nav class="main-nav" id="sidebarMenu">
-            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+        <nav class="main-nav" id="sidebarMenu" role="navigation" aria-label="Main navigation menu">
+            <button class="sidebar-close-btn" onclick="closeMenu()" aria-label="Close navigation menu"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
                 <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
@@ -330,28 +470,30 @@
         </nav>
     </header>
 
-    <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+    <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px; min-height: 60vh; animation: fadeIn 0.6s ease-out;">
 
-        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px;">
+        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px; color:var(--gov-blue); font-weight: 700;">
             Development Works
         </h2>
 
         <div style="margin-bottom: 30px;">
             <button id="btn-all-projects" class="btn-main" style="margin-right: 10px;">All Projects</button>
-            <button id="btn-filter-year" style="background: #ddd; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer;" onclick="alert('Filter feature coming soon')">Filter by Year</button>
+            <button id="btn-filter-year" style="background: #ddd; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: 600; transition: var(--transition-smooth);" onmouseover="this.style.background='#ccc';" onmouseout="this.style.background='#ddd';" onclick="alert('Filter feature coming soon')">Filter by Year</button>
         </div>
 
         <div id="dynamic-works-container" class="works-grid">
-            <p style="grid-column: 1/-1; text-align: center;">Loading works from cloud...</p>
+            <p style="grid-column: 1/-1; text-align: center; animation: spin 1s linear infinite;"><i class="fas fa-spinner" style="margin-right: 8px;"></i>Loading works from cloud...</p>
         </div>
 
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-        <div class="lg-tech-credit">
-            Designed &amp; Developed by: L&amp;G Tech Solution
-            <span class="lg-contact">📞 Contact: 7378418453</span>
+    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
+                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
+                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+            </div>
         </div>
     </footer>
 
@@ -371,9 +513,17 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Make functions global for HTML onClick events
-        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+        // Make functions global
+        window.openMenu = function () { 
+            document.getElementById('sidebarMenu').classList.add('active'); 
+            document.getElementById('menuOverlay').style.display = 'block';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'true');
+        }
+        window.closeMenu = function () { 
+            document.getElementById('sidebarMenu').classList.remove('active'); 
+            document.getElementById('menuOverlay').style.display = 'none';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'false');
+        }
 
         // --- MASTER TRANSLATION SCRIPT ---
         const translations = {
@@ -411,31 +561,31 @@
             const t = translations[lang];
 
             // Header
-            document.getElementById('txt-helpline').innerText = t.helpline;
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
+            if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
+            if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
 
             // Nav
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
+            if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
+            if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
+            if (document.getElementById('nav-services')) document.getElementById('nav-services').innerText = t.navServices;
+            if (document.getElementById('nav-schemes')) document.getElementById('nav-schemes').innerText = t.navSchemes;
+            if (document.getElementById('nav-works')) document.getElementById('nav-works').innerText = t.navWorks;
+            if (document.getElementById('nav-gramsabha')) document.getElementById('nav-gramsabha').innerText = t.navGram;
+            if (document.getElementById('nav-gallery')) document.getElementById('nav-gallery').innerText = t.navGallery;
+            if (document.getElementById('nav-grievance')) document.getElementById('nav-grievance').innerText = t.navGrievance;
+            if (document.getElementById('nav-rti')) document.getElementById('nav-rti').innerText = t.navRTI;
+            if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
+            if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
 
             // Page Content
-            document.getElementById('page-title').innerText = t.pageTitle;
-            document.getElementById('btn-all-projects').innerText = t.btnAll;
-            document.getElementById('btn-filter-year').innerText = t.btnFilter;
+            if (document.getElementById('page-title')) document.getElementById('page-title').innerText = t.pageTitle;
+            if (document.getElementById('btn-all-projects')) document.getElementById('btn-all-projects').innerText = t.btnAll;
+            if (document.getElementById('btn-filter-year')) document.getElementById('btn-filter-year').innerText = t.btnFilter;
 
             // Footer
-            document.getElementById('txt-footer').innerText = t.footer;
+            if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
 
             localStorage.setItem('gp_lang_pref', lang);
 
@@ -443,7 +593,7 @@
             loadWorks(lang);
         }
 
-        // --- NEW: FIREBASE WORKS LOADER ---
+        // --- FIREBASE WORKS LOADER WITH BETTER ERROR HANDLING ---
         async function loadWorks(lang) {
             const t = translations[lang];
             const container = document.getElementById('dynamic-works-container');
@@ -459,7 +609,7 @@
                 });
 
                 if (works.length === 0) {
-                    container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777;">No project data found in cloud.</p>';
+                    container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777;"><i class="fas fa-inbox" style="opacity: 0.5; font-size: 1.5rem; display: block; margin-bottom: 10px;"></i>No project data found in cloud.</p>';
                     return;
                 }
 
@@ -467,12 +617,12 @@
                 works.sort((a, b) => (a.rank || 99) - (b.rank || 99));
 
                 let html = '';
-                works.forEach(w => {
+                works.forEach((w, index) => {
                     const imgUrl = w.photo ? w.photo : 'https://via.placeholder.com/400x200?text=No+Image';
 
                     html += `
-                                <div class="work-card">
-                                    <img src="${imgUrl}" class="work-img" alt="Work Image">
+                                <div class="work-card" style="animation-delay: ${index * 0.05}s;">
+                                    <img src="${imgUrl}" class="work-img" alt="Work Image: ${w.title}">
                                     <div class="work-body">
                                         <span class="status-badge status-${w.status}">${w.status}</span>
                                         <h3 class="work-title">${w.title}</h3>
@@ -500,7 +650,7 @@
 
             } catch (error) {
                 console.error("Error loading works:", error);
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:red;">Failed to load data. Please check connection.</p>';
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#d32f2f;"><i class="fas fa-exclamation-circle" style="opacity: 0.8; font-size: 1.5rem; display: block; margin-bottom: 10px;"></i>Failed to load data. Please check your connection and refresh.</p>';
             }
         }
 

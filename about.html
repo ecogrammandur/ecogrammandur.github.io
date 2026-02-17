@@ -170,7 +170,7 @@
             }
 
         /* MOBILE */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+        .mobile-toggle-btn, .sidebar-close-btn, #menuOverlay {
             display: none;
         }
 
@@ -188,17 +188,32 @@
             text-align: center;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--gov-blue);
+        }
+
+            .stat-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--gov-orange);
+            margin-bottom: 10px;
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: bold;
-            color: var(--gov-orange);
+            color: var(--gov-blue);
+            margin: 10px 0;
         }
 
         .stat-label {
-            color: #555;
+            color: #666;
             margin-top: 5px;
+            font-weight: 500;
         }
 
         .content-box {
@@ -242,7 +257,7 @@
                 font-size: 1.2rem;
             }
 
-            .menu-overlay {
+            #menuOverlay {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -292,15 +307,15 @@
 </head>
 <body>
 
-    <div class="menu" id="menuOverlay" onclick="closeMenu()"></div>
+    <div id="menuOverlay" role="presentation" onclick="closeMenu()"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
                 <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: +91-7378418453</span>
-                <span>
-                    <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
-                    <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
+                <span style="display: flex; gap: 15px; align-items: center;">
+                    <a id="lang-en" href="javascript:void(0)" onclick="setLanguage('en')" style="padding: 4px 12px; border-radius: 4px; text-decoration: none; font-weight: 600; cursor: pointer; background: white; color: var(--gov-blue); transition: 0.3s; border: 2px solid white;" title="Switch to English">English</a>
+                    <a id="lang-mr" href="javascript:void(0)" onclick="setLanguage('mr')" style="padding: 4px 12px; border-radius: 4px; text-decoration: none; font-weight: 600; cursor: pointer; background: rgba(255,255,255,0.1); color: white; transition: 0.3s; border: 2px solid rgba(255,255,255,0.3);" title="मराठीत स्विच करा">मराठी</a>
                 </span>
             </div>
         </div>
@@ -353,29 +368,35 @@
 
         <div class="stat-grid">
             <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
                 <div class="stat-number">1598</div>
                 <div class="stat-label" id="lbl-pop">Total Population</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-home"></i></div>
                 <div class="stat-number">395</div>
                 <div class="stat-label" id="lbl-house">Total Households</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-book"></i></div>
                 <div class="stat-number">04</div>
                 <div class="stat-label" id="lbl-school">Total Schools</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-gopuram"></i></div>
                 <div class="stat-number">02</div>
                 <div class="stat-label" id="lbl-temple">Major Temples</div>
             </div>
         </div>
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-        <div class="lg-tech-credit">
-            Designed & Developed by: L&G Tech Solution
-            <span class="lg-contact">📞 Contact: 7378418453</span>
+    <footer class="gov-footer" style="background:var(--gov-blue); color:white; padding:30px 20px; margin-top:40px;">
+        <div style="max-width:1200px; margin:0 auto;">
+            <p id="txt-footer" style="margin:0 0 15px 0; font-weight:600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit" style="font-size:0.9rem; border-top:1px solid rgba(255,255,255,0.2); padding-top:15px;">
+                Designed & Developed by: L&G Tech Solution
+                <span class="lg-contact" style="display:block; margin-top:8px;"><i class="fas fa-phone-alt"></i> Contact: 7378418453</span>
+            </div>
         </div>
     </footer>
 
@@ -464,6 +485,27 @@
             if (document.getElementById('lbl-temple')) document.getElementById('lbl-temple').innerText = t.lblTemple;
 
             if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
+
+            // Update language button styling
+            const langEnBtn = document.getElementById('lang-en');
+            const langMrBtn = document.getElementById('lang-mr');
+            if (langEnBtn && langMrBtn) {
+                if (lang === 'en') {
+                    langEnBtn.style.background = 'white';
+                    langEnBtn.style.color = 'var(--gov-blue)';
+                    langEnBtn.style.border = '2px solid white';
+                    langMrBtn.style.background = 'rgba(255,255,255,0.1)';
+                    langMrBtn.style.color = 'white';
+                    langMrBtn.style.border = '2px solid rgba(255,255,255,0.3)';
+                } else {
+                    langMrBtn.style.background = 'white';
+                    langMrBtn.style.color = 'var(--gov-blue)';
+                    langMrBtn.style.border = '2px solid white';
+                    langEnBtn.style.background = 'rgba(255,255,255,0.1)';
+                    langEnBtn.style.color = 'white';
+                    langEnBtn.style.border = '2px solid rgba(255,255,255,0.3)';
+                }
+            }
 
             localStorage.setItem('gp_lang_pref', lang);
         }

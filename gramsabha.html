@@ -14,6 +14,22 @@
             --text-light: #ffffff;
             --header-height-desktop: 175px;
             --gov-green: #28a745;
+            --transition-smooth: all 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         body {
@@ -22,6 +38,7 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
+            scroll-behavior: smooth;
         }
 
         /* --- HEADER & BRANDING --- */
@@ -42,6 +59,20 @@
             font-size: 0.9rem;
         }
 
+        .top-strip a {
+            text-decoration: none;
+            color: var(--gov-blue);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .top-strip a:hover {
+            color: var(--gov-orange);
+            background-color: rgba(255, 153, 51, 0.1);
+        }
+
         .main-brand {
             max-width: 1200px;
             margin: 0 auto;
@@ -50,12 +81,22 @@
             align-items: center;
             justify-content: space-between;
             background: white;
+            gap: 20px;
+        }
+
+        .main-brand img {
+            transition: var(--transition-smooth);
+        }
+
+        .main-brand img:hover {
+            transform: scale(1.05);
         }
 
         .brand-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         #txt-title {
@@ -65,6 +106,7 @@
             font-weight: 800;
             text-transform: uppercase;
             line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
         #txt-subtitle {
@@ -72,6 +114,7 @@
             font-size: 0.95rem;
             color: var(--gov-blue) !important;
             font-weight: 600;
+            opacity: 0.85;
         }
 
         /* --- NAVIGATION --- */
@@ -97,10 +140,30 @@
                 font-weight: 500;
                 transition: 0.3s;
                 white-space: nowrap;
+                position: relative;
+                overflow: hidden;
             }
 
-                .main-nav li a:hover, .main-nav li a.active {
+                .main-nav li a:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
                     background-color: var(--gov-orange);
+                    transition: left 0.3s;
+                    z-index: -1;
+                }
+
+                .main-nav li a:hover:before,
+                .main-nav li a.active:before {
+                    left: 0;
+                }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: transparent;
+                    color: white;
                 }
 
         .btn-login {
@@ -108,8 +171,32 @@
         }
 
         /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+        .mobile-toggle-btn, .sidebar-close-btn, .menu {
             display: none;
+        }
+
+        .mobile-toggle-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar-close-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .sidebar-close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* Accessibility */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--gov-orange);
+            outline-offset: 2px;
+            border-radius: 2px;
         }
 
         @media (max-width: 992px) {
@@ -138,7 +225,8 @@
                 font-size: 1.2rem;
             }
 
-            .menu-overlay {
+            /* Overlay Background */
+            .menu {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -148,6 +236,7 @@
                 z-index: 1001;
             }
 
+            /* Sliding Sidebar */
             .main-nav {
                 position: fixed;
                 top: 0;
@@ -182,53 +271,228 @@
                 background: none;
                 border: none;
                 font-size: 1.5rem;
+                cursor: pointer;
             }
         }
 
         /* --- Page Specific Styles --- */
+        main {
+            animation: fadeIn 0.6s ease-out;
+        }
+
         .meeting-box {
             background: white;
-            border-left: 5px solid #dc3545; /* Red warning line */
+            border-left: 5px solid #dc3545;
             padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             margin-bottom: 30px;
+            border-radius: 6px;
+            animation: slideUp 0.6s ease-out;
+            transition: var(--transition-smooth);
+        }
+
+        .meeting-box:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .meeting-box h4 {
+            color: var(--gov-blue);
+            margin: 0 0 15px 0 !important;
+            font-size: 1.2rem !important;
+        }
+
+        .meeting-box p {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .meeting-box strong {
+            color: var(--gov-blue);
         }
 
         .agenda-list {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
             .agenda-list li {
-                padding: 10px 0;
-                border-bottom: 1px dashed #ccc;
+                padding: 8px 0 8px 25px;
+                border-bottom: 1px dashed #ddd;
+                position: relative;
+                color: #555;
+                font-size: 0.95rem;
             }
 
-                .agenda-list li::before {
-                    content: "\f00c"; /* Checkmark icon */
-                    font-family: "Font Awesome 5 Free";
-                    font-weight: 900;
+            .agenda-list li:last-child {
+                border-bottom: none;
+            }
+
+                .agenda-list li:before {
+                    content: "✓";
+                    position: absolute;
+                    left: 0;
                     color: var(--gov-green);
-                    margin-right: 10px;
+                    font-weight: bold;
+                    font-size: 1.1rem;
                 }
+
+        .btn-primary {
+            background: var(--gov-blue) !important;
+            color: white !important;
+            padding: 8px 15px !important;
+            text-decoration: none !important;
+            border-radius: 4px !important;
+            display: inline-block !important;
+            transition: var(--transition-smooth) !important;
+            font-weight: 600 !important;
+            border: none !important;
+        }
+
+        .btn-primary:hover {
+            background: var(--gov-orange) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 51, 102, 0.2) !important;
+        }
 
         /* Grid responsive fix */
         .page-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .page-grid > div {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .page-grid > div:last-child {
+            animation-delay: 0.1s;
+        }
+
+        .proceedings-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        .proceedings-item:hover {
+            background-color: #f9f9f9;
+            transform: translateX(5px);
+        }
+
+        .proceedings-item:last-child {
+            border-bottom: none;
+        }
+
+        .proceedings-date {
+            color: var(--gov-blue);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .proceedings-title {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .download-btn {
+            border: 1px solid var(--gov-blue);
+            background: white;
+            color: var(--gov-blue);
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition-smooth);
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .download-btn:hover {
+            background: var(--gov-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .loading-spinner::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--gov-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
         }
 
         @media (max-width: 768px) {
+            main {
+                margin: 20px auto !important;
+                padding: 0 15px !important;
+            }
+
             .page-grid {
                 grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .meeting-box {
+                padding: 15px;
+            }
+
+            .proceedings-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .download-btn {
+                margin-top: 10px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                margin: 15px auto !important;
+                padding: 0 12px !important;
+            }
+
+            .meeting-box {
+                padding: 12px;
+            }
+
+            .page-grid {
+                gap: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menu" onclick="closeMenu()"></div>
+    <div class="menu" id="menuOverlay" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -242,17 +506,17 @@
         </div>
         <div class="main-brand">
             <div class="brand-info">
-                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <button class="mobile-toggle-btn" onclick="openMenu()" aria-label="Open navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
                     <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
         </div>
-        <nav class="main-nav" id="sidebarMenu">
-            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+        <nav class="main-nav" id="sidebarMenu" role="navigation" aria-label="Main navigation menu">
+            <button class="sidebar-close-btn" onclick="closeMenu()" aria-label="Close navigation menu"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
                 <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
@@ -276,7 +540,7 @@
 
     <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
 
-        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px;">
+        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px; color:var(--gov-blue); font-weight: 700;">
             Gram Sabha & Meetings
         </h2>
 
@@ -306,11 +570,13 @@
 
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-        <div class="lg-tech-credit">
-            Designed &amp; Developed by: L&amp;G Tech Solution
-            <span class="lg-contact">📞 Contact: 7378418453</span>
+    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
+                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
+                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+            </div>
         </div>
     </footer>
 
@@ -331,8 +597,16 @@
         const db = getFirestore(app);
 
         // Make functions global
-        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+        window.openMenu = function () {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'true');
+        }
+        window.closeMenu = function () {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'false');
+        }
 
         const translations = {
             en: {
@@ -374,31 +648,31 @@
         window.setLanguage = function (lang) {
             const t = translations[lang];
 
-            // Header & Nav (Standard)
-            document.getElementById('txt-helpline').innerText = t.helpline;
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            // Header & Nav (with error checking)
+            if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
+            if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
+            if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
+            if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
+            if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
+            if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
+            if (document.getElementById('nav-services')) document.getElementById('nav-services').innerText = t.navServices;
+            if (document.getElementById('nav-schemes')) document.getElementById('nav-schemes').innerText = t.navSchemes;
+            if (document.getElementById('nav-works')) document.getElementById('nav-works').innerText = t.navWorks;
+            if (document.getElementById('nav-gramsabha')) document.getElementById('nav-gramsabha').innerText = t.navGram;
+            if (document.getElementById('nav-gallery')) document.getElementById('nav-gallery').innerText = t.navGallery;
+            if (document.getElementById('nav-grievance')) document.getElementById('nav-grievance').innerText = t.navGrievance;
+            if (document.getElementById('nav-rti')) document.getElementById('nav-rti').innerText = t.navRTI;
+            if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
+            if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
 
             // Page Content
-            document.getElementById('page-title').innerText = t.pageTitle;
-            document.getElementById('txt-upcoming-title').innerText = t.upcomingTitle;
-            document.getElementById('txt-past-title').innerText = t.pastTitle;
-            document.getElementById('txt-past-desc').innerText = t.pastDesc;
+            if (document.getElementById('page-title')) document.getElementById('page-title').innerText = t.pageTitle;
+            if (document.getElementById('txt-upcoming-title')) document.getElementById('txt-upcoming-title').innerText = t.upcomingTitle;
+            if (document.getElementById('txt-past-title')) document.getElementById('txt-past-title').innerText = t.pastTitle;
+            if (document.getElementById('txt-past-desc')) document.getElementById('txt-past-desc').innerText = t.pastDesc;
 
             // Footer
-            document.getElementById('txt-footer').innerText = t.footer;
+            if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
 
             localStorage.setItem('gp_lang_pref', lang);
 
@@ -431,7 +705,7 @@
                 let hasUpcoming = false;
                 let hasPast = false;
 
-                meetings.forEach(m => {
+                meetings.forEach((m, index) => {
                     const mDate = new Date(m.date).setHours(0, 0, 0, 0);
 
                     if (mDate >= today) {
@@ -441,44 +715,44 @@
                         const agendaItems = m.agenda ? m.agenda.split(',').map(i => `<li>${i.trim()}</li>`).join('') : `<li>${m.agenda}</li>`;
 
                         upcomingHtml += `
-                                    <div class="meeting-box">
+                                    <div class="meeting-box" style="animation-delay: ${index * 0.1}s;">
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                                             <h4 style="margin: 0; font-size: 1.2rem;">${m.title}</h4>
-                                            <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem;">${t.lblUpcomingTag}</span>
+                                            <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">${t.lblUpcomingTag}</span>
                                         </div>
                                         <p><strong><i class="far fa-calendar-alt"></i> ${t.lblDate}:</strong> ${m.date}</p>
                                         <p><strong><i class="far fa-clock"></i> ${t.lblTime}:</strong> ${m.time}</p>
                                         <p><strong><i class="fas fa-map-marker-alt"></i> ${t.lblVenue}:</strong> ${m.venue}</p>
-                                        <hr style="border-top: 1px dashed #ccc;">
-                                        <h5 style="margin-top: 15px;">${t.lblAgenda}:</h5>
+                                        <hr style="border-top: 1px dashed #ccc; margin: 15px 0;">
+                                        <h5 style="margin: 15px 0 10px 0; color: var(--gov-blue); font-weight: 600;">${t.lblAgenda}:</h5>
                                         <ul class="agenda-list">
                                             ${agendaItems}
                                         </ul>
-                                        ${m.link ? `<div style="margin-top:10px;"><a href="${m.link}" target="_blank" class="btn-primary" style="background:var(--gov-blue); color:white; padding:5px 15px; text-decoration:none; border-radius:4px;">Download Notice PDF</a></div>` : ''}
+                                        ${m.link ? `<div style="margin-top:15px;"><a href="${m.link}" target="_blank" class="btn-primary" rel="noopener noreferrer"><i class="fas fa-download" style="margin-right:6px;"></i>Download Notice PDF</a></div>` : ''}
                                     </div>`;
                     } else {
                         // PAST (Right Side)
                         hasPast = true;
-                        const linkBtn = m.link ? `<a href="${m.link}" target="_blank" style="border: 1px solid var(--gov-blue); background: white; color: var(--gov-blue); padding: 5px 10px; border-radius: 4px; text-decoration:none;"><i class="fas fa-download"></i> PDF</a>` : `<span style="color:#999; font-size:0.8rem;">No File</span>`;
+                        const linkBtn = m.link ? `<a href="${m.link}" target="_blank" class="download-btn" rel="noopener noreferrer"><i class="fas fa-download"></i> PDF</a>` : `<span style="color:#999; font-size:0.8rem;">No File</span>`;
 
                         pastHtml += `
-                                    <div style="padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                                    <div class="proceedings-item">
                                         <div>
-                                            <strong>${m.date}</strong><br>
-                                            <small class="text-muted">${m.title}</small>
+                                            <div class="proceedings-date">${m.date}</div>
+                                            <div class="proceedings-title">${m.title}</div>
                                         </div>
                                         ${linkBtn}
                                     </div>`;
                     }
                 });
 
-                upcomingDiv.innerHTML = hasUpcoming ? upcomingHtml : `<p style="color:#666;">${t.lblNoUpcoming}</p>`;
-                pastDiv.innerHTML = hasPast ? pastHtml : `<p style="padding:15px; text-align:center; color:#666;">${t.lblNoRec}</p>`;
+                upcomingDiv.innerHTML = hasUpcoming ? upcomingHtml : `<div class="empty-state"><i class="fas fa-calendar"></i><p>${t.lblNoUpcoming}</p></div>`;
+                pastDiv.innerHTML = hasPast ? pastHtml : `<div style="padding:20px; text-align:center; color:#999;"><i class="fas fa-inbox" style="font-size:1.5rem; margin-bottom:10px; opacity:0.5;"></i><p>${t.lblNoRec}</p></div>`;
 
             } catch (error) {
                 console.error("Error loading meetings:", error);
-                upcomingDiv.innerHTML = `<p style="color:red;">Failed to load data.</p>`;
-                pastDiv.innerHTML = `<p style="text-align:center; color:red;">Failed to load data.</p>`;
+                upcomingDiv.innerHTML = `<div style="padding:20px; text-align:center; color:#d9534f;"><i class="fas fa-exclamation-circle" style="font-size:1.5rem; margin-bottom:10px;"></i><p style="font-weight:600;">Failed to load data</p><p style="font-size:0.85rem;">Please check your connection</p></div>`;
+                pastDiv.innerHTML = `<div style="padding:20px; text-align:center; color:#d9534f;"><i class="fas fa-exclamation-circle" style="font-size:1.5rem; margin-bottom:10px;"></i><p style="font-weight:600;">Failed to load data</p></div>`;
             }
         }
 

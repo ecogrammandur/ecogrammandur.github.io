@@ -13,6 +13,22 @@
             --gov-orange: #ff9933;
             --text-light: #ffffff;
             --header-height-desktop: 175px;
+            --transition-smooth: all 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         body {
@@ -21,6 +37,7 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
+            scroll-behavior: smooth;
         }
 
         /* --- HEADER & BRANDING --- */
@@ -41,6 +58,20 @@
             font-size: 0.9rem;
         }
 
+        .top-strip a {
+            text-decoration: none;
+            color: var(--gov-blue);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .top-strip a:hover {
+            color: var(--gov-orange);
+            background-color: rgba(255, 153, 51, 0.1);
+        }
+
         .main-brand {
             max-width: 1200px;
             margin: 0 auto;
@@ -49,12 +80,22 @@
             align-items: center;
             justify-content: space-between;
             background: white;
+            gap: 20px;
+        }
+
+        .main-brand img {
+            transition: var(--transition-smooth);
+        }
+
+        .main-brand img:hover {
+            transform: scale(1.05);
         }
 
         .brand-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         #txt-title {
@@ -64,6 +105,7 @@
             font-weight: 800;
             text-transform: uppercase;
             line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
         #txt-subtitle {
@@ -71,6 +113,7 @@
             font-size: 0.95rem;
             color: var(--gov-blue) !important;
             font-weight: 600;
+            opacity: 0.85;
         }
 
         /* --- NAVIGATION --- */
@@ -96,10 +139,30 @@
                 font-weight: 500;
                 transition: 0.3s;
                 white-space: nowrap;
+                position: relative;
+                overflow: hidden;
             }
 
-                .main-nav li a:hover, .main-nav li a.active {
+                .main-nav li a:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
                     background-color: var(--gov-orange);
+                    transition: left 0.3s;
+                    z-index: -1;
+                }
+
+                .main-nav li a:hover:before,
+                .main-nav li a.active:before {
+                    left: 0;
+                }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: transparent;
+                    color: white;
                 }
 
         .btn-login {
@@ -107,8 +170,32 @@
         }
 
         /* Mobile specific elements */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+        .mobile-toggle-btn, .sidebar-close-btn, .menu {
             display: none;
+        }
+
+        .mobile-toggle-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar-close-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .sidebar-close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* Accessibility */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--gov-orange);
+            outline-offset: 2px;
+            border-radius: 2px;
         }
 
         @media (max-width: 992px) {
@@ -137,7 +224,8 @@
                 font-size: 1.2rem;
             }
 
-            .menu-overlay {
+            /* Overlay Background */
+            .menu {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -147,6 +235,7 @@
                 z-index: 1001;
             }
 
+            /* Sliding Sidebar */
             .main-nav {
                 position: fixed;
                 top: 0;
@@ -181,10 +270,15 @@
                 background: none;
                 border: none;
                 font-size: 1.5rem;
+                cursor: pointer;
             }
         }
 
         /* --- Page Specific Styles --- */
+        main {
+            animation: fadeIn 0.6s ease-out;
+        }
+
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -198,11 +292,14 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             background: white;
-            transition: transform 0.3s;
+            transition: var(--transition-smooth);
+            animation: slideUp 0.6s ease-out;
+            cursor: pointer;
         }
 
             .gallery-item:hover {
-                transform: translateY(-5px);
+                transform: translateY(-8px);
+                box-shadow: 0 12px 25px rgba(0,0,0,0.15);
             }
 
         .gallery-img {
@@ -210,7 +307,28 @@
             height: 220px;
             object-fit: cover;
             display: block;
-            cursor: pointer;
+            transition: var(--transition-smooth);
+            background-color: #f0f0f0;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.08);
+        }
+
+        .gallery-item::after {
+            content: '🔍';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
         }
 
         .caption {
@@ -219,13 +337,161 @@
             font-weight: 600;
             color: var(--gov-blue);
             font-size: 0.95rem;
-            border-top: 1px solid #eee;
+            border-top: 2px solid #eee;
+            line-height: 1.5;
+            transition: var(--transition-smooth);
+        }
+
+        .gallery-item:hover .caption {
+            background-color: #f9f9f9;
+        }
+
+        /* Loading State */
+        .loading-spinner::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--gov-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+            overflow: auto;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            background: white;
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .lightbox-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .lightbox-caption {
+            padding: 20px;
+            text-align: center;
+            color: var(--gov-blue);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .lightbox-close:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            main {
+                margin: 20px auto !important;
+                padding: 0 15px !important;
+            }
+
+            .gallery-grid {
+                gap: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+
+            .gallery-img {
+                height: 200px;
+            }
+
+            .lightbox-content {
+                max-width: 95vw;
+                max-height: 85vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                margin: 15px auto !important;
+                padding: 0 12px !important;
+            }
+
+            .gallery-grid {
+                gap: 12px;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .gallery-img {
+                height: 150px;
+            }
+
+            .caption {
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+
+            .lightbox-close {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menu" onclick="closeMenu()"></div>
+    <div class="menu" id="menuOverlay" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -239,17 +505,17 @@
         </div>
         <div class="main-brand">
             <div class="brand-info">
-                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <button class="mobile-toggle-btn" onclick="openMenu()" aria-label="Open navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
                     <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
         </div>
-        <nav class="main-nav" id="sidebarMenu">
-            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+        <nav class="main-nav" id="sidebarMenu" role="navigation" aria-label="Main navigation menu">
+            <button class="sidebar-close-btn" onclick="closeMenu()" aria-label="Close navigation menu"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index.html" id="nav-home" onclick="closeMenu()">Home</a></li>
                 <li><a href="about.html" id="nav-about" onclick="closeMenu()">About Us</a></li>
@@ -272,20 +538,31 @@
     </header>
 
     <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px;">
+        <h2 id="page-title" style="border-bottom: 3px solid var(--gov-orange); padding-bottom: 10px; margin-bottom: 30px; color:var(--gov-blue); font-weight: 700;">
             Photo Gallery
         </h2>
 
         <div id="dynamic-gallery" class="gallery-grid">
-            <p style="grid-column: 1/-1; text-align: center;">Loading photos from cloud...</p>
+            <p class="loading-spinner" style="grid-column: 1/-1; text-align: center; color: var(--gov-blue);">Loading photos from cloud</p>
         </div>
     </main>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-        <div class="lg-tech-credit">
-            Designed &amp; Developed by: L&amp;G Tech Solution
-            <span class="lg-contact">📞 Contact: 7378418453</span>
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">×</button>
+            <img id="lightboxImg" class="lightbox-img" alt="Gallery photo">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
+                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
+                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+            </div>
         </div>
     </footer>
 
@@ -306,8 +583,31 @@
         const db = getFirestore(app);
 
         // Make functions global
-        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+        window.openMenu = function () {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'true');
+        }
+        window.closeMenu = function () {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'false');
+        }
+
+        // Lightbox Functions
+        window.openLightbox = function (url, caption) {
+            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightboxImg').src = url;
+            document.getElementById('lightboxCaption').innerText = caption || 'Gram Panchayat Event';
+            document.body.style.overflow = 'hidden';
+        }
+        window.closeLightbox = function () {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeLightbox();
+        });
 
         // --- TRANSLATION LOGIC ---
         const translations = {
@@ -332,28 +632,28 @@
         window.setLanguage = function (lang) {
             const t = translations[lang];
 
-            // Header & Nav
-            document.getElementById('txt-helpline').innerText = t.helpline;
-            document.getElementById('txt-title').innerText = t.title;
-            document.getElementById('txt-subtitle').innerText = t.subtitle;
-            document.getElementById('nav-home').innerText = t.navHome;
-            document.getElementById('nav-about').innerText = t.navAbout;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
-            document.getElementById('nav-services').innerText = t.navServices;
-            document.getElementById('nav-schemes').innerText = t.navSchemes;
-            document.getElementById('nav-works').innerText = t.navWorks;
-            document.getElementById('nav-gramsabha').innerText = t.navGram;
-            document.getElementById('nav-gallery').innerText = t.navGallery;
-            document.getElementById('nav-grievance').innerText = t.navGrievance;
-            document.getElementById('nav-rti').innerText = t.navRTI;
-            document.getElementById('nav-contact').innerText = t.navContact;
-            document.getElementById('btn-login-txt').innerText = t.navLogin;
+            // Header & Nav with error checking
+            if (document.getElementById('txt-helpline')) document.getElementById('txt-helpline').innerText = t.helpline;
+            if (document.getElementById('txt-title')) document.getElementById('txt-title').innerText = t.title;
+            if (document.getElementById('txt-subtitle')) document.getElementById('txt-subtitle').innerText = t.subtitle;
+            if (document.getElementById('nav-home')) document.getElementById('nav-home').innerText = t.navHome;
+            if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.navAbout;
+            if (document.getElementById('nav-admin')) document.getElementById('nav-admin').innerText = t.navAdmin;
+            if (document.getElementById('nav-services')) document.getElementById('nav-services').innerText = t.navServices;
+            if (document.getElementById('nav-schemes')) document.getElementById('nav-schemes').innerText = t.navSchemes;
+            if (document.getElementById('nav-works')) document.getElementById('nav-works').innerText = t.navWorks;
+            if (document.getElementById('nav-gramsabha')) document.getElementById('nav-gramsabha').innerText = t.navGram;
+            if (document.getElementById('nav-gallery')) document.getElementById('nav-gallery').innerText = t.navGallery;
+            if (document.getElementById('nav-grievance')) document.getElementById('nav-grievance').innerText = t.navGrievance;
+            if (document.getElementById('nav-rti')) document.getElementById('nav-rti').innerText = t.navRTI;
+            if (document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = t.navContact;
+            if (document.getElementById('btn-login-txt')) document.getElementById('btn-login-txt').innerText = t.navLogin;
 
             // Page Content
-            document.getElementById('page-title').innerText = t.pageTitle;
+            if (document.getElementById('page-title')) document.getElementById('page-title').innerText = t.pageTitle;
 
             // Footer
-            document.getElementById('txt-footer').innerText = t.footer;
+            if (document.getElementById('txt-footer')) document.getElementById('txt-footer').innerText = t.footer;
 
             localStorage.setItem('gp_lang_pref', lang);
         }
@@ -368,17 +668,19 @@
                 const snap = await getDocs(q);
 
                 if (snap.empty) {
-                    container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777;">No photos uploaded yet.</p>';
+                    container.innerHTML = '<div class="empty-state"><i class="fas fa-image"></i><p>No photos uploaded yet.</p><p style="font-size: 0.9rem; color: #aaa;">Gallery will be updated soon!</p></div>';
                     return;
                 }
 
                 let html = '';
-                snap.forEach(doc => {
+                snap.forEach((doc, index) => {
                     const item = doc.data();
+                    const caption = item.caption || 'Gram Panchayat Event';
+                    const delay = index * 0.05;
                     html += `
-                                <div class="gallery-item">
-                                    <img src="${item.url}" class="gallery-img" alt="Gallery Photo" onclick="window.open('${item.url}', '_blank')">
-                                    <div class="caption">${item.caption || 'Gram Panchayat Event'}</div>
+                                <div class="gallery-item" style="animation-delay: ${delay}s;">
+                                    <img src="${item.url}" class="gallery-img" alt="${caption}" loading="lazy" onclick="window.openLightbox('${item.url}', '${caption}')">
+                                    <div class="caption">${caption}</div>
                                 </div>`;
                 });
 
@@ -386,7 +688,7 @@
 
             } catch (error) {
                 console.error("Error loading gallery:", error);
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:red;">Failed to load photos. Please check connection.</p>';
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-circle" style="color: #d9534f;"></i><p style="color: #d9534f; font-weight: 600;">Failed to load photos</p><p style="font-size: 0.9rem; color: #aaa;">Please check your internet connection and try refreshing.</p></div>';
             }
         }
 

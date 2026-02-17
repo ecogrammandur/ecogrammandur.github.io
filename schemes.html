@@ -12,6 +12,23 @@
             --gov-orange: #ff9933;
             --text-light: #ffffff;
             --header-height-desktop: 175px;
+            --gov-green: #28a745;
+            --transition-smooth: all 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         body {
@@ -20,6 +37,7 @@
             font-family: 'Segoe UI', 'Mukta', Arial, sans-serif;
             background-color: #f4f6f9;
             padding-top: var(--header-height-desktop);
+            scroll-behavior: smooth;
         }
 
         /* HEADER */
@@ -40,6 +58,20 @@
             font-size: 0.9rem;
         }
 
+        .top-strip a {
+            text-decoration: none;
+            color: var(--gov-blue);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .top-strip a:hover {
+            color: var(--gov-orange);
+            background-color: rgba(255, 153, 51, 0.1);
+        }
+
         .main-brand {
             max-width: 1200px;
             margin: 0 auto;
@@ -48,12 +80,22 @@
             align-items: center;
             justify-content: space-between;
             background: white;
+            gap: 20px;
+        }
+
+        .main-brand img {
+            transition: var(--transition-smooth);
+        }
+
+        .main-brand img:hover {
+            transform: scale(1.05);
         }
 
         .brand-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         #txt-title {
@@ -63,6 +105,7 @@
             font-weight: 800;
             text-transform: uppercase;
             line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
         #txt-subtitle {
@@ -70,6 +113,7 @@
             font-size: 0.95rem;
             color: var(--gov-blue) !important;
             font-weight: 600;
+            opacity: 0.85;
         }
 
         /* NAV */
@@ -95,14 +139,40 @@
                 font-weight: 500;
                 transition: 0.3s;
                 white-space: nowrap;
+                position: relative;
+                overflow: hidden;
             }
 
-                .main-nav li a:hover, .main-nav li a.active {
+                .main-nav li a:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
                     background-color: var(--gov-orange);
+                    transition: left 0.3s;
+                    z-index: -1;
+                }
+
+                .main-nav li a:hover:before,
+                .main-nav li a.active:before {
+                    left: 0;
+                }
+
+                .main-nav li a:hover, .main-nav li a.active {
+                    background-color: transparent;
+                    color: white;
                 }
 
         .btn-login {
             background: #dc3545 !important;
+            transition: var(--transition-smooth) !important;
+        }
+
+        .btn-login:hover {
+            background: #b02a37 !important;
+            transform: translateY(-2px);
         }
 
         /* SCHEMES SPECIFIC */
@@ -111,6 +181,7 @@
             margin: 40px auto;
             padding: 0 20px;
             min-height: 60vh;
+            animation: fadeIn 0.6s ease-out;
         }
 
         .page-title {
@@ -119,50 +190,74 @@
             display: inline-block;
             padding-bottom: 10px;
             margin-bottom: 30px;
+            font-weight: 700;
         }
 
         .scheme-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 25px;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .scheme-card {
             background: white;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             padding: 25px;
             border-top: 4px solid var(--gov-blue);
-            transition: 0.3s;
+            transition: var(--transition-smooth);
+            animation: slideUp 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
         }
 
+        .scheme-grid .scheme-card:nth-child(2) { animation-delay: 0.05s; }
+        .scheme-grid .scheme-card:nth-child(3) { animation-delay: 0.1s; }
+        .scheme-grid .scheme-card:nth-child(4) { animation-delay: 0.15s; }
+        .scheme-grid .scheme-card:nth-child(5) { animation-delay: 0.2s; }
+        .scheme-grid .scheme-card:nth-child(6) { animation-delay: 0.25s; }
+
             .scheme-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+                transform: translateY(-8px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
             }
 
         .scheme-tag {
             display: inline-block;
-            background: #e0f2fe;
+            background: linear-gradient(135deg, #e0f2fe 0%, #cffafe 100%);
             color: #0369a1;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 15px;
+            width: fit-content;
+            transition: var(--transition-smooth);
+        }
+
+        .scheme-card:hover .scheme-tag {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+            color: white;
         }
 
         .scheme-title {
             color: var(--gov-blue);
             margin: 0 0 10px 0;
             font-size: 1.25rem;
+            font-weight: 700;
         }
 
         .scheme-benefit {
-            color: #059669;
+            color: var(--gov-green);
             font-weight: 600;
             margin-bottom: 10px;
             display: block;
+            transition: var(--transition-smooth);
+        }
+
+        .scheme-card:hover .scheme-benefit {
+            color: var(--gov-orange);
         }
 
         .scheme-desc {
@@ -170,6 +265,7 @@
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 20px;
+            flex-grow: 1;
         }
 
         .btn-apply {
@@ -177,19 +273,61 @@
             background: var(--gov-orange);
             color: white;
             text-decoration: none;
-            padding: 8px 20px;
+            padding: 10px 20px;
             border-radius: 5px;
             font-weight: 600;
-            transition: 0.2s;
+            transition: var(--transition-smooth);
+            align-self: flex-start;
+            cursor: pointer;
+            border: none;
         }
 
             .btn-apply:hover {
                 background: #e68a00;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3);
             }
 
-        /* MOBILE FIXES */
-        .mobile-toggle-btn, .sidebar-close-btn, .menu-overlay {
+        #schemes-loader {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-top: 50px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        #schemes-loader i {
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        /* Mobile specific elements */
+        .mobile-toggle-btn, .sidebar-close-btn, .menu {
             display: none;
+        }
+
+        .mobile-toggle-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar-close-btn {
+            transition: var(--transition-smooth);
+        }
+
+        .sidebar-close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* Accessibility */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--gov-orange);
+            outline-offset: 2px;
+            border-radius: 2px;
         }
 
         @media (max-width: 992px) {
@@ -218,7 +356,8 @@
                 font-size: 1.2rem;
             }
 
-            .menu-overlay {
+            /* Overlay Background */
+            .menu {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -228,6 +367,7 @@
                 z-index: 1001;
             }
 
+            /* Sliding Sidebar */
             .main-nav {
                 position: fixed;
                 top: 0;
@@ -262,13 +402,40 @@
                 background: none;
                 border: none;
                 font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto !important;
+                padding: 0 15px !important;
+            }
+
+            .scheme-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 15px auto !important;
+                padding: 0 12px !important;
+            }
+
+            .scheme-card {
+                padding: 15px;
+            }
+
+            .scheme-title {
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="menu" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="menu" id="menuOverlay" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -282,17 +449,17 @@
         </div>
         <div class="main-brand">
             <div class="brand-info">
-                <button class="mobile-toggle-btn" onclick="openMenu()"><i class="fas fa-bars"></i></button>
+                <button class="mobile-toggle-btn" onclick="openMenu()" aria-label="Open navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
                 <i class="fas fa-landmark fa-3x landmark-desktop" style="color: var(--gov-blue);"></i>
                 <div style="text-align: left;">
                     <h1 id="txt-title">GRAM PANCHAYAT MANDUR</h1>
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
         </div>
-        <nav class="main-nav" id="sidebarMenu">
-            <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+        <nav class="main-nav" id="sidebarMenu" role="navigation" aria-label="Main navigation menu">
+            <button class="sidebar-close-btn" onclick="closeMenu()" aria-label="Close navigation menu"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index.html" id="nav-home">Home</a></li>
                 <li><a href="about.html" id="nav-about">About Us</a></li>
@@ -321,11 +488,13 @@
         </div>
     </div>
 
-    <footer class="gov-footer" style="background:#1a1a1a; color:white; padding:10px 0; margin-top:20px; text-align:center;">
-        <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-        <div class="lg-tech-credit">
-            Designed & Developed by: L&G Tech Solution
-            <span class="lg-contact">📞 Contact: 7378418453</span>
+    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
+                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
+                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+            </div>
         </div>
     </footer>
 
@@ -387,7 +556,7 @@
             localStorage.setItem('gp_lang_pref', lang);
         }
 
-        // --- SCHEMES LOADER ---
+        // --- SCHEMES LOADER WITH BETTER ERROR HANDLING ---
         async function loadSchemes() {
             const grid = document.getElementById('schemes-grid');
             const loader = document.getElementById('schemes-loader');
@@ -399,19 +568,19 @@
                 let html = "";
 
                 if (querySnapshot.empty) {
-                    loader.innerHTML = "No active schemes found at this time.";
+                    loader.innerHTML = '<i class="fas fa-inbox" style="opacity: 0.5; font-size: 1.5rem; display: block; margin-bottom: 10px;"></i>No active schemes found at this time.';
                     return;
                 }
 
-                querySnapshot.forEach((doc) => {
+                querySnapshot.forEach((doc, index) => {
                     const s = doc.data();
                     html += `
-                                <div class="scheme-card">
+                                <div class="scheme-card" style="animation-delay: ${index * 0.05}s;">
                                     <span class="scheme-tag">${s.category || 'General'}</span>
                                     <h3 class="scheme-title">${s.title}</h3>
-                                    <span class="scheme-benefit"><i class="fas fa-gift"></i> Benefit: ${s.benefit}</span>
+                                    <span class="scheme-benefit"><i class="fas fa-gift" style="margin-right: 6px;"></i>Benefit: ${s.benefit}</span>
                                     <p class="scheme-desc">${s.desc}</p>
-                                    ${s.link ? `<a href="${s.link}" target="_blank" class="btn-apply">Apply Now <i class="fas fa-arrow-right"></i></a>` : ''}
+                                    ${s.link ? `<a href="${s.link}" target="_blank" class="btn-apply" rel="noopener noreferrer">Apply Now <i class="fas fa-arrow-right" style="margin-left: 6px;"></i></a>` : ''}
                                 </div>
                             `;
                 });
@@ -421,14 +590,23 @@
 
             } catch (error) {
                 console.error("Error loading schemes:", error);
-                loader.innerHTML = "Failed to load schemes. Please check connection.";
+                loader.innerHTML = '<i class="fas fa-exclamation-circle" style="opacity: 0.8; font-size: 1.5rem; display: block; margin-bottom: 10px; color: #d32f2f;"></i>Failed to load schemes. Please check your connection and refresh.';
             }
         }
 
         loadSchemes();
 
-        window.openMenu = function () { document.getElementById('sidebarMenu').classList.add('active'); document.getElementById('menuOverlay').style.display = 'block'; }
-        window.closeMenu = function () { document.getElementById('sidebarMenu').classList.remove('active'); document.getElementById('menuOverlay').style.display = 'none'; }
+        // Make functions global
+        window.openMenu = function () {
+            document.getElementById('sidebarMenu').classList.add('active');
+            document.getElementById('menuOverlay').style.display = 'block';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'true');
+        }
+        window.closeMenu = function () {
+            document.getElementById('sidebarMenu').classList.remove('active');
+            document.getElementById('menuOverlay').style.display = 'none';
+            document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'false');
+        }
 
         window.onload = function () {
             const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
