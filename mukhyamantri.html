@@ -193,6 +193,27 @@
             font-weight: 700;
         }
 
+        /* --- NEW BANNER STYLE --- */
+        .mspa-banner {
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .mspa-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .mspa-banner:hover img {
+            transform: scale(1.02);
+        }
+
         .filter-buttons {
             display: flex;
             gap: 10px;
@@ -508,6 +529,10 @@
             मुख्यमंत्री समृद्ध पंचायतराज अभियान
         </h2>
 
+        <div class="mspa-banner">
+            <img src="https://raw.githubusercontent.com/laxman941015/NewRepo/d8875e5391b189ce061da5c40676d572e882db3d/1.jpeg" alt="Mukhya Mantri Samriddh Panchayat Abhiyaan">
+        </div>
+
         <div class="filter-buttons">
             <button class="filter-btn active" onclick="filterContent('all')" id="filter-all">All</button>
             <button class="filter-btn" onclick="filterContent('Photos')" id="filter-photos"><i class="fas fa-images"></i> Photos</button>
@@ -697,9 +722,13 @@
             let html = '';
             filtered.forEach((item, idx) => {
                 const date = new Date(item.createdAt).toLocaleDateString('en-IN');
+                // Added Error Handling to the Image Tag
                 html += `
                     <div class="mspa-card" style="animation-delay: ${idx * 0.05}s;">
-                        ${item.photo ? `<img src="${item.photo}" class="mspa-image" alt="${item.title}">` : `<div class="mspa-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="font-size: 3rem; color: white;"></i></div>`}
+                        ${item.photo ? 
+                            `<img src="${item.photo}" class="mspa-image" alt="${item.title}" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';">` : 
+                            `<div class="mspa-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="font-size: 3rem; color: white;"></i></div>`
+                        }
                         <div class="mspa-body">
                             <span class="mspa-badge">${item.category}</span>
                             <h3 class="mspa-title">${item.title}</h3>
