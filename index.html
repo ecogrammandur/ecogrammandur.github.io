@@ -348,6 +348,29 @@
             padding: 0 20px;
         }
 
+        /* --- NEWS & UPDATES SECTION --- */
+        .news-updates-section {
+            max-width: 1200px;
+            margin: 20px auto 30px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .news-item {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            color: #333;
+            transition: var(--transition-smooth);
+        }
+
+        .news-item h4 {
+            margin: 0 0 6px 0;
+            color: var(--gov-blue);
+            font-size: 1.05rem;
+        }
+
         .docs-section h2 {
             color: var(--gov-blue);
             border-left: 5px solid var(--gov-orange);
@@ -744,6 +767,16 @@
         </div>
     </div>
 
+    <div class="news-updates-section" id="news-updates-section">
+        <h2 style="color:var(--gov-blue); border-left:5px solid var(--gov-orange); padding-left:15px; margin-bottom:12px;">News & Updates</h2>
+        <div id="news-updates-list">
+            <div class="news-item">Loading updates...</div>
+        </div>
+        <div style="margin-top:12px; text-align:right;">
+            <a href="admin.html#manage-home" class="btn-download">Manage news (Admin)</a>
+        </div>
+    </div>
+
     <div class="links-section" style="background:#fff; padding:40px 0; border-top:5px solid var(--gov-orange);">
         <div style="max-width:1200px; margin:0 auto; padding:0 20px;">
             <h2 style="text-align:center; color:var(--gov-blue); margin-bottom:30px; text-transform:uppercase; font-weight: 700; animation: slideUp 0.6s ease-out;">
@@ -948,8 +981,19 @@
             // 2. NEWS
             try {
                 const newsSnap = await getDoc(doc(db, "content", "news"));
-                if (newsSnap.exists()) {
-                    document.getElementById('news-marquee').innerText = newsSnap.data().text;
+                const newsText = (newsSnap && newsSnap.exists()) ? (newsSnap.data().text || '') : '';
+                if (document.getElementById('news-marquee')) document.getElementById('news-marquee').innerText = newsText || 'No updates at this time.';
+
+                // Also render a readable News & Updates section (admin updates this in Admin > Home)
+                const updatesEl = document.getElementById('news-updates-list');
+                if (updatesEl) {
+                    if (!newsText) {
+                        updatesEl.innerHTML = '<div class="news-item">No updates at this time.</div>';
+                    } else {
+                        // split by newlines into items
+                        const parts = newsText.split(/\n+/).map(s => s.trim()).filter(Boolean);
+                        updatesEl.innerHTML = parts.map(p => `<div class="news-item"><p>${p}</p></div>`).join('');
+                    }
                 }
             } catch (e) { console.error("News error", e); }
 

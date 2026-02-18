@@ -553,6 +553,18 @@
                         </div>
                         <div id="listPublicDocs" style="margin-top:15px;"></div>
                     </div>
+                    
+                    <div class="admin-card" style="border-left: 5px solid #0066cc;">
+                        <h3>News Items (Manage separate items)</h3>
+                        <div style="display:grid; grid-template-columns: 0.5fr 2fr 2fr 1fr; gap:10px; align-items:start;">
+                            <input type="number" id="newsRank" class="form-control" placeholder="Rank">
+                            <input type="text" id="newsTitle" class="form-control" placeholder="Headline / Title">
+                            <input type="text" id="newsLink" class="form-control" placeholder="Optional Link (URL)">
+                            <button id="btnSaveNewsItem" onclick="saveNewsItem()" class="btn-primary" style="margin-top:0; width:auto;">+ Add</button>
+                        </div>
+                        <textarea id="newsBody" class="form-control" placeholder="Short description / body (optional)" rows="2"></textarea>
+                        <div id="listNewsItems" style="margin-top:15px;"></div>
+                    </div>
                 </div>
 
                 <div id="manage-rti" class="view-section">
@@ -909,6 +921,8 @@
 
             // Home Documents
             loadList('documents', 'listPublicDocs', 'name', false, true);
+            // News items (managed as separate records)
+            loadList('news_items', 'listNewsItems', 'title', false, true);
 
             loadNews();
             loadCloudComplaints();
@@ -1093,6 +1107,15 @@
                 document.getElementById('docTitle').value = data.name || '';
                 document.getElementById('docLink').value = data.link || '';
                 toggleBtn('btnSaveDoc');
+                document.getElementById('manage-home').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            else if (colName === 'news_items') {
+                document.getElementById('newsRank').value = data.rank || '';
+                document.getElementById('newsTitle').value = data.title || '';
+                document.getElementById('newsLink').value = data.link || '';
+                document.getElementById('newsBody').value = data.body || '';
+                toggleBtn('btnSaveNewsItem');
                 document.getElementById('manage-home').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
@@ -1324,6 +1347,25 @@
                 name: name,
                 link: link
             }, 'btnSaveDoc', ['docRank', 'docTitle', 'docLink']);
+        }
+
+        // --- News Items (Add / Edit / Delete) ---
+        window.saveNewsItem = () => {
+            const rank = document.getElementById('newsRank').value;
+            const title = document.getElementById('newsTitle').value;
+            const link = document.getElementById('newsLink').value;
+            const body = document.getElementById('newsBody').value;
+
+            if (!title) { alert('⚠️ Please enter a title for the news item'); return; }
+
+            if (rank && isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
+
+            handleSave('news_items', {
+                rank: parseInt(rank) || 99,
+                title: title,
+                link: link || '',
+                body: body || ''
+            }, 'btnSaveNewsItem', ['newsRank', 'newsTitle', 'newsLink', 'newsBody']);
         }
 
         window.saveScheme = () => {
