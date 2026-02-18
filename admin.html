@@ -15,18 +15,27 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         * {
@@ -67,10 +76,10 @@
             animation: slideUp 0.6s ease-out;
         }
 
-        .login-card h2 {
-            margin-bottom: 20px;
-            color: #1e293b;
-        }
+            .login-card h2 {
+                margin-bottom: 20px;
+                color: #1e293b;
+            }
 
         .login-input {
             width: 100%;
@@ -82,11 +91,11 @@
             font-family: inherit;
         }
 
-        .login-input:focus {
-            outline: none;
-            border-color: var(--admin-accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
+            .login-input:focus {
+                outline: none;
+                border-color: var(--admin-accent);
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
 
         /* --- BUTTONS --- */
         .btn-primary {
@@ -118,10 +127,6 @@
                 background-color: #f59e0b;
             }
 
-            .btn-primary.updating:hover {
-                box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-            }
-
         .btn-danger {
             background-color: #ef4444;
             color: white;
@@ -132,11 +137,6 @@
             font-size: 0.8rem;
             transition: var(--transition-smooth);
         }
-
-            .btn-danger:hover {
-                background-color: #dc2626;
-                transform: translateY(-1px);
-            }
 
         .btn-warning {
             background-color: #f59e0b;
@@ -150,11 +150,6 @@
             transition: var(--transition-smooth);
         }
 
-            .btn-warning:hover {
-                background-color: #d97706;
-                transform: translateY(-1px);
-            }
-
         .btn-cancel {
             background-color: #6b7280;
             color: white;
@@ -167,11 +162,6 @@
             transition: var(--transition-smooth);
         }
 
-            .btn-cancel:hover {
-                background-color: #4b5563;
-                transform: translateY(-1px);
-            }
-
         .btn-success {
             background-color: #10b981;
             color: white;
@@ -182,25 +172,16 @@
             transition: var(--transition-smooth);
         }
 
-            .btn-success:hover {
-                background-color: #059669;
-                transform: translateY(-1px);
-            }
-
-            .btn-success.updating {
-                background-color: #f59e0b;
-            }
-
         /* --- DASHBOARD LAYOUT --- */
         #dashboard-container {
-            display: none; /* Hidden until login */
+            display: none;
             height: 100vh;
             position: relative;
         }
 
-        #dashboard-container.active {
-            display: flex;
-        }
+            #dashboard-container.active {
+                display: flex;
+            }
 
         .mobile-menu-backdrop {
             display: none;
@@ -213,15 +194,9 @@
             z-index: 999;
         }
 
-        .mobile-menu-backdrop.active {
-            display: block;
-        }
-
-        .required::after {
-            content: " *";
-            color: #ef4444;
-            font-weight: bold;
-        }
+            .mobile-menu-backdrop.active {
+                display: block;
+            }
 
         .form-error {
             color: #dc2626;
@@ -231,9 +206,9 @@
             display: none;
         }
 
-        .form-error.show {
-            display: block;
-        }
+            .form-error.show {
+                display: block;
+            }
 
         .sidebar {
             width: 260px;
@@ -245,11 +220,6 @@
             overflow-y: auto;
             transition: transform 0.3s ease;
             box-shadow: 2px 0 10px rgba(0,0,0,0.3);
-        }
-
-        .sidebar h3 {
-            border-color: #334155 !important;
-            animation: none;
         }
 
         .menu {
@@ -266,7 +236,6 @@
                 cursor: pointer;
                 transition: var(--transition-smooth);
                 font-weight: 500;
-                position: relative;
             }
 
                 .menu li a:hover {
@@ -293,7 +262,7 @@
 
         .page-content {
             padding: 30px;
-            padding-top: 60px; /* Space for mobile toggle */
+            padding-top: 60px;
         }
 
         .admin-card {
@@ -304,10 +273,6 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             animation: slideUp 0.4s ease-out;
             transition: var(--transition-smooth);
-        }
-
-        .admin-card:hover {
-            box-shadow: 0 8px 12px rgba(0,0,0,0.08);
         }
 
         .form-control {
@@ -321,20 +286,10 @@
             transition: var(--transition-smooth);
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--admin-accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-control:invalid:not(:placeholder-shown) {
-            border-color: #ef4444;
-        }
-
-        .form-control:focus-visible {
-            outline: 3px solid var(--admin-accent);
-            outline-offset: 2px;
-        }
+            .form-control:focus {
+                outline: none;
+                border-color: var(--admin-accent);
+            }
 
         .view-section {
             display: none;
@@ -357,7 +312,6 @@
                 padding: 10px;
                 border-bottom: 1px solid #eee;
                 text-align: left;
-                transition: var(--transition-smooth);
             }
 
             .data-table th {
@@ -366,45 +320,15 @@
                 font-weight: 600;
             }
 
-            .data-table tr:hover {
-                background-color: #f9fafb;
-            }
-
         h3 {
             margin-bottom: 15px;
             color: #1e293b;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 10px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: slideUp 0.3s ease-out;
         }
 
-        .edit-mode-indicator {
-            display: inline-block;
-            background: #f59e0b;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            margin-left: auto;
-        }
-
-        .form-section {
-            position: relative;
-            opacity: 1;
-            transition: opacity 0.2s;
-        }
-
-        .form-section.edit-active {
-            background: rgba(251, 191, 36, 0.02);
-            border-left: 4px solid var(--admin-accent);
-        }
-
-        /* --- MOBILE TOGGLE BUTTON --- */
+        /* --- MOBILE TOGGLE --- */
         .mobile-toggle {
             display: none;
             position: absolute;
@@ -417,17 +341,6 @@
             border-radius: 5px;
             z-index: 1100;
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: var(--transition-smooth);
-        }
-
-        .mobile-toggle:hover {
-            transform: scale(1.05);
-        }
-
-        .mobile-toggle:focus-visible {
-            outline: 3px solid var(--admin-accent);
-            outline-offset: 2px;
         }
 
         /* --- RESPONSIVE CSS --- */
@@ -450,12 +363,7 @@
 
                 .sidebar.active {
                     left: 0;
-                    transform: translateX(0);
                 }
-
-            .main-content {
-                width: 100%;
-            }
 
             .page-content {
                 padding: 15px;
@@ -464,25 +372,10 @@
 
             .login-card {
                 width: 90%;
-                animation: slideUp 0.4s ease-out;
             }
 
             .admin-card {
                 overflow-x: auto;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .page-content {
-                padding: 10px;
-            }
-
-            .admin-card {
-                padding: 15px;
-            }
-
-            h3 {
-                font-size: 1.1rem;
             }
         }
     </style>
@@ -553,7 +446,7 @@
                         </div>
                         <div id="listPublicDocs" style="margin-top:15px;"></div>
                     </div>
-                    
+
                     <div class="admin-card" style="border-left: 5px solid #0066cc;">
                         <h3>News Items (Manage separate items)</h3>
                         <div style="display:grid; grid-template-columns: 0.5fr 2fr 2fr 1fr; gap:10px; align-items:start;">
@@ -809,8 +702,7 @@
                         </div>
 
                         <div id="scrollContainer" onscroll="handleHistoryScroll()" style="max-height: 400px; overflow-y: auto; border: 1px solid #eee; padding: 5px;">
-                            <div id="listResolvedHistory">
-                            </div>
+                            <div id="listResolvedHistory"></div>
                             <p id="historyLoadingMsg" style="text-align:center; color:#666; display:none; padding:10px;">Loading more...</p>
                         </div>
                     </div>
@@ -825,6 +717,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, deleteDoc, query, orderBy, where, limit, startAfter, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyARHvXnoIZxM-ODOf1qDFbOEptPbJQBDtQ",
             authDomain: "ecogrampanchayatmandur.firebaseapp.com",
@@ -859,7 +752,6 @@
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                // Clear form on success
                 document.getElementById('adminUser').value = '';
                 document.getElementById('adminPass').value = '';
                 errorMsg.classList.remove('show');
@@ -871,6 +763,7 @@
                 btnLogin.innerHTML = 'LOGIN SECURELY';
             }
         });
+
         document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => window.location.href = "index.html"));
 
         onAuthStateChanged(auth, (user) => {
@@ -884,6 +777,7 @@
             }
         });
 
+        // Attach global window functions for HTML callbacks
         window.toggleMobileMenu = function () {
             const sidebar = document.getElementById('adminSidebar');
             const backdrop = document.getElementById('mobileBackdrop');
@@ -912,26 +806,18 @@
             loadList('subcenter', 'listSubCenter', 'name', false, true);
             loadList('anganwadi', 'listAng', 'name', false, true);
             loadList('rti', 'listRti', 'name', false, true);
-
-            // RTI Documents (New)
             loadList('rti_docs', 'listRtiDocs', 'name', false, true);
-
             loadList('services', 'listServices', 'title', false, true);
             loadList('gallery', 'adminGalleryList', 'url', true);
-
-            // Home Documents
             loadList('documents', 'listPublicDocs', 'name', false, true);
-            // News items (managed as separate records)
             loadList('news_items', 'listNewsItems', 'title', false, true);
 
             loadNews();
             loadCloudComplaints();
         }
 
-        // --- GENERIC LIST LOADER WITH EDIT BUTTON ---
         async function loadList(colName, divId, displayField, isImage = false, showRank = false) {
             const div = document.getElementById(divId); if (!div) return;
-            // Try to sort by rank if applicable, else createdAt
             let q;
             if (showRank) {
                 q = query(collection(db, colName), orderBy("rank", "asc"));
@@ -969,34 +855,31 @@
         }
 
         // --- CORE SAVE/UPDATE LOGIC WITH VALIDATION ---
-		async function handleSave(colName, data, btnId, inputIdsToClear) {
-			try {
-				const btn = document.getElementById(btnId);
-				if (!btn) return;
+        async function handleSave(colName, data, btnId, inputIdsToClear) {
+            try {
+                const btn = document.getElementById(btnId);
+                if (!btn) return;
 
-				// Validate data
-				const isEmpty = Object.values(data).some(v => v === '' || v === null);
-				if (isEmpty) {
-					alert('⚠️ Please fill in all required fields');
-					return;
-				}
+                // Validate data
+                const isEmpty = Object.values(data).some(v => v === '' || v === null);
+                if (isEmpty) {
+                    alert('⚠️ Please fill in all required fields');
+                    return;
+                }
 
-				btn.disabled = true;
-				const originalText = btn.innerText;
-				btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                btn.disabled = true;
+                const originalText = btn.innerText;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
 
-				if (currentEdit.col === colName && currentEdit.id) {
-					// FIX: Added { merge: true } so we don't lose the 'createdAt' timestamp
-					await setDoc(doc(db, colName, currentEdit.id), data, { merge: true });
-				} else {
-					data.createdAt = Date.now();
-					await addDoc(collection(db, colName), data);
-				}
+                if (currentEdit.col === colName && currentEdit.id) {
+                    await setDoc(doc(db, colName, currentEdit.id), data, { merge: true });
+                } else {
+                    data.createdAt = Date.now();
+                    await addDoc(collection(db, colName), data);
+                }
 
-                // Clear Form
                 inputIdsToClear.forEach(id => { if (document.getElementById(id)) document.getElementById(id).value = ''; });
 
-                // Reset Edit Mode
                 currentEdit = { col: null, id: null };
                 btn.innerText = originalText.replace('Update', 'Add').replace('Record', 'Member').replace('News', 'News');
                 if (btnId === "btnSaveDoc" || btnId === "btnSaveRtiDoc") btn.innerText = "+ Add";
@@ -1011,14 +894,11 @@
                 alert("❌ Error: " + e.message);
             } finally {
                 const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.disabled = false;
-                }
+                if (btn) btn.disabled = false;
             }
         }
 
-        // Helper: Cancel Edit Mode
-        window.cancelEdit = function() {
+        window.cancelEdit = function () {
             currentEdit = { col: null, id: null };
             document.querySelectorAll('.view-section.active input, .view-section.active textarea, .view-section.active select').forEach(el => el.value = '');
             document.querySelectorAll('#dashboard-container .btn-primary.updating').forEach(btn => {
@@ -1028,150 +908,44 @@
             resetCancelBtn();
         }
 
-        // --- COMPLETE EDIT TRIGGER ---
         window.editDoc = function (colName, id, dataEncoded) {
             const data = JSON.parse(decodeURIComponent(dataEncoded));
             currentEdit = { col: colName, id: id };
+            const sectionMap = {
+                'leaders': 'manage-admin', 'members': 'manage-admin', 'staff': 'manage-admin',
+                'phc': 'manage-admin', 'subcenter': 'manage-admin', 'anganwadi': 'manage-admin',
+                'rti': 'manage-rti', 'rti_docs': 'manage-rti', 'documents': 'manage-home',
+                'news_items': 'manage-home', 'services': 'manage-services', 'schemes': 'manage-schemes',
+                'works': 'manage-works', 'gramsabha': 'manage-gramsabha', 'mspa': 'manage-mspa'
+            };
 
-            if (colName === 'leaders') {
-                document.getElementById('leadRank').value = data.rank || '';
-                document.getElementById('leadName').value = data.name || '';
-                document.getElementById('leadRole').value = data.role || '';
-                document.getElementById('leadPhone').value = data.phone || '';
-                document.getElementById('leadPhoto').value = data.photo || '';
-                toggleBtn('btnSaveLeader');
-                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
-            }
-            else if (colName === 'members') {
-                document.getElementById('memRank').value = data.rank || '';
-                document.getElementById('memName').value = data.name || '';
-                document.getElementById('memRole').value = data.role || '';
-                document.getElementById('memWard').value = data.ward || '';
-                document.getElementById('memPhone').value = data.phone || '';
-                toggleBtn('btnSaveMember');
-                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
-            }
-            else if (colName === 'staff') {
-                document.getElementById('staffRank').value = data.rank || '';
-                document.getElementById('staffName').value = data.name || '';
-                document.getElementById('staffRole').value = data.role || '';
-                document.getElementById('staffPhone').value = data.phone || '';
-                toggleBtn('btnSaveStaff');
-                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
-            }
-            else if (colName === 'phc') {
-                document.getElementById('phcRank').value = data.rank || '';
-                document.getElementById('phcName').value = data.name || '';
-                document.getElementById('phcRole').value = data.role || '';
-                document.getElementById('phcPhone').value = data.phone || '';
-                toggleBtn('btnSavePhc');
-                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
-            }
-            else if (colName === 'subcenter') {
-                document.getElementById('scRank').value = data.rank || '';
-                document.getElementById('scName').value = data.name || '';
-                document.getElementById('scRole').value = data.role || '';
-                document.getElementById('scPhone').value = data.phone || '';
-                toggleBtn('btnSaveSc');
-                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
-            }
-            else if (colName === 'anganwadi') {
-                document.getElementById('angRank').value = data.rank || '';
-                document.getElementById('angName').value = data.name || '';
-                document.getElementById('angRole').value = data.role || '';
-                document.getElementById('angCenter').value = data.center || '';
-                document.getElementById('angPhone').value = data.phone || '';
-                toggleBtn('btnSaveAng');
-                document.getElementById('manage-admin').scrollIntoView({ behavior: 'smooth' });
-            }
-            else if (colName === 'rti') {
-                document.getElementById('rtiRank').value = data.rank || '';
-                document.getElementById('rtiName').value = data.name || '';
-                document.getElementById('rtiRole').value = data.role || '';
-                document.getElementById('rtiPhone').value = data.phone || '';
-                toggleBtn('btnSaveRti');
-                document.getElementById('manage-rti').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            // --- NEW: RTI DOCUMENTS EDIT ---
-            else if (colName === 'rti_docs') {
-                document.getElementById('rtiDocRank').value = data.rank || '';
-                document.getElementById('rtiDocTitle').value = data.name || '';
-                document.getElementById('rtiDocLink').value = data.link || '';
-                toggleBtn('btnSaveRtiDoc');
-                document.getElementById('manage-rti').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            else if (colName === 'documents') {
-                document.getElementById('docRank').value = data.rank || '';
-                document.getElementById('docTitle').value = data.name || '';
-                document.getElementById('docLink').value = data.link || '';
-                toggleBtn('btnSaveDoc');
-                document.getElementById('manage-home').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            else if (colName === 'news_items') {
-                document.getElementById('newsRank').value = data.rank || '';
-                document.getElementById('newsTitle').value = data.title || '';
-                document.getElementById('newsLink').value = data.link || '';
-                document.getElementById('newsBody').value = data.body || '';
-                toggleBtn('btnSaveNewsItem');
-                document.getElementById('manage-home').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            else if (colName === 'services') {
-                document.getElementById('svcRank').value = data.rank || '';
-                document.getElementById('svcTitle').value = data.title || '';
-                document.getElementById('svcIcon').value = data.icon || '';
-                document.getElementById('svcLink').value = data.link || '';
-                document.getElementById('svcDesc').value = data.desc || '';
-                toggleBtn('btnSaveService');
-                document.getElementById('manage-services').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            else if (colName === 'schemes') {
-                document.getElementById('schTitle').value = data.title || '';
-                document.getElementById('schCat').value = data.category || '';
-                document.getElementById('schBenefit').value = data.benefit || '';
-                document.getElementById('schLink').value = data.link || '';
-                document.getElementById('schDesc').value = data.desc || '';
-                toggleBtn('btnSaveScheme');
-                document.getElementById('manage-schemes').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            else if (colName === 'works') {
-                document.getElementById('workRank').value = data.rank || '';
-                document.getElementById('workTitle').value = data.title || '';
-                document.getElementById('workStatus').value = data.status || 'Proposed';
-                document.getElementById('workEstCost').value = data.cost || '';
-                document.getElementById('workExp').value = data.exp || '';
-                document.getElementById('workStart').value = data.start || '';
-                document.getElementById('workEnd').value = data.end || '';
-                document.getElementById('workPhoto').value = data.photo || '';
-                toggleBtn('btnSaveWork');
-                document.getElementById('manage-works').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            else if (colName === 'gramsabha') {
-                document.getElementById('gsTitle').value = data.title || '';
-                document.getElementById('gsDate').value = data.date || '';
-                document.getElementById('gsTime').value = data.time || '';
-                document.getElementById('gsVenue').value = data.venue || '';
-                document.getElementById('gsLink').value = data.link || '';
-                document.getElementById('gsAgenda').value = data.agenda || '';
-                toggleBtn('btnSaveGS');
-                document.getElementById('manage-gramsabha').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            else if (colName === 'mspa') {
-                document.getElementById('mspaRank').value = data.rank || '';
-                document.getElementById('mspaTitle').value = data.title || '';
-                document.getElementById('mspaDescription').value = data.description || '';
-                document.getElementById('mspaPhoto').value = data.photo || '';
-                document.getElementById('mspaCategory').value = data.category || 'Photos';
-                toggleBtn('btnSaveMSPA');
-                document.getElementById('manage-mspa').scrollIntoView({ behavior: 'smooth' });
-                return;
+            const mapping = {
+                'leaders': { rank: 'leadRank', name: 'leadName', role: 'leadRole', phone: 'leadPhone', photo: 'leadPhoto', btn: 'btnSaveLeader' },
+                'members': { rank: 'memRank', name: 'memName', role: 'memRole', ward: 'memWard', phone: 'memPhone', btn: 'btnSaveMember' },
+                'staff': { rank: 'staffRank', name: 'staffName', role: 'staffRole', phone: 'staffPhone', btn: 'btnSaveStaff' },
+                'phc': { rank: 'phcRank', name: 'phcName', role: 'phcRole', phone: 'phcPhone', btn: 'btnSavePhc' },
+                'subcenter': { rank: 'scRank', name: 'scName', role: 'scRole', phone: 'scPhone', btn: 'btnSaveSc' },
+                'anganwadi': { rank: 'angRank', name: 'angName', role: 'angRole', center: 'angCenter', phone: 'angPhone', btn: 'btnSaveAng' },
+                'rti': { rank: 'rtiRank', name: 'rtiName', role: 'rtiRole', phone: 'rtiPhone', btn: 'btnSaveRti' },
+                'rti_docs': { rank: 'rtiDocRank', name: 'rtiDocTitle', link: 'rtiDocLink', btn: 'btnSaveRtiDoc' },
+                'documents': { rank: 'docRank', name: 'docTitle', link: 'docLink', btn: 'btnSaveDoc' },
+                'news_items': { rank: 'newsRank', title: 'newsTitle', link: 'newsLink', body: 'newsBody', btn: 'btnSaveNewsItem' },
+                'services': { rank: 'svcRank', title: 'svcTitle', icon: 'svcIcon', link: 'svcLink', desc: 'svcDesc', btn: 'btnSaveService' },
+                'schemes': { title: 'schTitle', category: 'schCat', benefit: 'schBenefit', link: 'schLink', desc: 'schDesc', btn: 'btnSaveScheme' },
+                'works': { rank: 'workRank', title: 'workTitle', status: 'workStatus', cost: 'workEstCost', exp: 'workExp', start: 'workStart', end: 'workEnd', photo: 'workPhoto', btn: 'btnSaveWork' },
+                'gramsabha': { title: 'gsTitle', date: 'gsDate', time: 'gsTime', venue: 'gsVenue', link: 'gsLink', agenda: 'gsAgenda', btn: 'btnSaveGS' },
+                'mspa': { rank: 'mspaRank', title: 'mspaTitle', description: 'mspaDescription', photo: 'mspaPhoto', category: 'mspaCategory', btn: 'btnSaveMSPA' }
+            };
+
+            if (mapping[colName]) {
+                const m = mapping[colName];
+                for (const key in m) {
+                    if (key !== 'btn' && document.getElementById(m[key])) {
+                        document.getElementById(m[key]).value = data[key] || '';
+                    }
+                }
+                toggleBtn(m.btn);
+                if (sectionMap[colName]) document.getElementById(sectionMap[colName]).scrollIntoView({ behavior: 'smooth' });
             }
         }
 
@@ -1180,8 +954,6 @@
             if (btn) {
                 btn.innerHTML = '✏️ Update Record';
                 btn.classList.add('updating');
-                
-                // Add cancel button if not exists
                 if (!document.getElementById('btnCancel')) {
                     const cancelBtn = document.createElement('button');
                     cancelBtn.id = 'btnCancel';
@@ -1195,284 +967,44 @@
             }
         }
 
-        // Reset cancel button when done
         function resetCancelBtn() {
             const cancelBtn = document.getElementById('btnCancel');
             if (cancelBtn) cancelBtn.remove();
         }
 
         // --- SPECIFIC SAVE FUNCTIONS ---
+        window.saveLeader = () => handleSave('leaders', { rank: parseInt(document.getElementById('leadRank').value), name: document.getElementById('leadName').value, role: document.getElementById('leadRole').value, phone: document.getElementById('leadPhone').value, photo: document.getElementById('leadPhoto').value }, 'btnSaveLeader', ['leadRank', 'leadName', 'leadRole', 'leadPhone', 'leadPhoto']);
+        window.saveMember = () => handleSave('members', { rank: parseInt(document.getElementById('memRank').value), name: document.getElementById('memName').value, role: document.getElementById('memRole').value, ward: document.getElementById('memWard').value, phone: document.getElementById('memPhone').value }, 'btnSaveMember', ['memRank', 'memName', 'memRole', 'memWard', 'memPhone']);
+        window.saveStaff = () => handleSave('staff', { rank: parseInt(document.getElementById('staffRank').value), name: document.getElementById('staffName').value, role: document.getElementById('staffRole').value, phone: document.getElementById('staffPhone').value }, 'btnSaveStaff', ['staffRank', 'staffName', 'staffRole', 'staffPhone']);
+        window.savePhc = () => handleSave('phc', { rank: parseInt(document.getElementById('phcRank').value), name: document.getElementById('phcName').value, role: document.getElementById('phcRole').value, phone: document.getElementById('phcPhone').value }, 'btnSavePhc', ['phcRank', 'phcName', 'phcRole', 'phcPhone']);
+        window.saveSubCenter = () => handleSave('subcenter', { rank: parseInt(document.getElementById('scRank').value), name: document.getElementById('scName').value, role: document.getElementById('scRole').value, phone: document.getElementById('scPhone').value }, 'btnSaveSc', ['scRank', 'scName', 'scRole', 'scPhone']);
+        window.saveAng = () => handleSave('anganwadi', { rank: parseInt(document.getElementById('angRank').value), name: document.getElementById('angName').value, role: document.getElementById('angRole').value, center: document.getElementById('angCenter').value, phone: document.getElementById('angPhone').value }, 'btnSaveAng', ['angRank', 'angName', 'angRole', 'angCenter', 'angPhone']);
+        window.saveRtiDoc = () => handleSave('rti', { rank: parseInt(document.getElementById('rtiRank').value), name: document.getElementById('rtiName').value, role: document.getElementById('rtiRole').value, phone: document.getElementById('rtiPhone').value }, 'btnSaveRti', ['rtiRank', 'rtiName', 'rtiRole', 'rtiPhone']);
+        window.saveRtiDocFile = () => handleSave('rti_docs', { rank: parseInt(document.getElementById('rtiDocRank').value) || 99, name: document.getElementById('rtiDocTitle').value, link: document.getElementById('rtiDocLink').value }, 'btnSaveRtiDoc', ['rtiDocRank', 'rtiDocTitle', 'rtiDocLink']);
+        window.savePublicDoc = () => handleSave('documents', { rank: parseInt(document.getElementById('docRank').value) || 99, name: document.getElementById('docTitle').value, link: document.getElementById('docLink').value }, 'btnSaveDoc', ['docRank', 'docTitle', 'docLink']);
+        window.saveNewsItem = () => handleSave('news_items', { rank: parseInt(document.getElementById('newsRank').value) || 99, title: document.getElementById('newsTitle').value, link: document.getElementById('newsLink').value || '', body: document.getElementById('newsBody').value || '' }, 'btnSaveNewsItem', ['newsRank', 'newsTitle', 'newsLink', 'newsBody']);
+        window.saveScheme = () => handleSave('schemes', { title: document.getElementById('schTitle').value, category: document.getElementById('schCat').value, benefit: document.getElementById('schBenefit').value, link: document.getElementById('schLink').value, desc: document.getElementById('schDesc').value }, 'btnSaveScheme', ['schTitle', 'schCat', 'schBenefit', 'schLink', 'schDesc']);
+        window.saveWork = () => handleSave('works', { rank: parseInt(document.getElementById('workRank').value), title: document.getElementById('workTitle').value, status: document.getElementById('workStatus').value, cost: document.getElementById('workEstCost').value, exp: document.getElementById('workExp').value, start: document.getElementById('workStart').value, end: document.getElementById('workEnd').value, photo: document.getElementById('workPhoto').value }, 'btnSaveWork', ['workRank', 'workTitle', 'workEstCost', 'workExp', 'workStart', 'workEnd', 'workPhoto']);
+        window.saveGS = () => handleSave('gramsabha', { title: document.getElementById('gsTitle').value, date: document.getElementById('gsDate').value, time: document.getElementById('gsTime').value, venue: document.getElementById('gsVenue').value, link: document.getElementById('gsLink').value, agenda: document.getElementById('gsAgenda').value }, 'btnSaveGS', ['gsTitle', 'gsDate', 'gsTime', 'gsVenue', 'gsLink', 'gsAgenda']);
+        window.saveMSPA = () => handleSave('mspa', { rank: parseInt(document.getElementById('mspaRank').value), title: document.getElementById('mspaTitle').value, description: document.getElementById('mspaDescription').value, photo: document.getElementById('mspaPhoto').value, category: document.getElementById('mspaCategory').value, date: new Date().toISOString().split('T')[0] }, 'btnSaveMSPA', ['mspaRank', 'mspaTitle', 'mspaDescription', 'mspaPhoto', 'mspaCategory']);
 
-        window.saveLeader = () => {
-            const rank = document.getElementById('leadRank').value;
-            const name = document.getElementById('leadName').value;
-            const role = document.getElementById('leadRole').value;
-            const phone = document.getElementById('leadPhone').value;
-            const photo = document.getElementById('leadPhoto').value;
-
-            if (!rank || !name || !role || !phone || !photo) {
-                alert('⚠️ Please fill in all required fields');
-                return;
-            }
-
-            if (isNaN(parseInt(rank))) {
-                alert('⚠️ Rank must be a number');
-                return;
-            }
-
-            handleSave('leaders', {
-                rank: parseInt(rank),
-                name: name,
-                role: role,
-                phone: phone,
-                photo: photo
-            }, 'btnSaveLeader', ['leadRank', 'leadName', 'leadRole', 'leadPhone', 'leadPhoto']);
-        }
-
-        window.saveMember = () => {
-            const rank = document.getElementById('memRank').value;
-            const name = document.getElementById('memName').value;
-            if (!rank || !name) { alert('⚠️ Please fill in required fields'); return; }
-            if (isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('members', {
-                rank: parseInt(rank),
-                name: name,
-                role: document.getElementById('memRole').value,
-                ward: document.getElementById('memWard').value,
-                phone: document.getElementById('memPhone').value
-            }, 'btnSaveMember', ['memRank', 'memName', 'memRole', 'memWard', 'memPhone']);
-        }
-
-        window.saveStaff = () => {
-            const rank = document.getElementById('staffRank').value;
-            const name = document.getElementById('staffName').value;
-            if (!rank || !name) { alert('⚠️ Please fill in required fields'); return; }
-            if (isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('staff', {
-                rank: parseInt(rank),
-                name: name,
-                role: document.getElementById('staffRole').value,
-                phone: document.getElementById('staffPhone').value
-            }, 'btnSaveStaff', ['staffRank', 'staffName', 'staffRole', 'staffPhone']);
-        }
-
-        window.savePhc = () => {
-            const rank = document.getElementById('phcRank').value;
-            const name = document.getElementById('phcName').value;
-            if (!rank || !name) { alert('⚠️ Please fill in required fields'); return; }
-            if (isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('phc', {
-                rank: parseInt(rank),
-                name: name,
-                role: document.getElementById('phcRole').value,
-                phone: document.getElementById('phcPhone').value
-            }, 'btnSavePhc', ['phcRank', 'phcName', 'phcRole', 'phcPhone']);
-        }
-
-        window.saveSubCenter = () => {
-            const rank = document.getElementById('scRank').value;
-            const name = document.getElementById('scName').value;
-            if (!rank || !name) { alert('⚠️ Please fill in required fields'); return; }
-            if (isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('subcenter', {
-                rank: parseInt(rank),
-                name: name,
-                role: document.getElementById('scRole').value,
-                phone: document.getElementById('scPhone').value
-            }, 'btnSaveSc', ['scRank', 'scName', 'scRole', 'scPhone']);
-        }
-
-        window.saveAng = () => {
-            const rank = document.getElementById('angRank').value;
-            const name = document.getElementById('angName').value;
-            if (!rank || !name) { alert('⚠️ Please fill in required fields'); return; }
-            if (isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('anganwadi', {
-                rank: parseInt(rank),
-                name: name,
-                role: document.getElementById('angRole').value,
-                center: document.getElementById('angCenter').value,
-                phone: document.getElementById('angPhone').value
-            }, 'btnSaveAng', ['angRank', 'angName', 'angRole', 'angCenter', 'angPhone']);
-        }
-
-        window.saveRtiDoc = () => {
-            const rank = document.getElementById('rtiRank').value;
-            const name = document.getElementById('rtiName').value;
-            if (!rank || !name) { alert('⚠️ Please fill in required fields'); return; }
-            if (isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('rti', {
-                rank: parseInt(rank),
-                name: name,
-                role: document.getElementById('rtiRole').value,
-                phone: document.getElementById('rtiPhone').value
-            }, 'btnSaveRti', ['rtiRank', 'rtiName', 'rtiRole', 'rtiPhone']);
-        }
-
-        window.saveRtiDocFile = () => {
-            const rank = document.getElementById('rtiDocRank').value;
-            const name = document.getElementById('rtiDocTitle').value;
-            const link = document.getElementById('rtiDocLink').value;
-
-            if (!name || !link) {
-                alert('⚠️ Please fill in all required fields (Title & Link)');
-                return;
-            }
-
-            handleSave('rti_docs', {
-                rank: parseInt(rank) || 99,
-                name: name,
-                link: link
-            }, 'btnSaveRtiDoc', ['rtiDocRank', 'rtiDocTitle', 'rtiDocLink']);
-        }
-
-        window.savePublicDoc = () => {
-            const rank = document.getElementById('docRank').value;
-            const name = document.getElementById('docTitle').value;
-            const link = document.getElementById('docLink').value;
-
-            if (!name || !link) {
-                alert('⚠️ Please fill in all required fields (Title & Link)');
-                return;
-            }
-
-            handleSave('documents', {
-                rank: parseInt(rank) || 99,
-                name: name,
-                link: link
-            }, 'btnSaveDoc', ['docRank', 'docTitle', 'docLink']);
-        }
-
-        // --- News Items (Add / Edit / Delete) ---
-        window.saveNewsItem = () => {
-            const rank = document.getElementById('newsRank').value;
-            const title = document.getElementById('newsTitle').value;
-            const link = document.getElementById('newsLink').value;
-            const body = document.getElementById('newsBody').value;
-
-            if (!title) { alert('⚠️ Please enter a title for the news item'); return; }
-
-            if (rank && isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('news_items', {
-                rank: parseInt(rank) || 99,
-                title: title,
-                link: link || '',
-                body: body || ''
-            }, 'btnSaveNewsItem', ['newsRank', 'newsTitle', 'newsLink', 'newsBody']);
-        }
-
-        window.saveScheme = () => {
-            const title = document.getElementById('schTitle').value;
-            if (!title) { alert('⚠️ Please fill in required fields'); return; }
-
-            handleSave('schemes', {
-                title: title,
-                category: document.getElementById('schCat').value,
-                benefit: document.getElementById('schBenefit').value,
-                link: document.getElementById('schLink').value,
-                desc: document.getElementById('schDesc').value
-            }, 'btnSaveScheme', ['schTitle', 'schCat', 'schBenefit', 'schLink', 'schDesc']);
-        }
-
-        window.saveWork = () => {
-            const rank = document.getElementById('workRank').value;
-            const title = document.getElementById('workTitle').value;
-            if (!rank || !title) { alert('⚠️ Please fill in required fields'); return; }
-            if (isNaN(parseInt(rank))) { alert('⚠️ Rank must be a number'); return; }
-
-            handleSave('works', {
-                rank: parseInt(rank),
-                title: title,
-                status: document.getElementById('workStatus').value,
-                cost: document.getElementById('workEstCost').value,
-                exp: document.getElementById('workExp').value,
-                start: document.getElementById('workStart').value,
-                end: document.getElementById('workEnd').value,
-                photo: document.getElementById('workPhoto').value
-            }, 'btnSaveWork', ['workRank', 'workTitle', 'workEstCost', 'workExp', 'workStart', 'workEnd', 'workPhoto']);
-        }
-
-        window.saveGS = () => {
-            const title = document.getElementById('gsTitle').value;
-            const date = document.getElementById('gsDate').value;
-            if (!title || !date) { alert('⚠️ Please fill in title and date'); return; }
-
-            handleSave('gramsabha', {
-                title: title,
-                date: date,
-                time: document.getElementById('gsTime').value,
-                venue: document.getElementById('gsVenue').value,
-                link: document.getElementById('gsLink').value,
-                agenda: document.getElementById('gsAgenda').value
-            }, 'btnSaveGS', ['gsTitle', 'gsDate', 'gsTime', 'gsVenue', 'gsLink', 'gsAgenda']);
-        }
-
-        window.saveMSPA = () => {
-            const rank = document.getElementById('mspaRank').value;
-            const title = document.getElementById('mspaTitle').value;
-            const description = document.getElementById('mspaDescription').value;
-            const photo = document.getElementById('mspaPhoto').value;
-            const category = document.getElementById('mspaCategory').value;
-
-            // Title and description are optional now. Require rank, photo and category only.
-            if (!rank || !photo || !category) {
-                alert('⚠️ Please fill in required fields: Rank, Photo and Category');
-                return;
-            }
-
-            if (isNaN(parseInt(rank))) {
-                alert('⚠️ Rank must be a number');
-                return;
-            }
-
-            handleSave('mspa', {
-                rank: parseInt(rank),
-                title: title,
-                description: description,
-                photo: photo,
-                category: category,
-                date: new Date().toISOString().split('T')[0]
-            }, 'btnSaveMSPA', ['mspaRank', 'mspaTitle', 'mspaDescription', 'mspaPhoto', 'mspaCategory']);
-        }
-
-window.saveService = () => {
-            const title = document.getElementById('svcTitle').value;
-            const icon = document.getElementById('svcIcon').value;
-            const link = document.getElementById('svcLink').value;
-            const desc = document.getElementById('svcDesc').value;
-
-            if (!title || !icon || !link || !desc) {
-                alert('⚠️ Please fill in all required fields');
-                return;
-            }
-
+        // Fixed Syntax Here
+        window.saveService = () => {
             handleSave('services', {
-    			rank: parseInt(document.getElementById('svcRank').value) || 99,
-    			title: title,
-    			icon: icon,
-    			link: link,
-    			desc: desc
-    		}, 'btnSaveService', ['svcRank', 'svcTitle', 'svcIcon', 'svcLink', 'svcDesc']);
+                rank: parseInt(document.getElementById('svcRank').value) || 99,
+                title: document.getElementById('svcTitle').value,
+                icon: document.getElementById('svcIcon').value,
+                link: document.getElementById('svcLink').value,
+                desc: document.getElementById('svcDesc').value
+            }, 'btnSaveService', ['svcRank', 'svcTitle', 'svcIcon', 'svcLink', 'svcDesc']);
         }
 
         window.savePhoto = () => {
             const url = document.getElementById('galUrl').value;
             if (!url) { alert('⚠️ Please enter image URL'); return; }
-
-            handleSave('gallery', {
-                url: url,
-                caption: document.getElementById('galCaption').value
-            }, 'btnSavePhoto', ['galUrl', 'galCaption']);
+            handleSave('gallery', { url: url, caption: document.getElementById('galCaption').value }, 'btnSavePhoto', ['galUrl', 'galCaption']);
         }
 
-        // --- OTHER SAVES (News/Banner) ---
         if (document.getElementById('btnSaveNews')) document.getElementById('btnSaveNews').addEventListener('click', async () => {
             await setDoc(doc(db, "content", "news"), { text: document.getElementById('newsText').value });
             alert("News Updated!");
@@ -1488,7 +1020,6 @@ window.saveService = () => {
             document.getElementById('bannerInput').value = ''; loadAll();
         }
 
-        // TABS
         window.switchTab = function (id, el) {
             document.querySelectorAll('.view-section').forEach(x => x.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -1500,208 +1031,181 @@ window.saveService = () => {
             }
         }
 
-        // --- UPDATED COMPLAINTS LOGIC ---
-// --- UPDATED: Show ONLY Pending items in the list ---
-        window.loadCloudComplaints = async function () {
-            const div = document.getElementById('listComplaints');
-            const countPendingEl = document.getElementById('countPending');
-            const countResolvedEl = document.getElementById('countResolved');
-
-            if (!div) return;
-
-            // 1. Get ALL complaints (to calculate counts correctly)
-            const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
-            const snap = await getDocs(q);
-
-            let pendingCount = 0;
-            let resolvedCount = 0;
-
-            if (snap.empty) {
-                div.innerHTML = "<p>No complaints received yet.</p>";
-                if(countPendingEl) countPendingEl.innerText = "0";
-                if(countResolvedEl) countResolvedEl.innerText = "0";
-                return;
-            }
-
-            let html = '<table class="data-table"><tr><th>Date</th><th>Name/Phone</th><th>Issue</th><th>Action</th></tr>';
-            
-            snap.forEach(d => {
-                const c = d.data();
-                const date = new Date(c.createdAt).toLocaleDateString();
-                const isResolved = c.status === 'Resolved';
-
-                if (isResolved) {
-                    // CASE 1: RESOLVED
-                    // We only increment the counter. We DO NOT add it to the HTML table.
-                    resolvedCount++;
-                } else {
-                    // CASE 2: PENDING
-                    // Increment counter AND add to table
-                    pendingCount++;
-                    html += `<tr>
-                                <td>${date}</td>
-                                <td><strong>${c.name}</strong><br>${c.phone}</td>
-                                <td><strong style="color:#d32f2f">[${c.type}]</strong><br>${c.desc}</td>
-                                <td><button onclick="markResolved('${d.id}')" class="btn-success">Resolve</button></td>
-                             </tr>`;
-                }
-            });
-
-            // Update Dashboard Counters
-            if(countPendingEl) countPendingEl.innerText = pendingCount;
-            if(countResolvedEl) countResolvedEl.innerText = resolvedCount;
-
-            // Should we show "No Pending Complaints"?
-            if (pendingCount === 0) {
-                div.innerHTML = "<p style='padding:15px; color:#059669;'>✅ Great work! No pending complaints.</p>";
-            } else {
-                div.innerHTML = html + '</table>';
-            }
-        }
-
-        // NEW FUNCTION: Update status instead of delete
+        // --- COMPLAINTS LOGIC ---
+        // Defined properly in the module scope
         window.markResolved = async function (id) {
             if (confirm("Mark this complaint as Resolved?")) {
                 await setDoc(doc(db, "complaints", id), { status: "Resolved" }, { merge: true });
                 loadCloudComplaints();
             }
         }
-// --- ADVANCED HISTORY VARIABLES ---
-    let lastHistoryDoc = null;      // Keeps track of the last loaded item
-    let isHistoryLoading = false;   // Prevents double-loading
-    let historyAllLoaded = false;   // Stops loading when DB is empty
-    let isSearchMode = false;       // Are we searching or scrolling?
 
-    // 1. Open/Close the Section
-    window.toggleResolvedHistory = function() {
-        const section = document.getElementById('resolvedHistorySection');
-        if (section.style.display === 'none') {
-            section.style.display = 'block';
-            resetHistory(); // Load fresh data
-            section.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            section.style.display = 'none';
-        }
-    }
+        window.loadCloudComplaints = async function () {
+            const div = document.getElementById('listComplaints');
+            const countPendingEl = document.getElementById('countPending');
+            const countResolvedEl = document.getElementById('countResolved');
+            if (!div) return;
 
-    // 2. Reset & Load Initial Batch
-    window.resetHistory = async function() {
-        document.getElementById('historySearchInput').value = "";
-        document.getElementById('listResolvedHistory').innerHTML = "";
-        lastHistoryDoc = null;
-        historyAllLoaded = false;
-        isSearchMode = false;
-        await loadNextBatch();
-    }
-
-    // 3. The "Infinite Scroll" Logic
-    window.handleHistoryScroll = function() {
-        const el = document.getElementById('scrollContainer');
-        // Check if user scrolled to bottom (with 50px buffer)
-        if (el.scrollTop + el.clientHeight >= el.scrollHeight - 50) {
-            loadNextBatch();
-        }
-    }
-
-    // 4. Load Batch (Next 10 Items)
-    async function loadNextBatch() {
-        if (isHistoryLoading || historyAllLoaded || isSearchMode) return;
-        
-        isHistoryLoading = true;
-        document.getElementById('historyLoadingMsg').style.display = 'block';
-
-        try {
-            let q;
-            const colRef = collection(db, "complaints");
-
-            if (lastHistoryDoc) {
-                // Load NEXT 10 after the last one
-                q = query(colRef, where("status", "==", "Resolved"), orderBy("createdAt", "desc"), startAfter(lastHistoryDoc), limit(10));
-            } else {
-                // Load FIRST 10
-                q = query(colRef, where("status", "==", "Resolved"), orderBy("createdAt", "desc"), limit(10));
-            }
-
+            const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
             const snap = await getDocs(q);
 
-            if (snap.empty) {
-                historyAllLoaded = true;
-                document.getElementById('historyLoadingMsg').innerText = "No more records.";
+            let pendingCount = 0;
+            let resolvedCount = 0;
+            let html = '<table class="data-table"><tr><th>Date</th><th>Name/Phone</th><th>Issue</th><th>Action</th></tr>';
+            let hasPendingItems = false;
+
+            snap.forEach(d => {
+                const c = d.data();
+                const isResolved = c.status === 'Resolved';
+                if (isResolved) {
+                    resolvedCount++;
+                } else {
+                    pendingCount++;
+                    hasPendingItems = true;
+                    const date = new Date(c.createdAt).toLocaleDateString();
+                    html += `<tr>
+                                    <td>${date}</td>
+                                    <td><strong>${c.name}</strong><br>${c.phone}</td>
+                                    <td><strong style="color:#d32f2f">[${c.type}]</strong><br>${c.desc}</td>
+                                    <td><button onclick="markResolved('${d.id}')" class="btn-success">Resolve</button></td>
+                                 </tr>`;
+                }
+            });
+
+            if (countPendingEl) countPendingEl.innerText = pendingCount;
+            if (countResolvedEl) countResolvedEl.innerText = resolvedCount;
+
+            if (!hasPendingItems) {
+                div.innerHTML = "<p style='padding:15px; color:#059669;'>✅ Great work! No pending complaints.</p>";
             } else {
-                // Update Cursor
-                lastHistoryDoc = snap.docs[snap.docs.length - 1];
-                appendHistoryRows(snap);
+                div.innerHTML = html + '</table>';
+            }
+        }
+
+        // --- HISTORY VARIABLES ---
+        let lastHistoryDoc = null;
+        let isHistoryLoading = false;
+        let historyAllLoaded = false;
+        let isSearchMode = false;
+
+        window.toggleResolvedHistory = function () {
+            const section = document.getElementById('resolvedHistorySection');
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                resetHistory();
+                section.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        window.resetHistory = async function () {
+            document.getElementById('historySearchInput').value = "";
+            document.getElementById('listResolvedHistory').innerHTML = "";
+            lastHistoryDoc = null;
+            historyAllLoaded = false;
+            isSearchMode = false;
+            await loadNextBatch();
+        }
+
+        window.handleHistoryScroll = function () {
+            const el = document.getElementById('scrollContainer');
+            if (el.scrollTop + el.clientHeight >= el.scrollHeight - 50) {
+                loadNextBatch();
+            }
+        }
+
+        async function loadNextBatch() {
+            if (isHistoryLoading || historyAllLoaded || isSearchMode) return;
+            isHistoryLoading = true;
+            document.getElementById('historyLoadingMsg').style.display = 'block';
+
+            try {
+                let q;
+                const colRef = collection(db, "complaints");
+                if (lastHistoryDoc) {
+                    q = query(colRef, where("status", "==", "Resolved"), orderBy("createdAt", "desc"), startAfter(lastHistoryDoc), limit(10));
+                } else {
+                    q = query(colRef, where("status", "==", "Resolved"), orderBy("createdAt", "desc"), limit(10));
+                }
+
+                const snap = await getDocs(q);
+                if (snap.empty) {
+                    historyAllLoaded = true;
+                    document.getElementById('historyLoadingMsg').innerText = "No more records.";
+                } else {
+                    lastHistoryDoc = snap.docs[snap.docs.length - 1];
+                    appendHistoryRows(snap);
+                }
+            } catch (e) {
+                console.error(e);
+            } finally {
+                isHistoryLoading = false;
+                if (!historyAllLoaded) document.getElementById('historyLoadingMsg').style.display = 'none';
+            }
+        }
+
+        window.runHistorySearch = async function () {
+            const term = document.getElementById('historySearchInput').value.trim();
+            if (!term) { resetHistory(); return; }
+
+            isSearchMode = true;
+            const div = document.getElementById('listResolvedHistory');
+            div.innerHTML = "<p style='padding:10px;'>Searching database...</p>";
+
+            try {
+                const q = query(
+                    collection(db, "complaints"),
+                    where("status", "==", "Resolved"),
+                    orderBy("name"),
+                    startAt(term),
+                    endAt(term + "\uf8ff")
+                );
+
+                const snap = await getDocs(q);
+                div.innerHTML = "";
+
+                if (snap.empty) {
+                    div.innerHTML = "<p style='padding:10px; color:red;'>No results found.</p>";
+                } else {
+                    appendHistoryRows(snap);
+                }
+            } catch (e) {
+                console.error("Search Error:", e);
+                div.innerHTML = `<p style='color:red; padding:10px;'>Search failed. Requires Index: <a href="https://console.firebase.google.com" target="_blank">Create Index for 'status' + 'name'</a></p>`;
+            }
+        }
+
+        // Improved Row Appending - Safer than string replacement
+        function appendHistoryRows(snap) {
+            const div = document.getElementById('listResolvedHistory');
+            let table = div.querySelector('table');
+
+            // Create table if it doesn't exist
+            if (!table) {
+                div.innerHTML = `<table class="data-table" style="font-size:0.9rem;">
+                                        <thead><tr><th>Date</th><th>Citizen</th><th>Issue</th></tr></thead>
+                                        <tbody></tbody>
+                                     </table>`;
+                table = div.querySelector('table');
             }
 
-        } catch (e) {
-            console.error(e);
-        } finally {
-            isHistoryLoading = false;
-            if(!historyAllLoaded) document.getElementById('historyLoadingMsg').style.display = 'none';
+            const tbody = table.querySelector('tbody');
+            let rowsHtml = '';
+
+            snap.forEach(d => {
+                const c = d.data();
+                const date = new Date(c.createdAt).toLocaleDateString();
+                rowsHtml += `<tr style="background-color: #f0fdf4;">
+                                    <td>${date}</td>
+                                    <td><strong>${c.name}</strong><br>${c.phone}</td>
+                                    <td><span style="color:#059669;">[${c.type}]</span> ${c.desc}</td>
+                                 </tr>`;
+            });
+
+            tbody.insertAdjacentHTML('beforeend', rowsHtml);
         }
-    }
-
-    // 5. Search Function (Direct Database Search)
-    window.runHistorySearch = async function() {
-        const term = document.getElementById('historySearchInput').value.trim();
-        if (!term) { resetHistory(); return; }
-
-        isSearchMode = true; // Disable scrolling while searching
-        const div = document.getElementById('listResolvedHistory');
-        div.innerHTML = "<p style='padding:10px;'>Searching database...</p>";
-        
-        try {
-            // Search by Name Prefix (Case sensitive usually)
-            // Note: This requires an Index on 'status' + 'name'. Check Console if it fails.
-            const q = query(
-                collection(db, "complaints"), 
-                where("status", "==", "Resolved"),
-                orderBy("name"), 
-                startAt(term), 
-                endAt(term + "\uf8ff")
-            );
-
-            const snap = await getDocs(q);
-            div.innerHTML = ""; // Clear "Searching..."
-
-            if (snap.empty) {
-                div.innerHTML = "<p style='padding:10px; color:red;'>No results found.</p>";
-            } else {
-                appendHistoryRows(snap);
-            }
-
-        } catch (e) {
-            console.error("Search Error:", e);
-            div.innerHTML = "<p style='color:red; padding:10px;'>Search failed. (Check Console for Index Link)</p>";
-        }
-    }
-
-    // 6. Helper: Draw Rows
-    function appendHistoryRows(snap) {
-        const div = document.getElementById('listResolvedHistory');
-        let html = div.innerHTML;
-        
-        // Add table header only if it's empty
-        if (div.innerHTML === "") {
-            html = '<table class="data-table" style="font-size:0.9rem;"><tr><th>Date</th><th>Citizen</th><th>Issue</th></tr>';
-        } else {
-            // If table exists, remove the closing </table> tag so we can add rows inside
-            html = html.replace("</table>", "");
-        }
-
-        snap.forEach(d => {
-            const c = d.data();
-            const date = new Date(c.createdAt).toLocaleDateString();
-            html += `<tr style="background-color: #f0fdf4;">
-                        <td>${date}</td>
-                        <td><strong>${c.name}</strong><br>${c.phone}</td>
-                        <td><span style="color:#059669;">[${c.type}]</span> ${c.desc}</td>
-                     </tr>`;
-        });
-
-        div.innerHTML = html + "</table>";
-    }
-</script>
-<script src="js/ui-shield.js"></script>
+    </script>
+    <script src="js/ui-shield.js"></script>
 </body>
 </html>
