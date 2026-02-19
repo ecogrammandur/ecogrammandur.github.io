@@ -791,12 +791,12 @@
         </div>
     </div>
 
-    <footer class="gov-footer">
+    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
             <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
                 <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
-                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453">7378418453</a></p>
+                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
             </div>
         </div>
     </footer>
@@ -904,11 +904,11 @@
 
                         docs.forEach(item => {
                             newsHtml += `
-                                <div class="news-item">
-                                    <h4>${item.title || 'Update'}</h4>
-                                    ${item.body ? `<p>${item.body}</p>` : ''}
-                                    ${item.link ? `<a href="${item.link}" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>` : ''}
-                                </div>`;
+                                    <div class="news-item">
+                                        <h4>${item.title || 'Update'}</h4>
+                                        ${item.body ? `<p>${item.body}</p>` : ''}
+                                        ${item.link ? `<a href="${item.link}" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>` : ''}
+                                    </div>`;
                         });
                         updatesEl.innerHTML = newsHtml;
                     } else {
@@ -916,10 +916,10 @@
                         // This fixes the issue if you only added text to the top box in Admin
                         if (marqueeText && marqueeText !== 'Welcome to Gram Panchayat Mandur.') {
                             updatesEl.innerHTML = `
-                                <div class="news-item">
-                                    <h4>Latest Announcement</h4>
-                                    <p>${marqueeText}</p>
-                                </div>`;
+                                    <div class="news-item">
+                                        <h4>Latest Announcement</h4>
+                                        <p>${marqueeText}</p>
+                                    </div>`;
                         } else {
                             updatesEl.innerHTML = '<div class="news-item">No news updates available.</div>';
                         }
@@ -948,9 +948,9 @@
 
                     docs.forEach(doc => {
                         html += `<tr>
-                                    <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
-                                    <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
-                                    </tr>`;
+                                        <td><i class="fas fa-file-pdf" style="color:#dc3545; margin-right:10px;"></i> ${doc.name}</td>
+                                        <td><a href="${doc.link}" target="_blank" class="btn-download">Download <i class="fas fa-download"></i></a></td>
+                                        </tr>`;
                     });
                     docBody.innerHTML = html;
                 }
