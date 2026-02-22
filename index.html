@@ -458,6 +458,7 @@
             margin-top: 60px;
             font-size: 0.9rem;
             border-top: 3px solid var(--gov-orange);
+            text-align: center;
         }
 
             .gov-footer p {
@@ -637,7 +638,7 @@
 </head>
 <body>
 
-    <div class="menu-overlay" id="menu" onclick="closeMenu()"></div>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -687,7 +688,7 @@
             <div class="hero-content">
                 <h2 id="hero-title">Welcome to Mandur</h2>
                 <p id="hero-desc">Digital Gateway to Our Village Development</p>
-                <a href="services.html" class="feature-card" style="display:inline-block; padding:10px 30px; background:var(--gov-orange); color:white; border:none; transition: var(--transition-smooth); width:auto; border-bottom:none;" id="btn-explore">Explore Services</a>
+                <a href="services.html" class="feature-card" style="display:inline-block; padding:10px 30px; background:var(--gov-orange); color:white; border:none; width:auto; border-bottom:none;" id="btn-explore">Explore Services</a>
             </div>
         </div>
     </div>
@@ -791,15 +792,16 @@
         </div>
     </div>
 
-    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
+    <footer class="gov-footer">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
             <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
                 <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
                 <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
             </div>
         </div>
     </footer>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -816,9 +818,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ... (Keep your existing translation logic here) ...
-        // Note: Pasting the translation logic again for completeness is skipped to save space,
-        // BUT ensure you keep the 'translations' object and 'setLanguage' function from previous code.
         const translations = {
             en: {
                 helpline: "Help Line", title: "GRAM PANCHAYAT MANDUR", subtitle: "Taluka: Gaganbawada | District: Kolhapur",
@@ -839,9 +838,18 @@
         window.setLanguage = function (lang) {
             const t = translations[lang];
             const setText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
-            // ... (Include all your existing setText calls here) ...
             setText('txt-helpline', t.helpline); setText('txt-title', t.title); setText('txt-subtitle', t.subtitle);
-            // (Add the rest of the translation mapping from the previous code)
+            setText('nav-home', t.navHome); setText('nav-about', t.navAbout); setText('nav-admin', t.navAdmin);
+            setText('nav-services', t.navServices); setText('nav-schemes', t.navSchemes); setText('nav-works', t.navWorks);
+            setText('nav-gramsabha', t.navGram); setText('nav-mspa', t.navMspa); setText('nav-gallery', t.navGallery);
+            setText('nav-grievance', t.navGrievance); setText('nav-rti', t.navRTI); setText('nav-contact', t.navContact);
+            setText('btn-login-txt', t.navLogin); setText('hero-title', t.heroTitle); setText('hero-desc', t.heroDesc);
+            setText('btn-explore', t.btnExplore); setText('txt-updates', t.txtUpdates); setText('card-schemes', t.cardSchemes);
+            setText('desc-schemes', t.descSchemes); setText('card-works', t.cardWorks); setText('desc-works', t.descWorks);
+            setText('card-gramsabha', t.cardGram); setText('desc-gramsabha', t.descGram); setText('card-rti', t.cardRti);
+            setText('desc-rti', t.descRti); setText('sec-docs', t.secDocs); setText('th-doc-name', t.thDocName);
+            setText('th-action', t.thAction); setText('sec-links', t.secLinks); setText('txt-footer', t.footer);
+            localStorage.setItem('gp_lang_pref', lang);
         }
 
         // --- DATA LOADING ---
@@ -849,7 +857,6 @@
             // 1. SLIDER
             const bannerContainer = document.getElementById('hero-slider');
             try {
-                // Simplified query to avoid index errors
                 const qBanner = query(collection(db, "banners"));
                 const snapBanner = await getDocs(qBanner);
                 if (!snapBanner.empty) {
@@ -881,23 +888,16 @@
             const marqueeEl = document.getElementById('news-marquee');
 
             try {
-                // A. Get Marquee Text (Breaking News)
                 const newsSnap = await getDoc(doc(db, "content", "news"));
                 const marqueeText = (newsSnap && newsSnap.exists()) ? (newsSnap.data().text || '') : 'Welcome to Gram Panchayat Mandur.';
-
-                // Update Marquee
                 if (marqueeEl) marqueeEl.innerText = marqueeText;
 
-                // B. Get News Items (List)
-                // REMOVED orderBy("rank") to fix "Unable to load" error caused by missing index
                 const qNewsItems = query(collection(db, "news_items"));
                 const snapNewsItems = await getDocs(qNewsItems);
 
                 if (updatesEl) {
                     if (!snapNewsItems.empty) {
-                        // CASE 1: Specific News Items Exist
                         let newsHtml = '';
-                        // Sort manually in JS to avoid database index error
                         const docs = [];
                         snapNewsItems.forEach(d => docs.push(d.data()));
                         docs.sort((a, b) => (a.rank || 99) - (b.rank || 99));
@@ -912,8 +912,6 @@
                         });
                         updatesEl.innerHTML = newsHtml;
                     } else {
-                        // CASE 2: No specific items found -> Use Marquee Text as Fallback
-                        // This fixes the issue if you only added text to the top box in Admin
                         if (marqueeText && marqueeText !== 'Welcome to Gram Panchayat Mandur.') {
                             updatesEl.innerHTML = `
                                     <div class="news-item">
@@ -932,7 +930,6 @@
 
             // 3. PUBLIC DOCUMENTS
             try {
-                // REMOVED orderBy("rank") to prevent crash if index missing
                 const qDocs = query(collection(db, "documents"));
                 const snapDocs = await getDocs(qDocs);
                 const docBody = document.getElementById('public-docs-body');
@@ -941,7 +938,6 @@
                     docBody.innerHTML = '<tr><td colspan="2" style="text-align:center;">No documents available currently.</td></tr>';
                 } else {
                     let html = '';
-                    // Sort manually in JS
                     const docs = [];
                     snapDocs.forEach(d => docs.push(d.data()));
                     docs.sort((a, b) => (a.rank || 99) - (b.rank || 99));
@@ -959,7 +955,7 @@
 
         loadHomeData();
 
-        // Global Functions
+        // FIX 3: Corrected the JS ID to match the HTML ID for the mobile menu
         window.openMenu = function () {
             document.getElementById('sidebarMenu').classList.add('active');
             document.getElementById('menuOverlay').style.display = 'block';
