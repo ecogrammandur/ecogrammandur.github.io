@@ -450,32 +450,61 @@
                 text-decoration: none;
             }
 
-        /* --- FOOTER --- */
-        .gov-footer {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #fff;
-            padding: 30px 0 20px 0;
-            margin-top: 60px;
-            font-size: 0.9rem;
-            border-top: 3px solid var(--gov-orange);
-            text-align: center;
-        }
+		/* --- FOOTER --- */
+		.gov-footer {
+			background-color: var(--gov-blue);
+			color: #fff;
+			padding: 30px 0 20px 0;
+			margin-top: 60px;
+			text-align: center;
+		}
 
-            .gov-footer p {
-                margin: 0 0 15px 0;
-                font-weight: 600;
-            }
+			.gov-footer .footer-container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 20px;
+			}
 
-            .gov-footer a {
-                color: var(--gov-orange);
-                text-decoration: none;
-                font-weight: 600;
-                transition: var(--transition-smooth);
-            }
+			.gov-footer .copyright {
+				margin: 0 0 15px 0;
+				font-weight: 500;
+				font-size: 0.95rem;
+			}
 
-                .gov-footer a:hover {
-                    text-decoration: underline;
-                }
+			.gov-footer hr {
+				border: none;
+				border-top: 1px solid rgba(255, 255, 255, 0.2);
+				margin: 15px auto;
+				max-width: 800px;
+			}
+
+			.gov-footer .lg-tech-credit {
+				font-size: 0.9rem;
+			}
+
+			.gov-footer .credit-title {
+				color: var(--gov-orange);
+				font-weight: 800;
+				margin: 10px 0 5px 0;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+
+			.gov-footer .credit-contact {
+				margin: 5px 0;
+				color: #fff;
+				font-weight: 600;
+			}
+
+				.gov-footer .credit-contact a {
+					color: #fff;
+					text-decoration: none;
+					transition: var(--transition-smooth);
+				}
+
+					.gov-footer .credit-contact a:hover {
+						color: var(--gov-orange);
+					}
 
         /* --- LINKS GRID --- */
         .links-grid {
@@ -793,11 +822,15 @@
     </div>
 
     <footer class="gov-footer">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <p id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
-                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
-                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+        <div class="footer-container">
+            <p class="copyright" id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <hr>
+            <div class="lg-tech-credit">
+                <p class="credit-title">DESIGNED & DEVELOPED BY: L&G TECH SOLUTION</p>
+                <p class="credit-contact">
+                    <i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact:
+                    <a href="tel:7378418453">7378418453</a>
+                </p>
             </div>
         </div>
     </footer>
