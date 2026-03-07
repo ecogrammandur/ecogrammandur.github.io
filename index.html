@@ -1,9 +1,20 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GRAM PANCHAYAT MANDUR</title>
+    <title>Gram Panchayat Mandur | Taluka Gaganbawada, District Kolhapur</title>
+    <meta name="description" content="Official website of Gram Panchayat Mandur, Taluka Gaganbawada, District Kolhapur, Maharashtra. Access government schemes, services, RTI, gramsabha, and more.">
+    <meta name="keywords" content="Gram Panchayat, Mandur, Gaganbawada, Kolhapur, Maharashtra, government schemes, rural development, gramsabha, e-governance">
+    <meta name="author" content="L&G Tech Solution">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Gram Panchayat Mandur - Official Website">
+    <meta property="og:description" content="Digital gateway to Gram Panchayat Mandur, Gaganbawada Taluka, Kolhapur District">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://ecogrammandur.github.io/">
+    <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* --- CSS VARIABLES & RESET --- */
@@ -673,7 +684,8 @@
         <div class="top-strip">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px;">
                 <span><i class="fas fa-phone-alt"></i> <span id="txt-helpline">Help Line</span>: +91-7378418453</span>
-                <span>
+<span>
+                    <a href="javascript:void(0)" onclick="openSearch()" title="Search" style="cursor: pointer; margin-right: 10px;"><i class="fas fa-search"></i></a>
                     <a href="javascript:void(0)" onclick="setLanguage('en')" style="font-weight: bold; cursor: pointer;">English</a> |
                     <a href="javascript:void(0)" onclick="setLanguage('mr')" style="font-weight: bold; color: var(--gov-orange); cursor: pointer;">मराठी</a>
                 </span>
@@ -688,7 +700,7 @@
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India" loading="lazy">
         </div>
         <nav class="main-nav" id="sidebarMenu">
             <button class="sidebar-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
@@ -785,52 +797,67 @@
             </h2>
 
             <div class="links-grid">
-                <a href="https://aaplesarkar.mahaonline.gov.in/" target="_blank" class="link-card">
+<a href="https://aaplesarkar.mahaonline.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-landmark"></i>
                     <span>Aaple Sarkar</span>
                 </a>
-                <a href="https://bhulekh.mahabhumi.gov.in/" target="_blank" class="link-card">
+                <a href="https://bhulekh.mahabhumi.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-map"></i>
                     <span>Mahabhulekh (7/12)</span>
                 </a>
-                <a href="https://mahadbt.maharashtra.gov.in/" target="_blank" class="link-card">
+                <a href="https://mahadbt.maharashtra.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-rupee-sign"></i>
                     <span>MahaDBT</span>
                 </a>
-                <a href="https://pmkisan.gov.in/" target="_blank" class="link-card">
+                <a href="https://pmkisan.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-tractor"></i>
                     <span>PM Kisan Samman</span>
                 </a>
-                <a href="https://uidai.gov.in/" target="_blank" class="link-card">
+                <a href="https://uidai.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-fingerprint"></i>
                     <span>Download Aadhar</span>
                 </a>
-                <a href="https://voters.eci.gov.in/" target="_blank" class="link-card">
+                <a href="https://voters.eci.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-id-card"></i>
                     <span>Voter Services</span>
                 </a>
-                <a href="https://rcms.mahafood.gov.in/" target="_blank" class="link-card">
+                <a href="https://rcms.mahafood.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-utensils"></i>
                     <span>Ration Card</span>
                 </a>
-                <a href="https://rdd.maharashtra.gov.in/" target="_blank" class="link-card">
+                <a href="https://rdd.maharashtra.gov.in/" target="_blank" class="link-card" rel="noopener noreferrer">
                     <i class="fas fa-leaf"></i>
                     <span>Rural Dev. Dept</span>
                 </a>
             </div>
+</div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/917378418453" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <div class="search-header">
+                <h3><i class="fas fa-search"></i> Search Website</h3>
+                <button class="search-close" onclick="closeSearch()">&times;</button>
+            </div>
+            <div class="search-input-wrapper">
+                <input type="text" id="searchInput" placeholder="Search for services, schemes, information..." onkeyup="performSearch()">
+            </div>
+            <div class="search-results" id="searchResults"></div>
         </div>
     </div>
 
-    <footer class="gov-footer">
-        <div class="footer-container">
-            <p class="copyright" id="txt-footer">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-            <hr>
+    <footer class="gov-footer" style="background:var(--gov-blue); color:white; padding:30px 20px; margin-top:40px;">
+        <div style="max-width:1200px; margin:0 auto; text-align:center;">
+            <p id="txt-footer" style="margin:0 0 15px 0; font-weight:600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
             <div class="lg-tech-credit">
-                <p class="credit-title">DESIGNED & DEVELOPED BY: L&G TECH SOLUTION</p>
-                <p class="credit-contact">
-                    <i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact:
-                    <a href="tel:7378418453">7378418453</a>
-                </p>
+                <p style="margin:5px 0; font-weight:600;">DESIGNED &amp; DEVELOPED BY: L&amp;G TECH SOLUTION</p>
+                <p style="margin:5px 0;"><i class="fas fa-phone-alt" style="margin-right:8px;"></i>Contact: <a href="tel:7378418453" style="color:var(--gov-orange); text-decoration:none; font-weight:600;">7378418453</a></p>
             </div>
         </div>
     </footer>
@@ -997,13 +1024,85 @@
             document.getElementById('sidebarMenu').classList.remove('active');
             document.getElementById('menuOverlay').style.display = 'none';
         }
-        window.onload = function () {
+window.onload = function () {
             const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
             if (window.setLanguage) setLanguage(savedLang);
         };
+
+        // --- SEARCH FUNCTIONALITY ---
+        const searchData = [
+            { title: "Grievance / Complaint", desc: "Submit online complaint", url: "grievance.html" },
+            { title: "Track Complaint", desc: "Check complaint status", url: "grievance.html#track" },
+            { title: "Schemes", desc: "Government schemes & benefits", url: "schemes.html" },
+            { title: "Services", desc: "Online services", url: "services.html" },
+            { title: "Works", desc: "Development projects", url: "works.html" },
+            { title: "RTI", desc: "Right to Information", url: "rti.html" },
+            { title: "Gram Sabha", desc: "Village assembly meetings", url: "gramsabha.html" },
+            { title: "Administration", desc: "Sarpanch, staff, contacts", url: "administration.html" },
+            { title: "Contact Us", desc: "Phone, address, location", url: "contact.html" },
+            { title: "Gallery", desc: "Photos & videos", url: "gallery.html" },
+            { title: "MSPA", desc: "Mukhya Mantri Samriddh Panchayat", url: "mukhyamantri.html" },
+            { title: "Water Supply", desc: "Water supply complaints", url: "grievance.html" },
+            { title: "Street Light", desc: "Street light issues", url: "grievance.html" },
+            { title: "Cleaning", desc: "Sanitation & drainage", url: "grievance.html" },
+            { title: "Certificate", desc: "Apply for certificate", url: "services.html" },
+            { title: "PM Kisan", desc: "PM Kisan Samman Nidhi", url: "schemes.html" },
+            { title: "Aadhar", desc: "Download Aadhar card", url: "index.html" },
+            { title: "Voter ID", desc: "Voter services", url: "index.html" },
+            { title: "Ration Card", desc: "Food ration card", url: "index.html" },
+            { title: "7/12 Extract", desc: "Land records", url: "index.html" }
+        ];
+
+        window.openSearch = function() {
+            document.getElementById('searchOverlay').classList.add('active');
+            document.getElementById('searchInput').focus();
+        }
+        window.closeSearch = function() {
+            document.getElementById('searchOverlay').classList.remove('active');
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+        }
+        window.performSearch = function() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const results = document.getElementById('searchResults');
+            
+            if (query.length < 2) {
+                results.innerHTML = '';
+                return;
+            }
+
+            const matches = searchData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.desc.toLowerCase().includes(query)
+            );
+
+            if (matches.length === 0) {
+                results.innerHTML = '<div class="search-no-results">No results found</div>';
+            } else {
+                results.innerHTML = matches.map(item => `
+                    <a href="${item.url}" class="search-result-item">
+                        <h4>${item.title}</h4>
+                        <p>${item.desc}</p>
+                    </a>
+                `).join('');
+            }
+        }
+
+        // Close search on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSearch();
+        });
     </script>
 
     <script src="js/ui-shield.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            lazyImages.forEach(function(img) {
+                img.classList.add('loaded');
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -1,12 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grievance Redressal | Gram Panchayat Mandur</title>
+    <meta name="description" content="Online complaint registration system for Gram Panchayat Mandur. Submit grievances related to water supply, street lights, cleaning, drainage, and more.">
+    <meta name="keywords" content="grievance, complaint, takrar, Gram Panchayat Mandur, online complaint, water supply, street light">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Grievance Redressal - Gram Panchayat Mandur">
+    <meta property="og:description" content="Submit your complaints online to Gram Panchayat Mandur">
+    <link rel="canonical" href="https://ecogrammandur.github.io/grievance.html">
+    <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
 
     <style>
         /* CORE VARIABLES */
@@ -384,7 +391,7 @@
             }
 
             /* Overlay Background */
-            .menu {
+            .menu-overlay {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -392,6 +399,7 @@
                 height: 100%;
                 background: rgba(0,0,0,0.5);
                 z-index: 1001;
+                display: none;
             }
 
             /* Sliding Sidebar */
@@ -477,7 +485,7 @@
 </head>
 <body>
 
-    <div class="menu" id="menu" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
     <header class="gov-header-group">
         <div class="top-strip">
@@ -498,7 +506,7 @@
                     <p id="txt-subtitle">Taluka: Gaganbawada | District: Kolhapur</p>
                 </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="70" alt="Emblem of India" loading="lazy">
         </div>
         <nav class="main-nav" id="sidebarMenu" role="navigation" aria-label="Main navigation menu">
             <button class="sidebar-close-btn" onclick="closeMenu()" aria-label="Close navigation menu"><i class="fas fa-times"></i></button>
@@ -526,7 +534,7 @@
                 <i class="fas fa-exclamation-circle" style="color: #dc3545;"></i> <span id="form-header">Online Complaint / Takrar</span>
             </h2>
 
-            <div class="status-grid">
+<div class="status-grid">
                 <div class="status-card" style="border-bottom: 5px solid #dc3545; background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);">
                     <h3 id="publicPending" style="color: #dc3545;">--</h3>
                     <span style="color: #a71d2a;"><i class="fas fa-clock"></i> Pending / प्रलंबित</span>
@@ -535,6 +543,16 @@
                     <h3 id="publicResolved" style="color: #059669;">--</h3>
                     <span style="color: #047857;"><i class="fas fa-check-circle"></i> Resolved / निराकरण</span>
                 </div>
+            </div>
+
+            <!-- Complaint Tracking Section -->
+            <div class="tracking-section" id="track">
+                <h3><i class="fas fa-search"></i> Track Your Complaint / तक्रार पहा</h3>
+                <div class="tracking-form">
+                    <input type="tel" id="trackPhone" placeholder="Enter your mobile number / तुमचा मोबाईल नंबर" maxlength="10">
+                    <button onclick="trackComplaint()"><i class="fas fa-search"></i> Track / शोधा</button>
+                </div>
+                <div class="tracking-result" id="trackingResult"></div>
             </div>
 
             <div class="form-group">
@@ -569,15 +587,20 @@
             <div id="form-message" style="padding: 12px 15px; border-radius: 5px; margin-bottom: 20px; display: none; animation: slideUp 0.3s ease-out;"></div>
 
             <button onclick="submitComplaint()" class="btn-submit" id="submitBtn">Submit Complaint</button>
-        </div>
+</div>
     </main>
 
-    <footer class="gov-footer" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color:white; padding:30px 0 20px 0; margin-top:60px; text-align:center; border-top: 3px solid var(--gov-orange);">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <p id="txt-footer" style="margin: 0 0 15px 0; font-weight: 600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
-            <div class="lg-tech-credit" style="font-size: 0.9rem; opacity: 0.9;">
-                <p style="margin: 5px 0;">Designed &amp; Developed by: <strong>L&amp;G Tech Solution</strong></p>
-                <p style="margin: 5px 0;"><i class="fas fa-phone-alt" style="margin-right: 8px;"></i>Contact: <a href="tel:7378418453" style="color: var(--gov-orange); text-decoration: none; font-weight: 600;">7378418453</a></p>
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/917378418453" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer class="gov-footer" style="background:var(--gov-blue); color:white; padding:30px 20px; margin-top:40px;">
+        <div style="max-width:1200px; margin:0 auto; text-align:center;">
+            <p id="txt-footer" style="margin:0 0 15px 0; font-weight:600;">© 2026 GRAM PANCHAYAT MANDUR. All Rights Reserved.</p>
+            <div class="lg-tech-credit">
+                <p style="margin:5px 0; font-weight:600;">DESIGNED &amp; DEVELOPED BY: L&amp;G TECH SOLUTION</p>
+                <p style="margin:5px 0;"><i class="fas fa-phone-alt" style="margin-right:8px;"></i>Contact: <a href="tel:7378418453" style="color:var(--gov-orange); text-decoration:none; font-weight:600;">7378418453</a></p>
             </div>
         </div>
     </footer>
@@ -601,12 +624,14 @@
         // Make functions global
         window.openMenu = function () {
             document.getElementById('sidebarMenu').classList.add('active');
-            document.getElementById('menuOverlay').style.display = 'block';
+            const overlay = document.getElementById('menuOverlay');
+            if (overlay) overlay.style.display = 'block';
             document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'true');
         }
         window.closeMenu = function () {
             document.getElementById('sidebarMenu').classList.remove('active');
-            document.getElementById('menuOverlay').style.display = 'none';
+            const overlay = document.getElementById('menuOverlay');
+            if (overlay) overlay.style.display = 'none';
             document.querySelector('.mobile-toggle-btn').setAttribute('aria-expanded', 'false');
         }
 
@@ -754,6 +779,52 @@
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('loading');
                 submitBtn.innerText = 'Submit Complaint';
+            }
+        }
+
+        // Track Complaint Function
+        window.trackComplaint = async function () {
+            const phone = document.getElementById('trackPhone').value.trim();
+            const resultDiv = document.getElementById('trackingResult');
+            
+            if (!phone || phone.length !== 10) {
+                resultDiv.innerHTML = '<h4 style="color:#dc3545;">Please enter a valid 10-digit mobile number</h4>';
+                resultDiv.className = 'tracking-result pending';
+                resultDiv.classList.add('found');
+                return;
+            }
+
+            try {
+                const q = query(collection(db, "complaints"), where("phone", "==", phone));
+                const snap = await getDocs(q);
+                
+                if (snap.empty) {
+                    resultDiv.innerHTML = '<h4 style="color:#dc3545;">No complaints found with this mobile number</h4>';
+                    resultDiv.className = 'tracking-result pending';
+                } else {
+                    let html = '<h4>Your Complaints / तुमच्या तक्रारी:</h4>';
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        const statusClass = data.status === 'Resolved' ? 'resolved' : 'pending';
+                        const statusIcon = data.status === 'Resolved' ? 'check-circle' : 'clock';
+                        html += `
+                            <div style="padding:10px; margin:10px 0; background:white; border-radius:5px; border-left:4px solid ${data.status === 'Resolved' ? '#28a745' : '#ffc107'};">
+                                <p><strong>Type:</strong> ${data.type}</p>
+                                <p><strong>Description:</strong> ${data.desc}</p>
+                                <p><strong>Date:</strong> ${new Date(data.createdAt).toLocaleDateString()}</p>
+                                <p><strong>Status:</strong> <i class="fas fa-${statusIcon}"></i> ${data.status}</p>
+                            </div>
+                        `;
+                    });
+                    resultDiv.innerHTML = html;
+                    resultDiv.className = 'tracking-result';
+                }
+                resultDiv.classList.add('found');
+            } catch (e) {
+                console.error("Error tracking:", e);
+                resultDiv.innerHTML = '<h4 style="color:#dc3545;">Error searching. Please try again.</h4>';
+                resultDiv.className = 'tracking-result pending';
+                resultDiv.classList.add('found');
             }
         }
 
