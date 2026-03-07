@@ -708,6 +708,18 @@
         };
 </script>
     <script src="js/ui-shield.js"></script>
+    <script>
+        // Fix lazy loading for dynamically loaded images
+        document.addEventListener("DOMContentLoaded", function() {
+            // Run after gallery loads
+            setTimeout(function() {
+                const lazyImages = document.querySelectorAll('.gallery-img[loading="lazy"]');
+                lazyImages.forEach(function(img) {
+                    img.classList.add('loaded');
+                });
+            }, 1500); // Wait for gallery to load from Firebase
+        });
+    </script>
     <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
     <script>
         window.onscroll = function() {
