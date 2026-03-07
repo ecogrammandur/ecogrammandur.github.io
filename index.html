@@ -677,6 +677,8 @@
     </style>
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
     <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
@@ -731,6 +733,30 @@
                 <p id="hero-desc">Digital Gateway to Our Village Development</p>
                 <a href="services.html" class="feature-card" style="display:inline-block; padding:10px 30px; background:var(--gov-orange); color:white; border:none; width:auto; border-bottom:none;" id="btn-explore">Explore Services</a>
             </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats" style="max-width:1200px; margin:30px auto 20px auto; padding:0 20px;">
+        <div class="stat-item">
+            <i class="fas fa-users"></i>
+            <span class="stat-num">4,250</span>
+            <span class="stat-label">Population</span>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-home"></i>
+            <span class="stat-num">890</span>
+            <span class="stat-label">Households</span>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-map-marked-alt"></i>
+            <span class="stat-num">546</span>
+            <span class="stat-label">Hectares Area</span>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-tree"></i>
+            <span class="stat-num">2</span>
+            <span class="stat-label">Villages</span>
         </div>
     </div>
 
@@ -1102,6 +1128,33 @@ window.onload = function () {
                 img.classList.add('loaded');
             });
         });
+</script>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Scroll Progress Bar
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollProgress").style.width = scrolled + "%";
+            
+            // Back to Top Button
+            var backToTop = document.getElementById("backToTop");
+            if (winScroll > 300) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
     </script>
 
 </body>

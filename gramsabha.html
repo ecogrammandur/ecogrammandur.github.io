@@ -497,6 +497,7 @@
     </style>
 </head>
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
 
     <div class="menu" id="menu" onclick="closeMenu()" role="navigation" aria-label="Navigation overlay"></div>
 
@@ -768,7 +769,23 @@
             const savedLang = localStorage.getItem('gp_lang_pref') || 'en';
             setLanguage(savedLang);
         };
-    </script>
+</script>
     <script src="js/ui-shield.js"></script>
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
+    <script>
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            var progress = document.getElementById("scrollProgress");
+            if(progress) progress.style.width = scrolled + "%";
+            var backToTop = document.getElementById("backToTop");
+            if(backToTop) {
+                if (winScroll > 300) backToTop.classList.add("show");
+                else backToTop.classList.remove("show");
+            }
+        };
+        function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+    </script>
 </body>
 </html>
